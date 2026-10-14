@@ -1,0 +1,78 @@
+{
+  "dataFolder": {
+    "appLogs": "アプリログ",
+    "appLogsDesc": "アプリの詳細なログを表示します。"
+  },
+  "shortcuts": {
+    "application": "アプリケーション",
+    "newChat": "新しいチャット",
+    "newChatDesc": "新しいチャットを作成します。",
+    "toggleSidebar": "サイドバーの切り替え",
+    "toggleSidebarDesc": "サイドバーを表示または非表示にします。",
+    "zoomIn": "ズームイン",
+    "zoomInDesc": "ズームレベルを上げます。",
+    "zoomOut": "ズームアウト",
+    "zoomOutDesc": "ズームレベルを下げます。",
+    "chat": "チャット",
+    "sendMessage": "メッセージを送信",
+    "sendMessageDesc": "現在のメッセージを送信します。",
+    "newLine": "改行",
+    "newLineDesc": "新しい行を挿入します。",
+    "navigation": "ナビゲーション",
+    "search": "検索",
+    "searchDesc": "検索ダイアログを開きます。",
+    "goToSettings": "設定に移動",
+    "goToSettingsDesc": "設定を開きます。"
+  },
+  "interface": {
+    "title": "外観",
+    "theme": "テーマ",
+    "themeDesc": "OSのテーマに合わせます。",
+    "fontSize": "フォントサイズ",
+    "fontSizeDesc": "アプリのフォントサイズを調整します。"
+  },
+  "hardware": {},
+  "httpsProxy": {
+    "authentication": "認証"
+  },
+  "localApiServer": {},
+  "privacy": {},
+  "general": {
+    "openContainingFolder": "含まれているフォルダーを開く",
+    "appVersion": "アプリのバージョン",
+    "openLogs": "ログを開く",
+    "revealLogs": "ログを表示"
+  },
+  "attachments": {
+    "enable": "添付を有効にする",
+    "enableDesc": "検索のためにドキュメントをアップロードしてインデックス化できるようにします。",
+    "parseMode": "解析の設定",
+    "parseModeDesc": "解析したドキュメントを会話にどのように追加するかを選びます。",
+    "autoInlineThreshold": "自動インライン化のしきい値",
+    "autoInlineThresholdDesc": "ローカルモデルで解析したファイルをインライン化するかどうかの基準となる、モデルのコンテキストに対する割合です。",
+    "maxFile": "最大ファイルサイズ（MB）",
+    "maxFileDesc": "1ファイルあたりの最大サイズです。アップロード時と処理時に適用されます。",
+    "topK": "Top-K",
+    "topKDesc": "返す引用の最大数です。",
+    "threshold": "類似度のしきい値",
+    "thresholdDesc": "最小の類似度スコア（0〜1）です。線形コサイン検索でのみ使用され、ANNでは使用されません。",
+    "searchMode": "ベクトル検索モード",
+    "searchModeDesc": "sqlite-vecのANN、線形コサイン、または自動から選びます。",
+    "chunkSize": "チャンクサイズ（文字数）",
+    "chunkSizeDesc": "埋め込み用の1チャンクあたりのおおよその最大文字数です。",
+    "chunkOverlap": "オーバーラップ（文字数）",
+    "chunkOverlapDesc": "連続するチャンク間で重複させる文字数です。"
+  },
+  "dialogs": {
+    "changeDataFolder": {}
+  },
+  "backendUpdater": {
+    "newBackendVersion": "新しいLlamacppバージョン {{version}}",
+    "backendUpdateAvailable": "Llamacppのアップデートが利用可能です",
+    "remindMeLater": "後で通知",
+    "updating": "更新中...",
+    "updateNow": "今すぐ更新",
+    "updateSuccess": "Llamacppは正常に更新されました",
+    "updateError": "Llamacppの更新に失敗しました"
+  }
+}

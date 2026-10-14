@@ -1,0 +1,76 @@
+{
+  "dataFolder": {
+    "appLogs": "Журналы приложения",
+    "appLogsDesc": "Просмотреть подробные журналы приложения"
+  },
+  "shortcuts": {
+    "application": "Приложение",
+    "newChat": "Новый чат",
+    "newChatDesc": "Создать новый чат.",
+    "toggleSidebar": "Переключить боковую панель",
+    "toggleSidebarDesc": "Показать или скрыть боковую панель.",
+    "zoomIn": "Приблизить",
+    "zoomInDesc": "Увеличить масштаб.",
+    "zoomOut": "Отдалить",
+    "zoomOutDesc": "Уменьшить масштаб.",
+    "chat": "Чат",
+    "sendMessage": "Отправить сообщение",
+    "sendMessageDesc": "Отправить текущее сообщение.",
+    "newLine": "Вставить строку",
+    "newLineDesc": "Вставить новую строку.",
+    "navigation": "Навигация",
+    "goToSettings": "Перейти к настройкам",
+    "goToSettingsDesc": "Открыть настройки."
+  },
+  "interface": {
+    "title": "Интерфейс",
+    "theme": "Тема",
+    "themeDesc": "Соответствовать теме ОС.",
+    "fontSize": "Размер шрифта",
+    "fontSizeDesc": "Настроить размер шрифта приложения"
+  },
+  "hardware": {},
+  "httpsProxy": {
+    "authentication": "Авторизация"
+  },
+  "localApiServer": {},
+  "privacy": {},
+  "general": {
+    "openContainingFolder": "Открыть содержащую папку",
+    "appVersion": "Версия приложения",
+    "openLogs": "Открыть журналы",
+    "revealLogs": "Показать журналы"
+  },
+  "attachments": {
+    "enable": "Включить вложения",
+    "enableDesc": "Разрешить загрузку и индексацию документов для поиска.",
+    "parseMode": "Режим обработки",
+    "parseModeDesc": "Выберите способ добавления обработанных документов в диалоги.",
+    "autoInlineThreshold": "Порог автоматического встраивания",
+    "autoInlineThresholdDesc": "Доля контекста модели, используемая как порог для встраивания обработанных файлов в локальные модели.",
+    "maxFile": "Макс. размер файла (МБ)",
+    "maxFileDesc": "Максимальный размер файла. Принудительно применяется при загрузке и обработке.",
+    "topK": "Top-K",
+    "topKDesc": "Максимальное количество цитат для возврата.",
+    "threshold": "Порог сходства",
+    "thresholdDesc": "Минимальный балл сходства (от 0 до 1). Только для линейного косинусного поиска, не для ANN.",
+    "searchMode": "Режим векторного поиска",
+    "searchModeDesc": "Выберите между sqlite-vec ANN, линейным косинусным сходством или автоматическим выбором.",
+    "chunkSize": "Размер фрагмента (символов)",
+    "chunkSizeDesc": "Ориентировочное макс. количество символов во фрагменте для эмбеддингов.",
+    "chunkOverlap": "Перекрытие (символов)",
+    "chunkOverlapDesc": "Перекрытие символов между последовательными фрагментами."
+  },
+  "dialogs": {
+    "changeDataFolder": {}
+  },
+  "backendUpdater": {
+    "newBackendVersion": "Новая версия Llamacpp {{version}}",
+    "backendUpdateAvailable": "Доступно обновление Llamacpp",
+    "remindMeLater": "Отложить",
+    "updating": "Обновление…",
+    "updateNow": "Обновить",
+    "updateSuccess": "Llamacpp успешно обновлено",
+    "updateError": "Не удалось обновить Llamacpp"
+  }
+}

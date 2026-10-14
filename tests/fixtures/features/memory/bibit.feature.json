@@ -1,0 +1,29 @@
+{
+  "manifestSchemaVersion": 1,
+  "sdkApiVersion": 1,
+  "id": "memory",
+  "version": "0.1.0",
+  "owner": "memory-team",
+  "display": {
+    "titleKey": "memory:title",
+    "fallbackTitle": "Memory",
+    "descriptionKey": "memory:description",
+    "fallbackDescription": "Review and manage saved memories",
+    "iconKey": "memory"
+  },
+  "targets": ["desktop"],
+  "requiredHostCapabilities": ["external-service:memory"],
+  "contributions": {
+    "pages": [],
+    "settings": [
+      {
+        "id": "manager",
+        "path": "",
+        "surfaces": ["main"],
+        "navigation": { "group": "privacy", "order": 100 }
+      }
+    ],
+    "conversation": [],
+    "locales": ["en", "zh-CN"]
+  }
+}

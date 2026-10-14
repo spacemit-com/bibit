@@ -1,0 +1,377 @@
+import { type ClassValue, clsx } from 'clsx'
+import { twMerge } from 'tailwind-merge'
+import type { Node, Position } from 'unist'
+import type { Code, Paragraph, Parent, Text } from 'mdast'
+import { visit } from 'unist-util-visit'
+import { ExtensionManager } from './extension'
+import path from 'path'
+import type { VFile } from 'vfile'
+import { markdownCodeRanges } from './markdown-code'
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs))
+}
+
+export function basenameNoExt(filePath: string): string {
+  const base = path.basename(filePath)
+  const VALID_EXTENSIONS = ['.tar.gz', '.zip']
+
+  // handle VALID extensions first
+  for (const ext of VALID_EXTENSIONS) {
+    if (base.toLowerCase().endsWith(ext)) {
+      return base.slice(0, -ext.length)
+    }
+  }
+
+  // fallback: remove only the last extension
+  return base.slice(0, -path.extname(base).length)
+}
+
+/**
+ * Remark plugin that disables indented code block syntax.
+ * Converts indented code blocks to plain text paragraphs,
+ * while preserving fenced code blocks with backticks or tildes.
+ */
+export function disableIndentedCodeBlockPlugin() {
+  return (tree: Node, file: VFile) => {
+    visit(tree, 'code', (node: Code, index, parent: Parent | undefined) => {
+      // Convert indented code blocks (nodes without lang / meta property, 
+      // and are not surrounded by a fence) to plain text
+      // Check if the parent exists so we can replace the node safely
+      if (node.lang === null && node.meta === null && parent && typeof index === 'number') {
+        const nodePosition: Position | undefined = node.position
+        if (nodePosition !== undefined && !['`', '~'].includes(String(file.value).at(nodePosition.start.offset!) ?? '')) {
+          const textNode: Text = {
+            type: 'text',
+            value: node.value,
+            position: nodePosition,
+          }
+          const paragraphNode: Paragraph = {
+            type: 'paragraph',
+            children: [textNode],
+            position: nodePosition,
+          }
+          parent.children[index] = paragraphNode
+        }
+      }
+    })
+  }
+}
+
+export interface MarkdownSegment {
+  type: 'markdown' | 'html' | 'svg'
+  content: string
+}
+
+// Standalone artifact, any of:
+//   1. fenced block of any language → groups 1 (lead \n) 2 (ticks) 3 (info) 4 (body)
+//   2. raw <svg>…</svg> in prose    → group 5
+// The fence body is promoted to an artifact only when it's an html/svg fence,
+// or when its body is a lone <svg> in an xml or bare fence.
+// A fence with SVG mixed into other code stays as code. Raw SVG
+// is matched non-greedily so adjacent diagrams stay separate.
+const ARTIFACT_RE =
+  /(^|\n)(`{3,})[ \t]*([^\n]*)\n([\s\S]*?)\n\2[ \t]*(?=\n|$)|(<svg\b[\s\S]*?<\/svg>)/gi
+
+const bodyIsLoneSvg = (body: string) => {
+  const t = body.trim()
+  return /^<svg\b/i.test(t) && /<\/svg>$/i.test(t)
+}
+
+/**
+ * Split markdown into alternating prose and standalone artifact segments
+ * (interactive HTML previews and static SVG). Splitting the string keeps
+ * Streamdown's code/mermaid/inline handling intact for everything else —
+ * overriding its `code` component would replace all of it.
+ */
+export function splitHtmlArtifacts(content: string): MarkdownSegment[] {
+  if (!/<(?:svg|html|!doctype)\b|`{3,}[ \t]*(?:html|svg)/i.test(content)) {
+    return content ? [{ type: 'markdown', content }] : []
+  }
+  const segments: MarkdownSegment[] = []
+  const codeRanges = markdownCodeRanges(content)
+  let rangeIndex = 0
+  let lastIndex = 0
+  let match: RegExpExecArray | null
+  ARTIFACT_RE.lastIndex = 0
+  while ((match = ARTIFACT_RE.exec(content)) !== null) {
+    const isFence = match[2] !== undefined
+    const blockStart = isFence ? match.index + match[1].length : match.index
+    while (rangeIndex < codeRanges.length && codeRanges[rangeIndex].end <= blockStart) rangeIndex++
+    const range = codeRanges[rangeIndex]
+    // A preview fence must occupy an entire code node. Raw SVG must not
+    // overlap any code, including inline, tilde, nested or unclosed fences.
+    if (isFence ? (!range || range.start !== blockStart || range.end !== ARTIFACT_RE.lastIndex)
+      : (range && range.start < ARTIFACT_RE.lastIndex)) continue
+    let type: MarkdownSegment['type']
+    let artifactBody: string
+    if (isFence) {
+      const lang = match[3].trim().split(/\s+/)[0].toLowerCase()
+      const body = match[4]
+      if (lang === 'svg' || lang === 'html') {
+        type = lang
+      } else if ((lang === '' || lang === 'xml') && bodyIsLoneSvg(body)) {
+        type = 'svg'
+      } else {
+        // Real code fence — leave it in the markdown stream untouched.
+        continue
+      }
+      artifactBody = body
+    } else {
+      type = 'svg'
+      artifactBody = match[5]
+    }
+    // Fence keeps the leading newline as prose; raw SVG starts at match.index.
+    const before = content.slice(lastIndex, blockStart)
+    if (before.length) segments.push({ type: 'markdown', content: before })
+    segments.push({ type, content: artifactBody })
+    lastIndex = ARTIFACT_RE.lastIndex
+  }
+  const rest = content.slice(lastIndex)
+  if (rest.length) segments.push({ type: 'markdown', content: rest })
+  return segments
+}
+
+/**
+ * Get the display name for a model, falling back to the model ID if no display name is set
+ */
+export function getModelDisplayName(model: Model): string {
+  return model.displayName || model.id
+}
+
+export function getProviderLogo(provider: string) {
+  switch (provider) {
+    case 'jan':
+      return '/images/model-provider/jan.png'
+    case 'llamacpp':
+      return '/images/model-provider/llamacpp.svg'
+    case 'anthropic':
+      return '/images/model-provider/anthropic.svg'
+    case 'huggingface':
+      return '/images/model-provider/huggingface.svg'
+    case 'mistral':
+      return '/images/model-provider/mistral.svg'
+    case 'openrouter':
+      return '/images/model-provider/open-router.svg'
+    case 'groq':
+      return '/images/model-provider/groq.svg'
+    case 'cohere':
+      return '/images/model-provider/cohere.svg'
+    case 'gemini':
+      return '/images/model-provider/gemini.svg'
+    case 'openai':
+      return '/images/model-provider/openai.svg'
+    case 'azure':
+      return '/images/model-provider/azure.svg'
+    case 'xai':
+      return '/images/model-provider/xai.svg'
+    case 'minimax':
+      return '/images/model-provider/minimax.svg'
+    case 'nvidia':
+      return '/images/model-provider/nvidia.svg'
+    default:
+      return undefined
+  }
+}
+
+export const getProviderTitle = (provider: string) => {
+  switch (provider) {
+    case 'jan':
+      return 'Jan'
+    case 'llamacpp':
+      return 'Llama.cpp'
+    case 'openai':
+      return 'OpenAI'
+    case 'openrouter':
+      return 'OpenRouter'
+    case 'gemini':
+      return 'Gemini'
+    case 'huggingface':
+      return 'Hugging Face'
+    case 'xai':
+      return 'xAI'
+    case 'minimax':
+      return 'MiniMax'
+    case 'nvidia':
+      return 'NVIDIA NIM'
+    default:
+      return provider.charAt(0).toUpperCase() + provider.slice(1)
+  }
+}
+
+export function getReadableLanguageName(language: string): string {
+  const languageMap: Record<string, string> = {
+    js: 'JavaScript',
+    jsx: 'React JSX',
+    ts: 'TypeScript',
+    tsx: 'React TSX',
+    html: 'HTML',
+    css: 'CSS',
+    scss: 'SCSS',
+    json: 'JSON',
+    md: 'Markdown',
+    py: 'Python',
+    rb: 'Ruby',
+    java: 'Java',
+    c: 'C',
+    cpp: 'C++',
+    cs: 'C#',
+    go: 'Go',
+    rust: 'Rust',
+    php: 'PHP',
+    swift: 'Swift',
+    kotlin: 'Kotlin',
+    sql: 'SQL',
+    sh: 'Shell',
+    bash: 'Bash',
+    ps1: 'PowerShell',
+    yaml: 'YAML',
+    yml: 'YAML',
+    xml: 'XML',
+    // Add more languages as needed
+  }
+
+  return (
+    languageMap[language] ||
+    language.charAt(0).toUpperCase() + language.slice(1)
+  )
+}
+
+export const isLocalProvider = (provider: string) => {
+  const extension = ExtensionManager.getInstance().getEngine(provider)
+  return extension && 'load' in extension
+}
+
+export const toGigabytes = (
+  input: number,
+  options?: { hideUnit?: boolean; toFixed?: number }
+) => {
+  if (!input) return ''
+  if (input > 1024 ** 3) {
+    return (
+      (input / 1024 ** 3).toFixed(options?.toFixed ?? 2) +
+      (options?.hideUnit ? '' : 'GB')
+    )
+  } else if (input > 1024 ** 2) {
+    return (
+      (input / 1024 ** 2).toFixed(options?.toFixed ?? 2) +
+      (options?.hideUnit ? '' : 'MB')
+    )
+  } else if (input > 1024) {
+    return (
+      (input / 1024).toFixed(options?.toFixed ?? 2) +
+      (options?.hideUnit ? '' : 'KB')
+    )
+  } else {
+    return input + (options?.hideUnit ? '' : 'B')
+  }
+}
+
+export type ByteUnit = 'B' | 'KB' | 'MB' | 'GB'
+
+export type FormatBytesOptions = {
+  decimals?: number | ((value: number, unit: ByteUnit) => number)
+  separator?: string
+  hideUnit?: boolean
+  minUnit?: ByteUnit
+  fallback?: string
+}
+
+const BYTE_UNITS: ByteUnit[] = ['B', 'KB', 'MB', 'GB']
+
+export function formatBytes(
+  bytes: number | undefined,
+  options?: FormatBytesOptions
+): string {
+  const fallback = options?.fallback ?? ''
+
+  if (bytes === undefined || !Number.isFinite(bytes)) {
+    return fallback
+  }
+
+  const minUnitIndex =
+    options?.minUnit === undefined ? 0 : BYTE_UNITS.indexOf(options.minUnit)
+
+  let unitIndex = 0
+  let scaledValue = bytes
+
+  while (scaledValue >= 1024 && unitIndex < BYTE_UNITS.length - 1) {
+    scaledValue /= 1024
+    unitIndex++
+  }
+
+  while (unitIndex < minUnitIndex) {
+    scaledValue /= 1024
+    unitIndex++
+  }
+
+  const unit = BYTE_UNITS[unitIndex]
+  const rawDecimals =
+    typeof options?.decimals === 'function'
+      ? options.decimals(scaledValue, unit)
+      : options?.decimals ?? 1
+  const decimals = Math.min(20, Math.max(0, Math.trunc(rawDecimals)))
+  const formattedValue = scaledValue.toFixed(decimals)
+
+  if (options?.hideUnit) {
+    return formattedValue
+  }
+
+  return `${formattedValue}${options?.separator ?? ' '}${unit}`
+}
+
+export function formatMegaBytes(mb: number) {
+  const tb = mb / (1024 * 1024)
+  if (tb >= 1) {
+    return `${tb.toFixed(2)} TB`
+  } else {
+    const gb = mb / 1024
+    return `${gb.toFixed(2)} GB`
+  }
+}
+
+export function isDev() {
+  return window.location.host.startsWith('localhost:')
+}
+
+export function formatDuration(startTime: number, endTime?: number): string {
+  const end = endTime || Date.now()
+  const durationMs = end - startTime
+
+  if (durationMs < 0) {
+    return 'Invalid duration (start time is in the future)'
+  }
+
+  const seconds = Math.floor(durationMs / 1000)
+  const minutes = Math.floor(seconds / 60)
+  const hours = Math.floor(minutes / 60)
+  const days = Math.floor(hours / 24)
+
+  if (days > 0) {
+    return `${days}d ${hours % 24}h ${minutes % 60}m ${seconds % 60}s`
+  } else if (hours > 0) {
+    return `${hours}h ${minutes % 60}m ${seconds % 60}s`
+  } else if (minutes > 0) {
+    return `${minutes}m ${seconds % 60}s`
+  } else if (seconds > 0) {
+    return `${seconds}s`
+  } else {
+    return `${durationMs}ms`
+  }
+}
+
+export function sanitizeModelId(modelId: string): string {
+  return modelId.replace(/[^a-zA-Z0-9/_\-.]/g, '').replace(/\./g, '_')
+}
+
+export const extractThinkingContent = (text: string) => {
+  return text
+    .replace(/<\/?think>/g, '')
+    .replace(/<\|channel\|>analysis<\|message\|>/g, '')
+    .replace(/<\|start\|>assistant<\|channel\|>final<\|message\|>/g, '')
+    .replace(/assistant<\|channel\|>final<\|message\|>/g, '')
+    .replace(/<\|channel\|>/g, '') // remove any remaining channel markers
+    .replace(/<\|message\|>/g, '') // remove any remaining message markers
+    .replace(/<\|start\|>/g, '') // remove any remaining start markers
+    .trim()
+}

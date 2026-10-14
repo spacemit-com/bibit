@@ -1,0 +1,94 @@
+{
+  "dataFolder": {
+    "appLogs": "Registros de la aplicación",
+    "appLogsDesc": "Ver registros detallados de la aplicación."
+  },
+  "shortcuts": {
+    "application": "Aplicación",
+    "newChat": "Nuevo chat",
+    "newChatDesc": "Crear un nuevo chat.",
+    "toggleSidebar": "Alternar barra lateral",
+    "toggleSidebarDesc": "Mostrar u ocultar la barra lateral.",
+    "zoomIn": "Acercar",
+    "zoomInDesc": "Aumentar el nivel de zoom.",
+    "zoomOut": "Alejar",
+    "zoomOutDesc": "Disminuir el nivel de zoom.",
+    "chat": "Chat",
+    "sendMessage": "Enviar mensaje",
+    "sendMessageDesc": "Enviar el mensaje actual.",
+    "newLine": "Nueva línea",
+    "newLineDesc": "Insertar una nueva línea.",
+    "navigation": "Navegación",
+    "search": "Buscar",
+    "searchDesc": "Abrir el diálogo de búsqueda.",
+    "goToSettings": "Ir a Configuración",
+    "goToSettingsDesc": "Abrir configuración."
+  },
+  "interface": {
+    "title": "Interfaz",
+    "theme": "Tema",
+    "themeDesc": "Coincidir con el tema del sistema operativo.",
+    "fontSize": "Tamaño de fuente",
+    "fontSizeDesc": "Ajustar el tamaño de fuente de la aplicación."
+  },
+  "hardware": {},
+  "httpsProxy": {
+    "authentication": "Autenticación"
+  },
+  "localApiServer": {},
+  "privacy": {},
+  "general": {
+    "openContainingFolder": "Abrir carpeta contenedora",
+    "appVersion": "Versión de la aplicación",
+    "openLogs": "Abrir registros",
+    "revealLogs": "Revelar registros"
+  },
+  "attachments": {
+    "enable": "Activar adjuntos",
+    "enableDesc": "Permitir subir e indexar documentos para recuperación.",
+    "parseMode": "Preferencia de análisis",
+    "parseModeDesc": "Elige cómo se agregan los documentos analizados a las conversaciones.",
+    "autoInlineThreshold": "Umbral de inserción automática",
+    "autoInlineThresholdDesc": "Fracción del contexto del modelo usado como límite para insertar archivos analizados en modelos locales.",
+    "maxFile": "Tamaño máximo de archivo (MB)",
+    "maxFileDesc": "Tamaño máximo por archivo. Se aplica al subir y procesar.",
+    "topK": "Top-K",
+    "topKDesc": "Máximo de citas a devolver.",
+    "threshold": "Umbral de afinidad",
+    "thresholdDesc": "Puntuación mínima de similitud (0-1). Solo se usa para búsqueda de coseno lineal, no ANN.",
+    "searchMode": "Modo de búsqueda vectorial",
+    "searchModeDesc": "Elige entre ANN de sqlite-vec, coseno lineal o automático.",
+    "chunkSize": "Tamaño de fragmento (caracteres)",
+    "chunkSizeDesc": "Máximo aproximado de caracteres por fragmento para embeddings.",
+    "chunkOverlap": "Superposición (caracteres)",
+    "chunkOverlapDesc": "Superposición de caracteres entre fragmentos consecutivos."
+  },
+  "dialogs": {
+    "changeDataFolder": {}
+  },
+  "backendUpdater": {
+    "newBackendVersion": "Nueva versión de Llamacpp {{version}}",
+    "backendUpdateAvailable": "Actualización de Llamacpp disponible",
+    "remindMeLater": "Recordar más tarde",
+    "updating": "Actualizando...",
+    "updateNow": "Actualizar ahora",
+    "updateSuccess": "Llamacpp actualizado correctamente",
+    "updateError": "Error al actualizar Llamacpp"
+  },
+  "remoteAccess": {
+    "addChannel": {},
+    "channelDescriptions": {},
+    "tailscaleSettings": {},
+    "telegramWizard": {
+      "step1": {},
+      "step2": {},
+      "step3": {},
+      "step4": {},
+      "step5": {},
+      "buttons": {},
+      "status": {},
+      "errors": {}
+    },
+    "whatsappWizard": {}
+  }
+}

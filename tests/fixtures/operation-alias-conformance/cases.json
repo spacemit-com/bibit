@@ -1,0 +1,18 @@
+{
+  "note": "Business operation names may carry a trailing .v<digits> release suffix. The suffix is an alias only, so the canonical form must match on both sides. Read by packages/feature-contracts/src/operation-id.test.ts and src-tauri/src/feature_capabilities.rs.",
+  "cases": [
+    { "operation": "agents.list", "canonical": "agents.list" },
+    { "operation": "agents.list.v1", "canonical": "agents.list" },
+    { "operation": "agents.list.v12", "canonical": "agents.list" },
+    { "operation": "agents.upload.v1", "canonical": "agents.upload" },
+    { "operation": "settings.get.v1", "canonical": "settings.get" },
+    { "operation": "dlp.policy.update.v1", "canonical": "dlp.policy.update" },
+    { "operation": "permission.check.v1", "canonical": "permission.check" },
+    { "operation": "policy.update.v0", "canonical": "policy.update" },
+    { "operation": "agent.v1.list", "canonical": "agent.v1.list" },
+    { "operation": "agents.v1.list.v2", "canonical": "agents.v1.list" },
+    { "operation": "agents.list.vers1", "canonical": "agents.list.vers1" },
+    { "operation": "agents.list.v", "canonical": "agents.list.v" },
+    { "operation": "agents.list.vx", "canonical": "agents.list.vx" }
+  ]
+}

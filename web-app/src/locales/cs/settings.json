@@ -1,0 +1,72 @@
+{
+  "dataFolder": {
+    "appLogs": "Záznamy aplikace",
+    "appLogsDesc": "Zobrazit detailní záznamy aplikace."
+  },
+  "shortcuts": {
+    "application": "Aplikace",
+    "newChat": "Nový chat",
+    "newChatDesc": "Vytvořit nový chat.",
+    "toggleSidebar": "Přepnout postranní panel",
+    "toggleSidebarDesc": "Zobrazit nebo skrýt postranní panel.",
+    "zoomIn": "Přiblížit",
+    "zoomInDesc": "Zvýšit úroveň přiblížení.",
+    "zoomOut": "Oddálit",
+    "zoomOutDesc": "Snížit úroveň přiblížení.",
+    "chat": "Chat",
+    "sendMessage": "Odeslat zprávu",
+    "sendMessageDesc": "Odeslat aktuální zprávu.",
+    "newLine": "Nový řádek",
+    "newLineDesc": "Vložit nový řádek.",
+    "navigation": "Navigace",
+    "goToSettings": "Přejít do nastavení",
+    "goToSettingsDesc": "Otevřít nastavení."
+  },
+  "interface": {
+    "title": "Rozhraní",
+    "theme": "Motiv",
+    "themeDesc": "Přizpůsobit motivu OS.",
+    "fontSize": "Velikost písma",
+    "fontSizeDesc": "Upravit velikost písma aplikace."
+  },
+  "hardware": {},
+  "httpsProxy": {
+    "authentication": "Autentizace"
+  },
+  "localApiServer": {},
+  "privacy": {},
+  "general": {
+    "openContainingFolder": "Otevřít obsahující složku",
+    "appVersion": "Verze aplikace",
+    "openLogs": "Otevřít záznamy",
+    "revealLogs": "Zobrazit záznamy"
+  },
+  "attachments": {
+    "enable": "Povolit přílohy",
+    "enableDesc": "Povolit nahrávání a indexování dokumentů pro načítání.",
+    "maxFile": "Maximální velikost souboru (MB)",
+    "maxFileDesc": "Maximální velikost na soubor. Vynuceno při nahrávání a zpracování.",
+    "topK": "Top-K",
+    "topKDesc": "Maximální počet citací k vrácení.",
+    "threshold": "Práh afinity",
+    "thresholdDesc": "Minimální skóre podobnosti (0-1). Používá se pouze pro lineární kosinové vyhledávání, ne ANN.",
+    "searchMode": "Režim vektorového vyhledávání",
+    "searchModeDesc": "Vyberte mezi sqlite-vec ANN, lineárním kosinovým nebo automatickým.",
+    "chunkSize": "Velikost části (tokeny)",
+    "chunkSizeDesc": "Přibližný maximální počet tokenů na část pro embeddingy.",
+    "chunkOverlap": "Překryv (tokeny)",
+    "chunkOverlapDesc": "Překryv tokenů mezi po sobě jdoucími částmi."
+  },
+  "dialogs": {
+    "changeDataFolder": {}
+  },
+  "backendUpdater": {
+    "newBackendVersion": "Nová verze Llamacpp {{version}}",
+    "backendUpdateAvailable": "Dostupná aktualizace Llamacpp",
+    "remindMeLater": "Připomenout později",
+    "updating": "Aktualizování...",
+    "updateNow": "Aktualizovat nyní",
+    "updateSuccess": "Llamacpp úspěšně aktualizován",
+    "updateError": "Nepodařilo se aktualizovat Llamacpp"
+  }
+}

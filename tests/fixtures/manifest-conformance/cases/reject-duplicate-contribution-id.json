@@ -1,0 +1,45 @@
+{
+  "name": "reject-duplicate-contribution-id",
+  "expect": "reject",
+  "note": "Contribution ids are unique across kinds.",
+  "manifest": {
+    "manifestSchemaVersion": 1,
+    "sdkApiVersion": 1,
+    "id": "conformance",
+    "version": "0.1.0",
+    "owner": "platform-team",
+    "display": {
+      "titleKey": "conformance:title",
+      "fallbackTitle": "Conformance",
+      "iconKey": "feature"
+    },
+    "targets": [
+      "desktop"
+    ],
+    "requiredHostCapabilities": [],
+    "contributions": {
+      "pages": [
+        {
+          "id": "same",
+          "path": "",
+          "surfaces": [
+            "main"
+          ]
+        }
+      ],
+      "settings": [
+        {
+          "id": "same",
+          "path": "",
+          "surfaces": [
+            "main"
+          ]
+        }
+      ],
+      "conversation": [],
+      "locales": [
+        "en"
+      ]
+    }
+  }
+}

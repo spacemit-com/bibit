@@ -1,0 +1,94 @@
+{
+  "dataFolder": {
+    "appLogs": "ऐप लॉग्स",
+    "appLogsDesc": "विस्तृत ऐप लॉग्स देखें।"
+  },
+  "shortcuts": {
+    "application": "एप्लिकेशन",
+    "newChat": "नई चैट",
+    "newChatDesc": "नई चैट बनाएं।",
+    "toggleSidebar": "साइडबार टॉगल करें",
+    "toggleSidebarDesc": "साइडबार दिखाएं या छिपाएं।",
+    "zoomIn": "ज़ूम इन",
+    "zoomInDesc": "ज़ूम स्तर बढ़ाएं।",
+    "zoomOut": "ज़ूम आउट",
+    "zoomOutDesc": "ज़ूम स्तर घटाएं।",
+    "chat": "चैट",
+    "sendMessage": "संदेश भेजें",
+    "sendMessageDesc": "वर्तमान संदेश भेजें।",
+    "newLine": "नई पंक्ति",
+    "newLineDesc": "नई पंक्ति जोड़ें।",
+    "navigation": "नेविगेशन",
+    "search": "खोजें",
+    "searchDesc": "खोज डायलॉग खोलें।",
+    "goToSettings": "सेटिंग्स पर जाएं",
+    "goToSettingsDesc": "सेटिंग्स खोलें।"
+  },
+  "interface": {
+    "title": "इंटरफ़ेस",
+    "theme": "थीम",
+    "themeDesc": "ऑपरेटिंग सिस्टम थीम से मेल करें।",
+    "fontSize": "फ़ॉन्ट आकार",
+    "fontSizeDesc": "ऐप का फ़ॉन्ट आकार समायोजित करें।"
+  },
+  "hardware": {},
+  "httpsProxy": {
+    "authentication": "प्रमाणीकरण"
+  },
+  "localApiServer": {},
+  "privacy": {},
+  "general": {
+    "openContainingFolder": "संबंधित फ़ोल्डर खोलें",
+    "appVersion": "ऐप संस्करण",
+    "openLogs": "लॉग्स खोलें",
+    "revealLogs": "लॉग्स दिखाएं"
+  },
+  "attachments": {
+    "enable": "संलग्नक सक्षम करें",
+    "enableDesc": "पुनर्प्राप्ति के लिए दस्तावेज़ अपलोड और इंडेक्स करने की अनुमति दें।",
+    "parseMode": "पार्सिंग प्राथमिकता",
+    "parseModeDesc": "चुनें कि पार्स किए गए दस्तावेज़ बातचीत में कैसे जोड़े जाएं।",
+    "autoInlineThreshold": "ऑटो इनलाइन सीमा",
+    "autoInlineThresholdDesc": "मॉडल कॉन्टेक्स्ट का वह अनुपात जो लोकल मॉडल्स में पार्स की गई फ़ाइलों को इनलाइन करने की सीमा के रूप में उपयोग होता है।",
+    "maxFile": "अधिकतम फ़ाइल आकार (MB)",
+    "maxFileDesc": "प्रति फ़ाइल अधिकतम आकार। अपलोड और प्रोसेसिंग दोनों पर लागू होता है।",
+    "topK": "टॉप-K",
+    "topKDesc": "वापस किए जाने वाले अधिकतम संदर्भों की संख्या।",
+    "threshold": "समानता सीमा",
+    "thresholdDesc": "न्यूनतम समानता स्कोर (0-1)। केवल cosine linear खोज के लिए उपयोग होता है, ANN के लिए नहीं।",
+    "searchMode": "वेक्टर खोज मोड",
+    "searchModeDesc": "sqlite-vec ANN, cosine linear या ऑटोमेटिक में से चुनें।",
+    "chunkSize": "चंक आकार (अक्षर)",
+    "chunkSizeDesc": "एम्बेडिंग्स के लिए प्रति चंक अधिकतम अनुमानित अक्षरों की संख्या।",
+    "chunkOverlap": "ओवरलैप (अक्षर)",
+    "chunkOverlapDesc": "लगातार चंक्स के बीच अक्षरों का ओवरलैप।"
+  },
+  "dialogs": {
+    "changeDataFolder": {}
+  },
+  "backendUpdater": {
+    "newBackendVersion": "Llamacpp का नया संस्करण {{version}}",
+    "backendUpdateAvailable": "Llamacpp अपडेट उपलब्ध है",
+    "remindMeLater": "बाद में याद दिलाएं",
+    "updating": "अपडेट हो रहा है...",
+    "updateNow": "अभी अपडेट करें",
+    "updateSuccess": "Llamacpp सफलतापूर्वक अपडेट हुआ",
+    "updateError": "Llamacpp अपडेट करने में त्रुटि"
+  },
+  "remoteAccess": {
+    "addChannel": {},
+    "channelDescriptions": {},
+    "tailscaleSettings": {},
+    "telegramWizard": {
+      "step1": {},
+      "step2": {},
+      "step3": {},
+      "step4": {},
+      "step5": {},
+      "buttons": {},
+      "status": {},
+      "errors": {}
+    },
+    "whatsappWizard": {}
+  }
+}

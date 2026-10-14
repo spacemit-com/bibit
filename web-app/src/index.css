@@ -1,0 +1,700 @@
+@import 'tailwindcss' source(none);
+@import 'tw-animate-css';
+@import 'katex/dist/katex.min.css';
+/* Linked from 'self' so CSP keeps it: WebView2 drops sonner's runtime <style>
+   once index.html's inline <style> makes Tauri hash style-src (voids unsafe-inline). */
+@import 'sonner/dist/styles.css';
+
+/* Accent tint for neutral toasts (Appearance > Accent color, --primary).
+   Set via class, not an inline style prop, so WebView2's hashed style-src
+   CSP doesn't drop it. richColors typed toasts keep their semantics. */
+.toaster {
+  --normal-bg: color-mix(in oklch, var(--popover) 92%, var(--primary));
+  --normal-text: var(--popover-foreground);
+  --normal-border: color-mix(in oklch, var(--border) 55%, var(--primary));
+}
+
+@import '@/styles/font.css';
+@import '@/styles/markdown.css';
+@source '../index.html';
+@source './**/*.{ts,tsx}';
+@source '../node_modules/streamdown/dist/**/*.js';
+@source '../../packages/feature-ui/src/**/*.{ts,tsx}';
+@source '../../features/*/src/**/*.{ts,tsx}';
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  /* Agent trace cards: one visual system for reasoning, tool, approval and
+     diagnostic rows. Raw values live in :root/.dark; components must use these
+     utilities instead of picking colours per card. */
+  --color-trace-rail: var(--trace-rail);
+  --color-trace-hover: var(--trace-hover);
+  --color-trace-surface: var(--trace-surface);
+  --color-trace-status-idle: var(--trace-status-idle);
+  --color-trace-status-running: var(--trace-status-running);
+  --color-trace-status-success: var(--trace-status-success);
+  --color-trace-status-error: var(--trace-status-error);
+  --color-trace-status-attention: var(--trace-status-attention);
+  --animate-hue-rotate: hue-rotate 4s infinite;
+  --animate-trace-pulse: trace-pulse 1.6s ease-in-out infinite;
+  @keyframes trace-pulse {
+    0%,
+    100% {
+      opacity: 0.45;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+  --font-studio: "StudioFeixenSans";
+  /* UI 字体跟随系统：拉丁走平台栈，中文字体族必须显式列在 sans-serif 之前。
+     不列中文族的后果是交给 fontconfig 按 <html lang> 自行决定——lang=zh-CN 落到
+     Noto Sans CJK SC，而 lang=en（界面英文 + 中文内容）落到 Noto Sans CJK JP，
+     汉字会用日文字形。Noto Sans SC 排在 Noto Sans CJK SC 之前，是因为前者有 9 档
+     字重、后者只有 Regular/Bold，否则 font-medium(500) 对中文完全失效。 */
+  --font-sans:
+    system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "PingFang SC",
+    "Hiragino Sans GB", "Microsoft YaHei UI", "Microsoft YaHei", "Noto Sans SC",
+    "Source Han Sans SC", "Noto Sans CJK SC", "WenQuanYi Micro Hei", sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji";
+  /* 等宽同理：原栈里的 JetBrains Mono / Fira Code / Consolas / Monaco 一个都没打包，
+     实际落到系统 monospace。补上真实存在的族，并带 CJK 等宽兜底。 */
+  --font-mono:
+    ui-monospace, "SFMono-Regular", "JetBrains Mono", Menlo, Consolas,
+    "DejaVu Sans Mono", "Liberation Mono", "Noto Sans Mono CJK SC",
+    "WenQuanYi Zen Hei Mono", monospace;
+
+  /* Font scale based on --font-size-base */
+  --text-xs: calc(var(--font-size-base) * 0.75);
+  /* ~12px */
+  --text-sm: calc(var(--font-size-base) * 0.875);
+  /* ~14px */
+  --text-trace: calc(var(--font-size-base) * 0.8125);
+  /* ~13px, agent trace rows */
+  --text-base: var(--font-size-base);
+  /* ~16px */
+  --text-lg: calc(var(--font-size-base) * 1.125);
+  /* ~18px */
+  --text-xl: calc(var(--font-size-base) * 1.25);
+  /* ~20px */
+  --text-2xl: calc(var(--font-size-base) * 1.5);
+  /* ~24px */
+  --text-3xl: calc(var(--font-size-base) * 1.875);
+  /* ~30px */
+  --text-4xl: calc(var(--font-size-base) * 2.25);
+  /* ~36px */
+  --text-5xl: calc(var(--font-size-base) * 3);
+  /* ~48px */
+  --text-6xl: calc(var(--font-size-base) * 3.75);
+  /* ~60px */
+  --text-7xl: calc(var(--font-size-base) * 4.5);
+  /* ~72px */
+  --text-8xl: calc(var(--font-size-base) * 6);
+  /* ~96px */
+  --text-9xl: calc(var(--font-size-base) * 8);
+  /* ~128px */
+
+}
+
+/* Chat message zoom. --font-size-base is set inline on this element; the scale
+   has to be redeclared here because the :root copies substitute the root's
+   --font-size-base before inheriting, so overriding it alone changes nothing
+   for rules reading var(--text-*) (markdown.css). */
+.message-zoom {
+  --text-xs: calc(var(--font-size-base) * 0.75);
+  --text-sm: calc(var(--font-size-base) * 0.875);
+  --text-trace: calc(var(--font-size-base) * 0.8125);
+  --text-base: var(--font-size-base);
+  --text-lg: calc(var(--font-size-base) * 1.125);
+  --text-xl: calc(var(--font-size-base) * 1.25);
+  --text-2xl: calc(var(--font-size-base) * 1.5);
+  --text-3xl: calc(var(--font-size-base) * 1.875);
+  --text-4xl: calc(var(--font-size-base) * 2.25);
+}
+
+:root {
+  /* UAs paint native form controls and (non-overlay) scrollbars from this
+     property, not from our tokens. Without it WebKitGTK keeps rendering
+     <select>/<input> chrome light even when the app theme is dark. */
+  color-scheme: light;
+  --radius: 0.625rem;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: #B2E40D;
+  --primary-foreground: #000000;
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(84.0% 0 0);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --sidebar: #194D24;
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+  --trace-rail: var(--border);
+  --trace-hover: color-mix(in oklch, var(--muted) 60%, transparent);
+  --trace-surface: color-mix(in oklch, var(--muted) 45%, transparent);
+  --trace-status-idle: var(--muted-foreground);
+  --trace-status-running: var(--primary);
+  --trace-status-success: oklch(0.55 0.13 155);
+  --trace-status-error: var(--destructive);
+  --trace-status-attention: oklch(0.62 0.14 75);
+}
+
+.dark {
+  color-scheme: dark;
+  --background: oklch(0.18 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: #B2E40D;
+  --primary-foreground: #000000;
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(84.0% 0 0);
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: #194D24;
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0 0);
+  --trace-rail: var(--border);
+  --trace-hover: color-mix(in oklch, var(--muted) 60%, transparent);
+  --trace-surface: color-mix(in oklch, var(--muted) 70%, transparent);
+  --trace-status-idle: var(--muted-foreground);
+  --trace-status-running: var(--primary);
+  --trace-status-success: oklch(0.7 0.15 155);
+  --trace-status-error: var(--destructive);
+  --trace-status-attention: oklch(0.78 0.14 75);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+    caret-color: var(--foreground);
+  }
+
+  body {
+    @apply text-foreground font-sans text-sm antialiased overflow-hidden;
+    background: transparent !important;
+  }
+
+  ::-ms-reveal {
+    display: none;
+  }
+
+  /* WebKit (Safari/Tauri) input caret fix */
+  input,
+  textarea {
+    caret-color: var(--foreground) !important;
+    -webkit-text-fill-color: currentColor;
+  }
+
+  /* WebKit number input spin buttons */
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    appearance: none;
+    background: var(--foreground);
+    opacity: 0.5;
+    cursor: pointer;
+  }
+
+  input[type="number"]::-webkit-inner-spin-button:hover,
+  input[type="number"]::-webkit-outer-spin-button:hover {
+    opacity: 0.8;
+  }
+
+  code,
+  pre,
+  kbd,
+  samp {
+    @apply font-mono;
+  }
+
+  svg.lucide {
+    width: 14px;
+    height: 14px;
+  }
+
+  svg {
+    stroke-width: 2;
+  }
+
+  /* Scrollbar styles.
+     Two painters own scrollbars, and only one of them is reachable from CSS:
+     - WebKit/Blink with non-overlay scrollbars: the ::-webkit-scrollbar rules
+       and scrollbar-color below apply.
+     - WebKitGTK with GTK overlay scrolling (the Linux default, verified on the
+       K3 boards): the webview paints a GTK-themed overlay scrollbar and these
+       rules are ignored. That path is themed from the Rust side, which binds
+       gtk-theme-name to the resolved app theme (see set_app_theme in
+       src-tauri/src/core/setup.rs). Keep both in sync via the same tokens. */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: oklch(0.708 0 0 / 30%);
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: oklch(0.708 0 0 / 50%);
+  }
+
+  .dark ::-webkit-scrollbar-thumb {
+    background: oklch(0.985 0 0 / 20%);
+  }
+
+  .dark ::-webkit-scrollbar-thumb:hover {
+    background: oklch(0.985 0 0 / 35%);
+  }
+
+  /* Firefox scrollbar */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: oklch(0.708 0 0 / 30%) transparent;
+  }
+
+  .dark * {
+    scrollbar-color: oklch(0.985 0 0 / 20%) transparent;
+  }
+
+}
+
+/* Native windows are transparent surfaces. Ensure root HTML/body containers
+   have transparent backgrounds so custom window shells render rounded corners cleanly. */
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  background: transparent !important;
+}
+
+body {
+  color: var(--foreground);
+}
+
+/* The ball is a transparent native window. Keep the hit target circular so
+   transparent corners never intercept clicks or make the surface look square. */
+.bibit-voice-surface {
+  background: transparent !important;
+  overflow: hidden !important;
+}
+
+.bibit-voice-surface #initial-loader {
+  display: none !important;
+}
+
+.voice-ball-trigger {
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border-radius: 50%;
+  background: transparent;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-app-region: no-drag;
+  width: 96px;
+  height: 96px;
+}
+
+/* 黑盘（伪元素）和 SVG 叠在同一格，共用同一个中心。 */
+.voice-ball-frame {
+  position: relative;
+  display: grid;
+  place-items: center;
+}
+
+/* 黑盘：不透明，但走普通绘制，不单独提升合成层。
+   它原来是 SVG 里的圆（整条链路透明），后来换成一个带 will-change 的 div 层，
+   两版都会在球心露出一块浮窗窗口的白底（实测 10x10 纯白，正好落在两眼看中间）。
+   画成 frame 的伪元素后，它和 SVG 在同一次绘制里，漏绘最多露黑。
+   93.75% = viewBox 半宽 128 里的 r=120，inset 3.125% 让圆心和尺寸与原来一致。 */
+.voice-ball-frame::before {
+  content: '';
+  position: absolute;
+  inset: 3.125%;
+  border-radius: 50%;
+  background: #000;
+}
+
+/* hover / 按下的缩放用 transform，但**不加过渡**：过渡会让 WebKit 在动画期间临时提升
+   一个合成层，鼠标进出的那一瞬间球心会闪一块白；不加过渡就只是重绘，不涉及层升降。
+   缩放只作用在球本身：触发器一旦带上 transform，就会成为内部绝对定位球的包含块，
+   按下瞬间球会被重定位到触发器所在位置，看起来就是跳到屏幕角落。 */
+.voice-ball-trigger:hover .voice-ball-svg,
+.voice-ball-trigger:hover .voice-ball-frame::before {
+  transform: scale(1.05);
+}
+
+.voice-ball-trigger:active {
+  cursor: grabbing;
+}
+
+/* 语音浮窗 composer：把次要控件收敛成同一种无填充形态，只留发送按钮一个强调色，
+   输入框圆角比主窗口更克制。作用域锁在 data-surface="overlay"，主窗口不受影响。
+   只用 data-variant 选，不加 [data-slot=button]：Radix 的 asChild 会把 Slot 上的
+   data-slot 盖成 *-trigger，那两个按钮就不叫 button 了。 */
+[data-surface='overlay'] [data-variant='secondary'] {
+  background: transparent;
+}
+
+[data-surface='overlay'] [data-variant='secondary']:hover {
+  background: var(--accent);
+}
+
+[data-surface='overlay'] [data-slot='composer-surface'] {
+  border-radius: 18px;
+}
+
+[data-surface='overlay'] [data-slot='agent-trigger'] {
+  border-color: transparent;
+  color: var(--muted-foreground);
+  font-weight: 400;
+}
+
+[data-surface='overlay'] [data-slot='agent-trigger']:hover {
+  background: var(--accent);
+  color: var(--accent-foreground);
+}
+
+/* ==========================================================================
+   语音浮窗磨砂材质（BIT-FLOAT-03）
+
+   只把浮窗原来那块不透明底换成磨砂半透明：底色仍是主题原来的 --background，
+   不带任何彩色，颗粒是叠在底色上的中性噪点。
+
+   为什么不用 backdrop-filter：目标平台（Bianbu / Wayland / labwc 0.9.3）的合成器
+   没有背景模糊实现，Tauri 2.11 的 windowEffects 也只有 macOS / Windows 两套实现；
+   浮窗又是整屏透明 surface，客户端拿不到别的 surface 的像素。所以窗口背后的内容
+   不会被系统糊掉——磨砂感由「降低不透明度 + 细颗粒」表达：底色留在 85% 上下，
+   背后的内容只隐约透出、看不清细节，这正是磨砂玻璃的观感；规格备注也允许
+   系统不支持毛玻璃时降级且不影响可读性。
+
+   作用域锁在 data-glass="voice"（语音输入态）：键盘态按 BIT-FLOAT-10 保持
+   不透明实色底，那个属性由 WindowSurfaceShell 按 voice-input-store 写。
+   ========================================================================== */
+[data-window-surface-shell='voice-overlay'][data-glass='voice'] {
+  background-color: color-mix(in oklch, var(--background) 85%, transparent);
+  /* 磨砂颗粒：一张 160×160 平铺的静态中性噪声（alpha≈8%），深色底上呈细微亮点、
+     浅色底上呈细微暗点，不带色相也没有动画。 */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 0 0.5 0.16 0 0 0 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  border-color: color-mix(in oklch, var(--border) 60%, transparent);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.1),
+    0 22px 60px rgb(0 0 0 / 0.45);
+}
+
+/* 顶栏跟着一起磨砂，否则卡片顶上会压一条实色断层。 */
+[data-window-surface-shell='voice-overlay'][data-glass='voice'] > header {
+  background: transparent;
+  border-bottom-color: color-mix(in oklch, var(--border) 55%, transparent);
+}
+
+/* 磨砂只铺在卡片这一层：卡片里面的气泡与卡片压回实色，否则背后的桌面/主窗口会透进
+   正文区，可读性跟着底图乱跳。这里只接管显式半透明的中性底（Tailwind 的 /xx 写法），
+   实色气泡（用户消息的 bg-primary / bg-secondary / 绿色气泡）本来就不受影响；
+   header 是卡片材质的一部分，排除在外。 */
+[data-window-surface-shell='voice-overlay'][data-glass='voice'] :is([class*='bg-muted/']):not(header) {
+  background-color: var(--muted);
+}
+
+[data-window-surface-shell='voice-overlay'][data-glass='voice'] :is([class*='bg-background/']):not(header) {
+  background-color: var(--background);
+}
+
+[data-window-surface-shell='voice-overlay'][data-glass='voice'] :is([class*='bg-card/']):not(header) {
+  background-color: var(--card);
+}
+
+[data-window-surface-shell='voice-overlay'][data-glass='voice'] :is([class*='bg-popover/']):not(header) {
+  background-color: var(--popover);
+}
+
+[data-window-surface-shell='voice-overlay'][data-glass='voice'] :is([class*='bg-secondary/']):not(header) {
+  background-color: var(--secondary);
+}
+
+[data-window-surface-shell='voice-overlay'][data-glass='voice'] :is([class*='bg-accent/']):not(header) {
+  background-color: var(--accent);
+}
+
+/* 助手回答也给他一层实色气泡：磨砂只做卡片背景，回答本身压在气泡上，
+   这样长文不会直接铺在磨砂底上、背后内容也透不进正文。用户消息本来
+   就有自己的实色气泡（右对齐），这里只挂助手那一侧。
+
+   作用域只锁浮窗窗面、不锁 data-glass：键盘态虽然是不透明底，但"回答有气泡"
+   是浮窗这一套交互的一部分，两种输入态保持一致，切模式时观感不跳。 */
+[data-window-surface-shell='voice-overlay'] [data-message-role='assistant'] {
+  background-color: var(--secondary);
+  border: 1px solid color-mix(in oklch, var(--border) 70%, transparent);
+  border-radius: 14px;
+  padding: 10px 12px;
+}
+
+.voice-ball-trigger:active .voice-ball-svg,
+.voice-ball-trigger:active .voice-ball-frame::before {
+  transform: scale(0.92);
+}
+
+.voice-ball-svg {
+  grid-area: 1 / 1;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+/* 描边默认隐藏，思考态显现。旋转由 JS 按 THINKING_STEP_MS 离散步进（见 VoiceBall.tsx），
+   这里不挂 CSS 动画：整屏透明 surface 上每出一帧约 16ms，infinite 就是常驻烧核。 */
+.voice-ball-ring {
+  opacity: 0;
+  transform-origin: 128px 128px;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.voice-ball-ring.is-thinking {
+  opacity: 1;
+}
+
+/* 点阵眼睛：默认完全静止。视线移动是 JS 每个节拍切一次 .is-look-* 触发的一过性过渡，
+   没有常驻动画——整屏透明 surface 上动画每出一帧约 16ms，常驻 60fps 等于烧掉半个核，
+   主窗口的流式正文就只能一格一格跳。 */
+.voice-ball-eyes {
+  transform-origin: 128px 128px;
+  transition: transform 0.45s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* 眨眼：0.24s 有限动画。要点阵层每次重新挂载才会重放（JS 用 key 触发），
+   绝不能写成 infinite。 */
+.voice-ball-tier-outer {
+  animation: voice-ball-blink-outer-manual 0.24s ease-in-out;
+}
+
+.voice-ball-tier-mid {
+  animation: voice-ball-blink-mid-manual 0.24s ease-in-out;
+}
+
+.voice-ball-tier-inner {
+  animation: voice-ball-blink-inner-manual 0.24s ease-in-out;
+}
+
+/* 手动视线定格类名（用于调试或固定方向） */
+.voice-ball-eyes.is-look-center {
+  transform: translate(0px, 0px) !important;
+}
+
+.voice-ball-eyes.is-look-top-left,
+.voice-ball-eyes.is-look-left {
+  transform: translate(-18px, -14px) !important;
+}
+
+.voice-ball-eyes.is-look-right {
+  transform: translate(18px, -14px) !important;
+}
+
+@keyframes voice-ball-blink-outer-manual {
+
+  0%,
+  10% {
+    opacity: 1;
+  }
+
+  16%,
+  84% {
+    opacity: 0;
+  }
+
+  90%,
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes voice-ball-blink-mid-manual {
+
+  0%,
+  26% {
+    opacity: 1;
+  }
+
+  32%,
+  68% {
+    opacity: 0;
+  }
+
+  74%,
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes voice-ball-blink-inner-manual {
+
+  0%,
+  42% {
+    opacity: 1;
+  }
+
+  48%,
+  52% {
+    opacity: 0;
+  }
+
+  58%,
+  100% {
+    opacity: 1;
+  }
+}
+
+/* ==========================================================================
+   语音输入录音态：点阵音波跳动（纯小点数量增减，无形变）
+   ========================================================================== */
+.voice-ball-eyes.is-hidden {
+  display: none !important;
+  opacity: 0 !important;
+  animation: none !important;
+}
+
+.voice-ball-waves {
+  display: none;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.voice-ball-waves.is-active {
+  display: block;
+  opacity: 1;
+}
+
+/* 音波层级由数据驱动，轻量线性过渡（~80ms 平滑升降） */
+.voice-ball-wave-tier {
+  transition: opacity 0.08s linear;
+}
+
+.voice-overlay-shell {
+  border-radius: 16px;
+}
+
+.voice-overlay-drag-region {
+  cursor: grab;
+}
+
+.voice-overlay-drag-region:active {
+  cursor: grabbing;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply text-foreground;
+  }
+
+  [data-streamdown="code-block-header"] {
+    padding: 6px 16px !important;
+  }
+}
+
+/* Window corner clipping and sidebar curvature alignment */
+[data-window-surface-shell] {
+  overflow: hidden;
+  isolation: isolate;
+}
+
+[data-window-surface-shell="main"]:not([data-maximized="true"]) [data-sidebar="sidebar"],
+[data-window-surface-shell="main"]:not([data-maximized="true"]) [data-side="left"]>div:nth-child(2) {
+  border-top-left-radius: 1rem;
+  border-bottom-left-radius: 1rem;
+}
+
+[data-window-surface-shell="main"][data-maximized="true"] [data-sidebar="sidebar"],
+[data-window-surface-shell="main"][data-maximized="true"] [data-side="left"]>div {
+  border-top-left-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+}

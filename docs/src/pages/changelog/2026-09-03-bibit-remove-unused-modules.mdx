@@ -1,0 +1,22 @@
+---
+title: "BiBit removes unused jan CLI, mobile SQLite, and macOS MLX modules"
+description: "BiBit drops the jan CLI binary/feature, the Android/iOS SQLite thread store, and the macOS-only MLX extension, server, and plugin to keep the riscv64 desktop build lean."
+date: 2026-09-03
+---
+
+import ChangelogHeader from "@/components/Changelog/ChangelogHeader"
+
+<ChangelogHeader
+  title="BiBit removes unused jan CLI, mobile SQLite, and macOS MLX modules"
+  date="2026-09-03"
+/>
+
+# Removed Modules
+
+This change removes three modules that are not used by the BiBit riscv64 desktop build:
+
+- **jan CLI**: the standalone `jan-cli` binary and its `cli` feature are gone. The desktop app no longer ships a terminal CLI.
+- **Mobile SQLite**: the Android/iOS thread database (`sqlx` + SQLite) is removed. Desktop threads keep using JSONL storage.
+- **macOS MLX**: the Apple-Silicon-only `mlx-server`, `mlx-extension`, and `tauri-plugin-mlx` are removed, along with the server proxy's MLX session path. Local inference on Linux uses the llama.cpp router.
+
+Related documentation pages for the CLI and MLX have been removed to avoid describing features that are no longer present.

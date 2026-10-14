@@ -1,0 +1,30 @@
+{
+  "name": "reject-unpaired-display-description",
+  "expect": "reject",
+  "note": "descriptionKey requires fallbackDescription.",
+  "manifest": {
+    "manifestSchemaVersion": 1,
+    "sdkApiVersion": 1,
+    "id": "conformance",
+    "version": "0.1.0",
+    "owner": "platform-team",
+    "display": {
+      "titleKey": "conformance:title",
+      "fallbackTitle": "Conformance",
+      "iconKey": "feature",
+      "descriptionKey": "conformance:description"
+    },
+    "targets": [
+      "desktop"
+    ],
+    "requiredHostCapabilities": [],
+    "contributions": {
+      "pages": [],
+      "settings": [],
+      "conversation": [],
+      "locales": [
+        "en"
+      ]
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "name": "@bibit/feature-security",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "bibitFeature": "./bibit.feature.json",
+  "exports": {
+    "./bibit-feature": "./src/bibit-feature.tsx"
+  },
+  "dependencies": {
+    "@bibit/feature-sdk": "workspace:*",
+    "@bibit/feature-ui": "workspace:*"
+  },
+  "peerDependencies": {
+    "react": "19.0.0"
+  }
+}

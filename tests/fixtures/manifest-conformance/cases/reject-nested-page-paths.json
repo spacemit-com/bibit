@@ -1,0 +1,44 @@
+{
+  "name": "reject-nested-page-paths",
+  "expect": "reject",
+  "note": "An empty page path owns the whole namespace.",
+  "manifest": {
+    "manifestSchemaVersion": 1,
+    "sdkApiVersion": 1,
+    "id": "conformance",
+    "version": "0.1.0",
+    "owner": "platform-team",
+    "display": {
+      "titleKey": "conformance:title",
+      "fallbackTitle": "Conformance",
+      "iconKey": "feature"
+    },
+    "targets": [
+      "desktop"
+    ],
+    "requiredHostCapabilities": [],
+    "contributions": {
+      "pages": [
+        {
+          "id": "catalog",
+          "path": "",
+          "surfaces": [
+            "main"
+          ]
+        },
+        {
+          "id": "detail",
+          "path": "detail",
+          "surfaces": [
+            "main"
+          ]
+        }
+      ],
+      "settings": [],
+      "conversation": [],
+      "locales": [
+        "en"
+      ]
+    }
+  }
+}

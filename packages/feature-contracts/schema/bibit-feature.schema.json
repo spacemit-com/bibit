@@ -1,0 +1,213 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://janhq.dev/schemas/bibit-feature-v1.json",
+  "title": "Bibit Feature Manifest v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "manifestSchemaVersion",
+    "sdkApiVersion",
+    "id",
+    "version",
+    "owner",
+    "display",
+    "targets",
+    "requiredHostCapabilities",
+    "contributions"
+  ],
+  "properties": {
+    "manifestSchemaVersion": { "const": 1 },
+    "sdkApiVersion": { "const": 1 },
+    "id": { "$ref": "#/$defs/id" },
+    "version": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(?:-[0-9A-Za-z-]+(?:\\.[0-9A-Za-z-]+)*)?(?:\\+[0-9A-Za-z-]+(?:\\.[0-9A-Za-z-]+)*)?$"
+    },
+    "owner": { "type": "string", "minLength": 2, "maxLength": 128 },
+    "display": { "$ref": "#/$defs/display" },
+    "targets": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/target" }
+    },
+    "requiredHostCapabilities": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/hostCapability" }
+    },
+    "contributions": { "$ref": "#/$defs/contributions" }
+  },
+  "$defs": {
+    "id": {
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 64,
+      "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$"
+    },
+    "relativePath": {
+      "type": "string",
+      "pattern": "^(?:[a-z0-9]+(?:-[a-z0-9]+)*(?:/[a-z0-9]+(?:-[a-z0-9]+)*)*)?$"
+    },
+    "locale": {
+      "type": "string",
+      "pattern": "^[a-z]{2}(?:-[A-Z]{2})?$"
+    },
+    "target": { "type": "string", "enum": ["desktop"] },
+    "surface": { "type": "string", "enum": ["main"] },
+    "hostCapability": {
+      "type": "string",
+      "anyOf": [
+        {
+          "maxLength": 72,
+          "pattern": "^service:[a-z][a-z0-9]*(?:-[a-z0-9]+)*$"
+        },
+        {
+          "enum": [
+            "external-service:store",
+            "external-service:memory",
+            "external-service:security",
+            "runtime:permission",
+            "file:transfer",
+            "job:manage",
+            "host:actions"
+          ]
+        }
+      ]
+    },
+    "declaredToken": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 64,
+      "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$"
+    },
+    "iconKey": { "$ref": "#/$defs/declaredToken" },
+    "pageNavigationGroup": { "$ref": "#/$defs/declaredToken" },
+    "settingsNavigationGroup": { "$ref": "#/$defs/declaredToken" },
+    "display": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["titleKey", "fallbackTitle", "iconKey"],
+      "properties": {
+        "titleKey": { "type": "string", "minLength": 1 },
+        "fallbackTitle": { "type": "string", "minLength": 1 },
+        "descriptionKey": { "type": "string", "minLength": 1 },
+        "fallbackDescription": { "type": "string", "minLength": 1 },
+        "iconKey": { "$ref": "#/$defs/iconKey" }
+      },
+      "dependencies": {
+        "descriptionKey": ["fallbackDescription"],
+        "fallbackDescription": ["descriptionKey"]
+      }
+    },
+    "pageNavigation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["group"],
+      "properties": {
+        "group": { "$ref": "#/$defs/pageNavigationGroup" },
+        "order": { "type": "integer", "minimum": -10000, "maximum": 10000 }
+      }
+    },
+    "settingsNavigation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["group"],
+      "properties": {
+        "group": { "$ref": "#/$defs/settingsNavigationGroup" },
+        "order": { "type": "integer", "minimum": -10000, "maximum": 10000 },
+        "titleKey": { "type": "string", "minLength": 1 },
+        "fallbackTitle": { "type": "string", "minLength": 1 },
+        "iconKey": { "$ref": "#/$defs/iconKey" },
+        "section": { "$ref": "#/$defs/settingsNavigationSection" }
+      }
+    },
+    "settingsNavigationSection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "fallbackTitle"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "titleKey": { "type": "string", "minLength": 1 },
+        "fallbackTitle": { "type": "string", "minLength": 1 }
+      }
+    },
+    "pageContribution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "path", "surfaces"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "path": { "$ref": "#/$defs/relativePath" },
+        "surfaces": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/surface" }
+        },
+        "navigation": { "$ref": "#/$defs/pageNavigation" }
+      }
+    },
+    "settingsContribution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "path", "surfaces"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "path": { "$ref": "#/$defs/relativePath" },
+        "surfaces": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/surface" }
+        },
+        "navigation": { "$ref": "#/$defs/settingsNavigation" }
+      }
+    },
+    "conversationContribution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind", "surfaces"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "kind": {
+          "type": "string",
+          "enum": ["permission-presenter"]
+        },
+        "surfaces": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/surface" }
+        },
+        "order": { "type": "integer", "minimum": -10000, "maximum": 10000 }
+      }
+    },
+    "contributions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["pages", "settings", "conversation", "locales"],
+      "properties": {
+        "pages": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/pageContribution" }
+        },
+        "settings": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/settingsContribution" }
+        },
+        "conversation": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/conversationContribution" }
+        },
+        "locales": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "contains": { "const": "en" },
+          "items": { "$ref": "#/$defs/locale" }
+        }
+      }
+    }
+  }
+}

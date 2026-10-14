@@ -1,0 +1,75 @@
+:root {
+  color: #182230;
+  background: #eef2f5;
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; }
+button, input, textarea { font: inherit; }
+
+.bibit-dev-host {
+  --ink: #182230;
+  --muted: #667383;
+  --line: #cbd5df;
+  --signal: #176b87;
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: minmax(250px, 310px) 1fr;
+  background: #eef2f5;
+  color: var(--ink);
+}
+
+.bibit-dev-host__rail {
+  padding: 34px 26px;
+  background: #f8fafb;
+  border-right: 1px solid var(--line);
+  box-shadow: inset 5px 0 0 var(--signal);
+}
+
+.bibit-dev-host__eyebrow {
+  margin: 0 0 28px;
+  color: var(--signal);
+  font: 700 11px/1.2 ui-monospace, SFMono-Regular, monospace;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.bibit-dev-host h1 { margin: 0; font-size: clamp(28px, 3vw, 42px); line-height: .98; }
+.bibit-dev-host__contract { margin: 28px 0; border-block: 1px solid var(--line); }
+.bibit-dev-host__contract div { display: flex; justify-content: space-between; gap: 16px; padding: 10px 0; border-bottom: 1px solid #e4e9ee; }
+.bibit-dev-host__contract div:last-child { border-bottom: 0; }
+.bibit-dev-host__contract dt { color: var(--muted); }
+.bibit-dev-host__contract dd { margin: 0; font-family: ui-monospace, SFMono-Regular, monospace; }
+.bibit-dev-host nav { display: grid; gap: 8px; }
+.bibit-dev-host nav button { padding: 10px 12px; text-align: left; color: var(--ink); background: transparent; border: 1px solid transparent; border-radius: 6px; cursor: pointer; }
+.bibit-dev-host nav button:hover { background: #edf3f6; }
+.bibit-dev-host nav button.is-active { background: #e0eef3; border-color: #b4ced8; color: #0f5a73; }
+.bibit-dev-host nav button:focus-visible { outline: 3px solid #7fc1d8; outline-offset: 2px; }
+
+.bibit-dev-host__stage { min-width: 0; padding: 24px; }
+.bibit-dev-host__stage > header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; color: var(--muted); font-size: 13px; }
+.bibit-dev-host__stage code { padding: 5px 8px; background: #dfe6eb; border-radius: 4px; color: #41505f; }
+.bibit-dev-host__status-dot { display: inline-block; width: 8px; height: 8px; margin-right: 7px; background: #2d8d70; border-radius: 50%; box-shadow: 0 0 0 4px #d8ebe5; }
+.bibit-dev-host__preview { min-height: calc(100vh - 88px); overflow: hidden; background: white; border: 1px solid var(--line); border-radius: 10px; box-shadow: 0 18px 50px rgb(44 62 80 / 10%); }
+.bibit-dev-host__viewport-label { padding: 8px 14px; color: #6d7885; background: #f4f6f8; border-bottom: 1px solid #dce3e9; font: 11px/1.2 ui-monospace, SFMono-Regular, monospace; text-transform: uppercase; letter-spacing: .08em; }
+.bibit-dev-host__canvas { min-height: 560px; padding: clamp(18px, 4vw, 48px); }
+.bibit-dev-host__settings-shell { min-height: 560px; }
+.bibit-dev-host__settings-shell > header { height: 58px; display: flex; align-items: center; padding: 0 22px; border-bottom: 1px solid #dce3e9; }
+.bibit-dev-host__settings-shell > header h2 { margin: 0; font-size: 18px; }
+.bibit-dev-host__settings-body { display: grid; grid-template-columns: 232px minmax(0, 1fr); min-height: 502px; }
+.bibit-dev-host__settings-body > aside { display: flex; flex-direction: column; gap: 8px; padding: 20px 14px; color: var(--muted); background: #f8fafb; border-right: 1px solid #dce3e9; }
+.bibit-dev-host__settings-body > aside strong { padding: 9px 10px; color: #0f5a73; background: #e0eef3; border-radius: 6px; }
+.bibit-dev-host__settings-content { min-width: 0; max-width: 100%; overflow: auto; padding: clamp(18px, 3vw, 36px); }
+.bibit-dev-host__contract-error { margin: 0; padding: 10px 16px; color: #8a2c20; background: #fff0ed; border-top: 1px solid #e7aaa1; }
+
+@media (max-width: 760px) {
+  .bibit-dev-host { grid-template-columns: 1fr; }
+  .bibit-dev-host__rail { border-right: 0; border-bottom: 1px solid var(--line); }
+  .bibit-dev-host__stage { padding: 14px; }
+  .bibit-dev-host__preview { min-height: auto; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { scroll-behavior: auto !important; }
+}

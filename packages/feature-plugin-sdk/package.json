@@ -1,0 +1,41 @@
+{
+  "name": "@bibit/feature-plugin-sdk",
+  "version": "0.4.0",
+  "type": "module",
+  "files": [
+    "src",
+    "bin"
+  ],
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "bin": {
+    "bibit-plugin": "./bin/bibit-plugin.mjs"
+  },
+  "scripts": {
+    "test": "tsc --noEmit && vitest run"
+  },
+  "dependencies": {
+    "@bibit/feature-contracts": "0.4.0",
+    "@bibit/feature-sdk": "0.4.0",
+    "ajv": "8.17.1",
+    "postcss": "8.5.26",
+    "postcss-selector-parser": "6.1.2",
+    "tar": "6.2.1",
+    "vite": "6.1.0"
+  },
+  "peerDependencies": {
+    "react": "19.0.0",
+    "react-dom": "19.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "22.14.1",
+    "@types/react": "19.1.2",
+    "@types/react-dom": "19.1.2",
+    "jsdom": "26.1.0",
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
+    "typescript": "5.9.2",
+    "vitest": "3.2.4"
+  }
+}

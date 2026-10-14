@@ -1,0 +1,56 @@
+{
+  "dataFolder": {
+    "appLogs": "Nhật ký ứng dụng",
+    "appLogsDesc": "Xem nhật ký chi tiết của Ứng dụng."
+  },
+  "shortcuts": {
+    "application": "Ứng dụng",
+    "newChat": "Trò chuyện mới",
+    "newChatDesc": "Tạo một cuộc trò chuyện mới.",
+    "toggleSidebar": "Bật/tắt thanh bên",
+    "toggleSidebarDesc": "Hiển thị hoặc ẩn thanh bên.",
+    "zoomIn": "Phóng to",
+    "zoomInDesc": "Tăng mức thu phóng.",
+    "zoomOut": "Thu nhỏ",
+    "zoomOutDesc": "Giảm mức thu phóng.",
+    "chat": "Trò chuyện",
+    "sendMessage": "Gửi tin nhắn",
+    "sendMessageDesc": "Gửi tin nhắn hiện tại.",
+    "newLine": "Dòng mới",
+    "newLineDesc": "Chèn một dòng mới.",
+    "navigation": "Điều hướng",
+    "goToSettings": "Đi tới Cài đặt",
+    "goToSettingsDesc": "Mở cài đặt."
+  },
+  "interface": {
+    "title": "Giao diện",
+    "theme": "Chủ đề",
+    "themeDesc": "Khớp với chủ đề hệ điều hành.",
+    "fontSize": "Kích thước phông chữ",
+    "fontSizeDesc": "Điều chỉnh kích thước phông chữ của ứng dụng."
+  },
+  "hardware": {},
+  "httpsProxy": {
+    "authentication": "Xác thực"
+  },
+  "localApiServer": {},
+  "privacy": {},
+  "general": {
+    "openContainingFolder": "Mở Thư mục Chứa",
+    "appVersion": "Phiên bản Ứng dụng",
+    "openLogs": "Mở Nhật ký",
+    "revealLogs": "Hiển thị Nhật ký"
+  },
+  "dialogs": {
+    "changeDataFolder": {}
+  },
+  "backendUpdater": {
+    "newBackendVersion": "Phiên bản Llamacpp mới {{version}}",
+    "backendUpdateAvailable": "Có cập nhật Llamacpp",
+    "remindMeLater": "Nhắc tôi sau",
+    "updating": "Đang cập nhật...",
+    "updateNow": "Cập nhật ngay",
+    "updateSuccess": "Cập nhật Llamacpp thành công",
+    "updateError": "Không thể cập nhật Llamacpp"
+  }
+}

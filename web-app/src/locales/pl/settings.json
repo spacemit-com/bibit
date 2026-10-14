@@ -1,0 +1,56 @@
+{
+  "dataFolder": {
+    "appLogs": "Dzienniki Aplikacji",
+    "appLogsDesc": "Zobacz szczegółowe dzienniki aplikacji."
+  },
+  "shortcuts": {
+    "application": "Aplikacja",
+    "newChat": "Nowy Czat",
+    "newChatDesc": "Rozpocznij nowy czat.",
+    "toggleSidebar": "Przełącz Pasek Boczny",
+    "toggleSidebarDesc": "Pokaż lub ukryj pasek boczny.",
+    "zoomIn": "Przybliż",
+    "zoomInDesc": "Zwiększ poziom przybliżenia.",
+    "zoomOut": "Oddal",
+    "zoomOutDesc": "Zmniejsz poziom przybliżenia.",
+    "chat": "Czat",
+    "sendMessage": "Wyślij Wiadomość",
+    "sendMessageDesc": "Wyślij bieżącą wiadomość.",
+    "newLine": "Nowa Linia",
+    "newLineDesc": "Wprowadź nową linię.",
+    "navigation": "Nawigacja",
+    "goToSettings": "Przejdź do Ustawień",
+    "goToSettingsDesc": "Otwórz ustawienia."
+  },
+  "interface": {
+    "title": "Wygląd",
+    "theme": "Schemat Kolorystyczny",
+    "themeDesc": "Dopasuj do schematu systemowego.",
+    "fontSize": "Rozmiar Fontu",
+    "fontSizeDesc": "Dostosuj rozmiar fontu w aplikacji."
+  },
+  "hardware": {},
+  "httpsProxy": {
+    "authentication": "Uwierzytelnianie"
+  },
+  "localApiServer": {},
+  "privacy": {},
+  "general": {
+    "openContainingFolder": "Otwórz Katalog Nadrzędny",
+    "appVersion": "Wersja Aplikacji",
+    "openLogs": "Otwórz Dzienniki",
+    "revealLogs": "Wyświetl Dzienniki"
+  },
+  "dialogs": {
+    "changeDataFolder": {}
+  },
+  "backendUpdater": {
+    "newBackendVersion": "Nowa wersja Llamacpp {{version}}",
+    "backendUpdateAvailable": "Dostępna aktualizacja Llamacpp",
+    "remindMeLater": "Przypomnij mi później",
+    "updating": "Aktualizowanie...",
+    "updateNow": "Aktualizuj teraz",
+    "updateSuccess": "Llamacpp został pomyślnie zaktualizowany",
+    "updateError": "Nie udało się zaktualizować Llamacpp"
+  }
+}

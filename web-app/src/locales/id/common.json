@@ -1,0 +1,315 @@
+{
+  "assistants": "Asisten",
+  "hardware": "Perangkat Keras",
+  "mcp-servers": "Server MCP",
+  "local_api_server": "Server API Lokal",
+  "https_proxy": "Proksi HTTPS",
+  "extensions": "Ekstensi",
+  "attachments": "Lampiran",
+  "experimental": "Eksperimental",
+  "general": "Umum",
+  "settings": "Pengaturan",
+  "modelProviders": "Penyedia Model",
+  "localProviders": "Lokal",
+  "remoteProviders": "Jarak Jauh",
+  "manageProviders": "Manage providers",
+  "hiddenProviders": "{{count}} disabled",
+  "interface": "Tampilan",
+  "appearance": "Tampilan",
+  "privacy": "Privasi",
+  "keyboardShortcuts": "Pintasan",
+  "newChat": "Obrolan Baru",
+  "newAgentChat": "Obrolan Agent Baru",
+  "chats": "Obrolan",
+  "favorites": "Favorit",
+  "recents": "Terbaru",
+  "helpSupport": "Bantuan & Dukungan",
+  "unstarAll": "Batal Bintangi Semua",
+  "unstar": "Batal Bintangi",
+  "deleteAll": "Hapus Semua",
+  "star": "Bintangi",
+  "rename": "Ubah Nama",
+  "delete": "Hapus",
+  "copied": "Tersalin!",
+  "dataFolder": "Folder Data",
+  "others": "Lainnya",
+  "language": "Bahasa",
+  "login": "Masuk",
+  "loginWith": "Masuk Dengan {{provider}}",
+  "loginFailed": "Gagal Masuk",
+  "logout": "Keluar",
+  "loggingOut": "Sedang Keluar...",
+  "loggedOut": "Berhasil Keluar",
+  "logoutFailed": "Gagal Keluar",
+  "profile": "Profil",
+  "reset": "Setel Ulang",
+  "search": "Cari",
+  "name": "Nama",
+  "cancel": "Batal",
+  "create": "Buat",
+  "save": "Simpan",
+  "edit": "Edit",
+  "copy": "Salin",
+  "back": "Kembali",
+  "close": "Tutup",
+  "done": "Selesai",
+  "next": "Berikutnya",
+  "finish": "Selesai",
+  "skip": "Lewati",
+  "allow": "Izinkan",
+  "deny": "Tolak",
+  "start": "Mulai",
+  "stop": "Hentikan",
+  "preview": "Pratinjau",
+  "compactWidth": "Lebar Ringkas",
+  "fullWidth": "Lebar Penuh",
+  "dark": "Gelap",
+  "light": "Terang",
+  "system": "Sistem",
+  "auto": "Otomatis",
+  "english": "Inggris",
+  "medium": "Sedang",
+  "newThread": "Utas Baru",
+  "noResultsFound": "Tidak ada hasil yang ditemukan",
+  "noThreadsYet": "Belum ada utas",
+  "noThreadsYetDesc": "Mulai percakapan baru untuk melihat riwayat utas Anda di sini.",
+  "downloads": "Unduhan",
+  "downloading": "Mengunduh",
+  "uploadingAttachments": "Mengunggah lampiran…",
+  "cancelDownload": "Batalkan unduhan",
+  "downloadCancelled": "Unduhan Dibatalkan",
+  "downloadComplete": "Unduhan Selesai",
+  "thinking": "Berpikir...",
+  "thought": "Pikiran",
+  "callingTool": "Memanggil alat",
+  "completed": "Selesai",
+  "image": "Gambar",
+  "vision": "Visi",
+  "embeddings": "Embedding",
+  "tools": "Alat",
+  "webSearch": "Pencarian Web",
+  "reasoning": "Penalaran",
+  "proactive": "Proaktif",
+  "selectAModel": "Pilih model",
+  "noToolsAvailable": "Tidak ada alat yang tersedia",
+  "noModelsFoundFor": "Tidak ada model yang ditemukan untuk \"{{searchValue}}\"",
+  "failedToLoadModels": "Gagal memuat model",
+  "noModels": "Tidak ada model yang ditemukan",
+  "customAvatar": "Avatar kustom",
+  "editAssistant": "Edit Asisten",
+  "jan": "Jan",
+  "metadata": "Metadata",
+  "regenerate": "Hasilkan Ulang",
+  "threadImage": "Gambar utas",
+  "editMessage": "Edit Pesan",
+  "deleteMessage": "Hapus Pesan",
+  "deleteThread": "Hapus Utas",
+  "renameThread": "Ubah Nama Utas",
+  "threadTitle": "Judul Utas",
+  "deleteAllThreads": "Hapus Semua Utas",
+  "allThreadsUnfavorited": "Semua Utas Batal Difavoritkan",
+  "deleteAllThreadsConfirm": "Apakah Anda yakin ingin menghapus semua utas? Tindakan ini tidak dapat dibatalkan.",
+  "addProvider": "Tambah Penyedia",
+  "addOpenAIProvider": "Tambah Penyedia OpenAI",
+  "enterNameForProvider": "Masukkan nama untuk penyedia Anda",
+  "providerAlreadyExists": "Penyedia dengan nama \"{{name}}\" sudah ada. Silakan pilih nama yang berbeda.",
+  "adjustFontSize": "Sesuaikan Ukuran Font",
+  "changeLanguage": "Ubah Bahasa",
+  "editTheme": "Edit Tema",
+  "editCodeBlockStyle": "Edit Gaya Blok Kode",
+  "editServerHost": "Edit Host Server",
+  "pickColorWindowBackground": "Pilih Warna Latar Belakang Jendela",
+  "pickColorAppMainView": "Pilih Warna Tampilan Utama Aplikasi",
+  "pickColorAppPrimary": "Pilih Warna Utama Aplikasi",
+  "pickColorAppAccent": "Pilih Warna Aksen Aplikasi",
+  "pickColorAppDestructive": "Pilih Warna Merusak Aplikasi",
+  "apiKeyRequired": "Kunci API diperlukan",
+  "enterTrustedHosts": "Masukkan host tepercaya",
+  "placeholder": {
+    "chatInput": "Tanyakan apa saja padaku..."
+  },
+  "confirm": "Konfirmasi",
+  "continue": "Lanjutkan",
+  "loading": "Memuat...",
+  "error": "Kesalahan",
+  "success": "Sukses",
+  "warning": "Peringatan",
+  "conversationNotAvailable": "Percakapan tidak tersedia",
+  "conversationNotAvailableDescription": "Percakapan yang Anda coba akses tidak tersedia atau telah dihapus.",
+  "temporaryChat": "Obrolan Sementara",
+  "temporaryChatTooltip": "Obrolan sementara tidak akan muncul di riwayat Anda",
+  "noResultsFoundDesc": "Kami tidak dapat menemukan obrolan yang cocok dengan pencarian Anda. Coba kata kunci yang berbeda.",
+  "searchModels": "Cari model...",
+  "searchStyles": "Cari gaya...",
+  "createAssistant": "Buat Asisten",
+  "enterApiKey": "Masukkan Kunci API",
+  "scrollToBottom": "Gulir ke bawah",
+  "generateAiResponse": "Hasilkan Respons AI",
+  "addModel": {
+    "title": "Tambah Model",
+    "modelId": "ID Model",
+    "enterModelId": "Masukkan ID Model",
+    "addModel": "Tambah Model",
+    "description": "Tambahkan model baru ke penyedia",
+    "exploreModels": "Lihat daftar model dari penyedia"
+  },
+  "mcpServers": {
+    "editServer": "Edit Server",
+    "addServer": "Tambah Server",
+    "serverName": "Nama Server",
+    "enterServerName": "Masukkan nama server",
+    "command": "Perintah",
+    "enterCommand": "Masukkan perintah",
+    "arguments": "Argumen",
+    "argument": "Argumen {{index}}",
+    "envVars": "Variabel Lingkungan",
+    "key": "Kunci",
+    "value": "Nilai",
+    "save": "Simpan"
+  },
+  "deleteServer": {
+    "title": "Hapus Server",
+    "delete": "Hapus"
+  },
+  "editJson": {
+    "errorParse": "Gagal mengurai JSON",
+    "errorPaste": "Gagal menempelkan JSON",
+    "errorFormat": "Format JSON tidak valid",
+    "titleAll": "Edit Semua Konfigurasi Server",
+    "placeholder": "Masukkan konfigurasi JSON...",
+    "save": "Simpan"
+  },
+  "editModel": {
+    "title": "Edit Model: {{modelId}}",
+    "description": "Konfigurasikan kemampuan model dengan mengalihkan opsi di bawah ini.",
+    "capabilities": "Kemampuan",
+    "tools": "Alat",
+    "vision": "Visi",
+    "embeddings": "Embedding",
+    "notAvailable": "Belum tersedia"
+  },
+  "outOfContextError": {
+    "truncateInput": "Potong Input",
+    "title": "Kesalahan konteks habis",
+    "description": "Obrolan ini mencapai batas memori AI, seperti papan tulis yang penuh. Kami dapat memperluas jendela memori (disebut ukuran konteks) agar lebih mengingat, tetapi mungkin akan menggunakan lebih banyak memori komputer Anda. Kami juga dapat memotong input, yang berarti akan melupakan sebagian riwayat obrolan untuk memberi ruang bagi pesan baru.",
+    "increaseContextSizeDescription": "Apakah Anda ingin meningkatkan ukuran konteks?",
+    "increaseContextSize": "Tingkatkan Ukuran Konteks"
+  },
+  "toolApproval": {
+    "title": "Permintaan Izin Alat",
+    "description": "Asisten ingin menggunakan <strong>{{toolName}}</strong>",
+    "securityNotice": "Hanya izinkan alat yang Anda percayai. Alat dapat mengakses sistem dan data Anda.",
+    "deny": "Tolak",
+    "allowOnce": "Izinkan Sekali",
+    "alwaysAllow": "Selalu Izinkan"
+  },
+  "deleteModel": {
+    "title": "Hapus Model: {{modelId}}",
+    "description": "Apakah Anda yakin ingin menghapus model ini? Tindakan ini tidak dapat dibatalkan.",
+    "success": "Model {{modelId}} telah dihapus secara permanen.",
+    "cancel": "Batal",
+    "delete": "Hapus"
+  },
+  "deleteProvider": {
+    "title": "Hapus Penyedia",
+    "description": "Hapus penyedia ini dan semua modelnya. Tindakan ini tidak dapat dibatalkan.",
+    "success": "Penyedia {{provider}} telah dihapus secara permanen.",
+    "confirmTitle": "Hapus Penyedia: {{provider}}",
+    "confirmDescription": "Apakah Anda yakin ingin menghapus penyedia ini? Tindakan ini tidak dapat dibatalkan.",
+    "cancel": "Batal",
+    "delete": "Hapus"
+  },
+  "modelSettings": {
+    "nglDisabledByFit": "Auto-fit is choosing GPU layers. Turn off Auto-fit to set this manually.",
+    "title": "Pengaturan Model - {{modelId}}",
+    "description": "Konfigurasikan pengaturan model untuk mengoptimalkan kinerja dan perilaku."
+  },
+  "dialogs": {
+    "changeDataFolder": {
+      "title": "Ubah Lokasi Folder Data",
+      "description": "Apakah Anda yakin ingin mengubah lokasi folder data? Ini akan memindahkan semua data Anda ke lokasi baru dan memulai ulang aplikasi.",
+      "currentLocation": "Lokasi Saat Ini:",
+      "newLocation": "Lokasi Baru:",
+      "cancel": "Batal",
+      "changeLocation": "Ubah Lokasi"
+    },
+    "deleteAllThreads": {
+      "title": "Hapus Semua Utas",
+      "description": "Semua utas akan dihapus. Tindakan ini tidak dapat dibatalkan."
+    },
+    "deleteThread": {
+      "description": "Apakah Anda yakin ingin menghapus thread ini? Tindakan ini tidak dapat dibatalkan."
+    },
+    "editMessage": {
+      "title": "Edit Pesan"
+    },
+    "messageMetadata": {
+      "title": "Metadata Pesan"
+    }
+  },
+  "errorDialog": {
+    "titleFallback": "Terjadi kesalahan",
+    "details": "Detail"
+  },
+  "toast": {
+    "allThreadsUnfavorited": {
+      "title": "Semua Utas Batal Difavoritkan",
+      "description": "Semua utas telah dihapus dari favorit Anda."
+    },
+    "deleteAllThreads": {
+      "title": "Hapus Semua Utas",
+      "description": "Semua utas telah dihapus secara permanen."
+    },
+    "renameThread": {
+      "title": "Ubah Nama Utas",
+      "description": "Judul utas telah diubah menjadi '{{title}}'"
+    },
+    "deleteThread": {
+      "title": "Hapus Utas",
+      "description": "Utas ini telah dihapus secara permanen."
+    },
+    "errorCopied": {
+      "title": "Berhasil disalin",
+      "description": "Informasi kesalahan disalin ke papan klip"
+    },
+    "errorCopyFailed": {
+      "title": "Gagal menyalin",
+      "description": "Gagal menyalin informasi kesalahan ke papan klip"
+    },
+    "editMessage": {
+      "title": "Edit Pesan",
+      "description": "Pesan berhasil diedit. Silakan tunggu model merespons."
+    },
+    "downloadComplete": {
+      "title": "Unduhan Selesai",
+      "description": "{{item}} telah diunduh"
+    },
+    "downloadCancelled": {
+      "title": "Unduhan Dibatalkan",
+      "description": "Proses unduhan telah dibatalkan"
+    },
+    "downloadFailed": {
+      "title": "Unduhan Gagal",
+      "description": "Unduhan {{item}} gagal"
+    },
+    "modelValidationStarted": {
+      "title": "Memvalidasi Model",
+      "description": "Model \"{{modelId}}\" berhasil diunduh. Memverifikasi integritas..."
+    },
+    "modelValidationFailed": {
+      "title": "Validasi Model Gagal",
+      "description": "Model yang diunduh \"{{modelId}}\" gagal verifikasi integritas dan telah dihapus. File mungkin rusak atau telah dimanipulasi."
+    },
+    "downloadAndVerificationComplete": {
+      "title": "Unduhan Selesai",
+      "description": "Model \"{{item}}\" berhasil diunduh dan diverifikasi"
+    }
+  },
+  "llamacppBusyOnExit": {
+    "title": "llama.cpp is still busy",
+    "description": "One or more models did not unload in time. Force-quitting will terminate llama.cpp and may interrupt active responses.",
+    "forceQuit": "Force quit",
+    "forcing": "Force quitting…",
+    "shuttingDown": "Shutting down…"
+  }
+}

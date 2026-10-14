@@ -1,0 +1,222 @@
+[
+  {
+    "schemaVersion": "1.0",
+    "eventId": "event-runtime-0",
+    "runtimeId": "hermes",
+    "runtimeEpoch": "epoch-1",
+    "sessionId": "__runtime__",
+    "sequence": 0,
+    "timestamp": "2026-08-04T08:00:00Z",
+    "event": {
+      "type": "runtime_status_changed",
+      "status": "ready",
+      "message": "Hermes ready"
+    }
+  },
+  {
+    "schemaVersion": "1.0",
+    "eventId": "event-run1-0",
+    "runtimeId": "hermes",
+    "runtimeEpoch": "epoch-1",
+    "sessionId": "thread-1",
+    "runId": "run-1",
+    "sequence": 0,
+    "timestamp": "2026-08-04T08:00:01Z",
+    "event": {
+      "type": "run_started",
+      "userMessageId": "user-1"
+    }
+  },
+  {
+    "schemaVersion": "1.0",
+    "eventId": "event-run1-1",
+    "runtimeId": "hermes",
+    "runtimeEpoch": "epoch-1",
+    "sessionId": "thread-1",
+    "runId": "run-1",
+    "sequence": 1,
+    "timestamp": "2026-08-04T08:00:02Z",
+    "event": {
+      "type": "text_delta",
+      "messageId": "assistant-1",
+      "delta": "你好"
+    }
+  },
+  {
+    "schemaVersion": "1.0",
+    "eventId": "event-run1-2",
+    "runtimeId": "hermes",
+    "runtimeEpoch": "epoch-1",
+    "sessionId": "thread-1",
+    "runId": "run-1",
+    "sequence": 2,
+    "timestamp": "2026-08-04T08:00:03Z",
+    "event": {
+      "type": "reasoning_delta",
+      "messageId": "thought-1",
+      "delta": "分析"
+    }
+  },
+  {
+    "schemaVersion": "1.0",
+    "eventId": "event-run1-3",
+    "runtimeId": "hermes",
+    "runtimeEpoch": "epoch-1",
+    "sessionId": "thread-1",
+    "runId": "run-1",
+    "sequence": 3,
+    "timestamp": "2026-08-04T08:00:04Z",
+    "event": {
+      "type": "tool_started",
+      "toolCallId": "tool-1",
+      "name": "web_search",
+      "input": {
+        "query": "AI"
+      }
+    }
+  },
+  {
+    "schemaVersion": "1.0",
+    "eventId": "event-run1-4",
+    "runtimeId": "hermes",
+    "runtimeEpoch": "epoch-1",
+    "sessionId": "thread-1",
+    "runId": "run-1",
+    "sequence": 4,
+    "timestamp": "2026-08-04T08:00:05Z",
+    "event": {
+      "type": "tool_updated",
+      "toolCallId": "tool-1",
+      "update": {
+        "status": "in_progress"
+      }
+    }
+  },
+  {
+    "schemaVersion": "1.0",
+    "eventId": "event-run1-5",
+    "runtimeId": "hermes",
+    "runtimeEpoch": "epoch-1",
+    "sessionId": "thread-1",
+    "runId": "run-1",
+    "sequence": 5,
+    "timestamp": "2026-08-04T08:00:06Z",
+    "event": {
+      "type": "tool_completed",
+      "toolCallId": "tool-1",
+      "result": {
+        "count": 3
+      }
+    }
+  },
+  {
+    "schemaVersion": "1.0",
+    "eventId": "event-run1-6",
+    "runtimeId": "hermes",
+    "runtimeEpoch": "epoch-1",
+    "sessionId": "thread-1",
+    "runId": "run-1",
+    "sequence": 6,
+    "timestamp": "2026-08-04T08:00:07Z",
+    "event": {
+      "type": "permission_requested",
+      "request": {
+        "requestId": "permission-1",
+        "toolCallId": "tool-2",
+        "title": "运行命令",
+        "description": "Hermes 请求执行工具",
+        "toolName": "terminal",
+        "inputSummary": {
+          "command": "pwd"
+        },
+        "canAllowOnce": true,
+        "canDeny": true,
+        "actions": [
+          {
+            "kind": "tool",
+            "name": "terminal",
+            "summary": "Hermes 请求执行工具"
+          }
+        ],
+        "actionSetDigest": "91c60140ed112b3e39e45b19714e30a0d00ab7af834c4095d024d940da1fd6a0",
+        "expiresAt": "2026-08-04T08:01:07Z"
+      }
+    }
+  },
+  {
+    "schemaVersion": "1.0",
+    "eventId": "event-run1-7",
+    "runtimeId": "hermes",
+    "runtimeEpoch": "epoch-1",
+    "sessionId": "thread-1",
+    "runId": "run-1",
+    "sequence": 7,
+    "timestamp": "2026-08-04T08:00:08Z",
+    "event": {
+      "type": "permission_resolved",
+      "requestId": "permission-1",
+      "decision": "allow_once"
+    }
+  },
+  {
+    "schemaVersion": "1.0",
+    "eventId": "event-run1-8",
+    "runtimeId": "hermes",
+    "runtimeEpoch": "epoch-1",
+    "sessionId": "thread-1",
+    "runId": "run-1",
+    "sequence": 8,
+    "timestamp": "2026-08-04T08:00:09Z",
+    "event": {
+      "type": "diagnostic_notice",
+      "level": "warning",
+      "message": "简化展示"
+    }
+  },
+  {
+    "schemaVersion": "1.0",
+    "eventId": "event-run1-9",
+    "runtimeId": "hermes",
+    "runtimeEpoch": "epoch-1",
+    "sessionId": "thread-1",
+    "runId": "run-1",
+    "sequence": 9,
+    "timestamp": "2026-08-04T08:00:10Z",
+    "event": {
+      "type": "run_completed",
+      "stopReason": "end_turn"
+    }
+  },
+  {
+    "schemaVersion": "1.0",
+    "eventId": "event-run2-0",
+    "runtimeId": "hermes",
+    "runtimeEpoch": "epoch-1",
+    "sessionId": "thread-1",
+    "runId": "run-2",
+    "sequence": 0,
+    "timestamp": "2026-08-04T08:00:11Z",
+    "event": {
+      "type": "run_cancelled",
+      "reason": "user"
+    }
+  },
+  {
+    "schemaVersion": "1.0",
+    "eventId": "event-run3-0",
+    "runtimeId": "hermes",
+    "runtimeEpoch": "epoch-1",
+    "sessionId": "thread-1",
+    "runId": "run-3",
+    "sequence": 0,
+    "timestamp": "2026-08-04T08:00:12Z",
+    "event": {
+      "type": "run_failed",
+      "error": {
+        "code": "run_failed",
+        "message": "failed",
+        "recoverable": true
+      }
+    }
+  }
+]

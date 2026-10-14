@@ -1,0 +1,109 @@
+/**
+ * The controller props for settings
+ */
+type ControllerProps = {
+  value?: string | boolean | number
+  placeholder?: string
+  type?: string
+  options?: Array<{ value: number | string; name: string; nameKey?: string }>
+  input_actions?: string[]
+  recommended?: string
+  min?: number
+  max?: number
+  step?: number
+}
+
+/**
+ * The setting item for a provider
+ */
+type ProviderSetting = {
+  key: string
+  title: string
+  /** Locale key for `title`; falls back to `title` when absent. */
+  titleKey?: string
+  description: string
+  /** Locale key for `description`; falls back to `description` when absent. */
+  descriptionKey?: string
+  controller_type: 'input' | 'checkbox' | 'dropdown' | 'slider' | string
+  controller_props: ControllerProps
+}
+
+/**
+ * A chat-template kwarg the model's embedded jinja template accepts,
+ * detected from the GGUF (e.g. `preserve_thinking`).
+ */
+type TemplateKwarg = {
+  name: string
+  type: 'boolean' | 'number' | 'string'
+  default: boolean | number | string
+}
+
+/**
+ * The model object structure
+ */
+type Model = {
+  id: string
+  model?: string
+  name?: string
+  displayName?: string
+  version?: number | string
+  description?: string
+  format?: string
+  capabilities?: string[]
+  /** Chat-template kwargs the model's template accepts (llamacpp only). */
+  template_kwargs?: TemplateKwarg[]
+  settings?: Record<string, ProviderSetting>
+  /** Whether this model is an embedding model (e.g., BERT-based) */
+  embedding?: boolean
+  /** Whether this model was imported from a user-supplied local file
+   *  (path lives outside the provider's managed models directory). */
+  imported?: boolean
+}
+
+/**
+ * The provider object structure
+ */
+type ProviderApiType = 'openai' | 'anthropic'
+
+type ProviderObject = {
+  active: boolean
+  provider: string
+  explore_models_url?: string
+  api_key?: string
+  /** Extra keys used after `api_key` when the API returns 401, 403, or 429. */
+  api_key_fallbacks?: string[]
+  base_url?: string
+  settings: ProviderSetting[]
+  models: Model[]
+  persist?: boolean
+  custom_header?: ProviderCustomHeader[] | null
+  /** Wire format of the provider's HTTP API. Missing = 'openai' (default). */
+  api_type?: ProviderApiType
+}
+
+/**
+ * The model provider type
+ */
+type ModelProvider = ProviderObject
+
+/**
+ * Proxy configuration options
+ * @description This type defines the structure of the proxy configuration options.
+ */
+type ProxyOptions = {
+  proxyEnabled: boolean
+  proxyUrl: string
+  proxyUsername: string
+  proxyPassword: string
+  proxyIgnoreSSL: boolean
+  verifyProxySSL: boolean
+  verifyProxyHostSSL: boolean
+  verifyPeerSSL: boolean
+  verifyHostSSL: boolean
+  noProxy: string
+}
+
+type ProviderCustomHeader = {
+  header: string
+  value: string
+}

@@ -1,0 +1,16 @@
+BiBit GUI
+
+本产品包含由 Menlo Research 开发的 Jan 软件。
+上游项目：https://github.com/janhq/jan
+固定基线提交：978d7eb4d7cc1393f29dfd88ba0e222066f72285
+
+Jan
+Copyright 2025 Menlo Research
+
+本仓库沿用上游 Jan 的混合许可结构，不对上游组件重新授权：
+
+- 根目录上游作品：Apache License 2.0，完整文本见 LICENSE。
+- Rust/Tauri 主包及声明 MIT 的插件：MIT License，完整文本见 LICENSES/MIT.txt。
+- core 及声明 AGPL-3.0 的扩展：GNU Affero General Public License v3.0，完整文本见 LICENSES/AGPL-3.0.txt。
+
+具体文件和组件以其 Cargo.toml、package.json、文件头或随附许可声明为准。第三方依赖仍适用各自许可证。BiBit GUI 保留适用的上游版权、许可及归属声明。

@@ -1,0 +1,50 @@
+{
+  "app": {
+    "windows": [
+      {
+        "label": "main",
+        "title": "BiBit",
+        "width": 1200,
+        "minWidth": 1024,
+        "height": 800,
+        "minHeight": 740,
+        "resizable": true,
+        "fullscreen": false,
+        "devtools": false,
+        "zoomHotkeysEnabled": false,
+        "center": true,
+        "transparent": true,
+        "decorations": false,
+        "dragDropEnabled": false
+      }
+    ]
+  },
+  "bundle": {
+    "targets": ["deb"],
+    "linux": {
+      "deb": {
+        "desktopTemplate": "resources/BiBit.desktop",
+        "depends": [
+          "bibit-voice",
+          "bibit-runtime-plugin",
+          "bibit-filesearch-plugin",
+          "bibit-agenthub-plugin",
+          "bibit-memory-plugin",
+          "bianbu-agent-runtime",
+          "libgtk-layer-shell0",
+          "libegl1",
+          "libgles2",
+          "libgtk-3-0t64",
+          "libegl-pvr0",
+          "libgbm1-pvr",
+          "libgl1-pvr-dri",
+          "libglapi-pvr"
+        ],
+        "files": {
+          "/usr/bin/bibit": "resources/bibit",
+          "/usr/share/icons/hicolor/scalable/apps/bibit-status.svg": "static/tray-icon.svg"
+        }
+      }
+    }
+  }
+}

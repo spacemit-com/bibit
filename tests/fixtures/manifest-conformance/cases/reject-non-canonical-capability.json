@@ -1,0 +1,31 @@
+{
+  "name": "reject-non-canonical-capability",
+  "expect": "reject",
+  "note": "Capability ids are lowercase kebab-case.",
+  "manifest": {
+    "manifestSchemaVersion": 1,
+    "sdkApiVersion": 1,
+    "id": "conformance",
+    "version": "0.1.0",
+    "owner": "platform-team",
+    "display": {
+      "titleKey": "conformance:title",
+      "fallbackTitle": "Conformance",
+      "iconKey": "feature"
+    },
+    "targets": [
+      "desktop"
+    ],
+    "requiredHostCapabilities": [
+      "service:Store"
+    ],
+    "contributions": {
+      "pages": [],
+      "settings": [],
+      "conversation": [],
+      "locales": [
+        "en"
+      ]
+    }
+  }
+}

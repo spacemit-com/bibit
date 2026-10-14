@@ -1,0 +1,70 @@
+{
+  "name": "accept-full-contributions",
+  "expect": "accept",
+  "note": "Valid manifest using every contribution kind.",
+  "manifest": {
+    "manifestSchemaVersion": 1,
+    "sdkApiVersion": 1,
+    "id": "conformance",
+    "version": "0.1.0",
+    "owner": "platform-team",
+    "display": {
+      "titleKey": "conformance:title",
+      "fallbackTitle": "Conformance",
+      "iconKey": "feature"
+    },
+    "targets": [
+      "desktop"
+    ],
+    "requiredHostCapabilities": [
+      "service:store"
+    ],
+    "contributions": {
+      "pages": [
+        {
+          "id": "catalog",
+          "path": "",
+          "surfaces": [
+            "main"
+          ],
+          "navigation": {
+            "group": "library",
+            "order": 100
+          }
+        }
+      ],
+      "settings": [
+        {
+          "id": "configure",
+          "path": "configure",
+          "surfaces": [
+            "main"
+          ],
+          "navigation": {
+            "group": "privacy",
+            "order": 100,
+            "iconKey": "settings",
+            "section": {
+              "id": "agent-hub",
+              "fallbackTitle": "Agent Hub"
+            }
+          }
+        }
+      ],
+      "conversation": [
+        {
+          "id": "approval",
+          "kind": "permission-presenter",
+          "surfaces": [
+            "main"
+          ],
+          "order": 100
+        }
+      ],
+      "locales": [
+        "en",
+        "zh-CN"
+      ]
+    }
+  }
+}

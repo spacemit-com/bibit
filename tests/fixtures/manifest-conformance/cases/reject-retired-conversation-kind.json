@@ -1,0 +1,38 @@
+{
+  "name": "reject-retired-conversation-kind",
+  "expect": "reject",
+  "note": "The host renders permission presenters only; retired kinds must fail validation instead of silently rendering nothing.",
+  "manifest": {
+    "manifestSchemaVersion": 1,
+    "sdkApiVersion": 1,
+    "id": "conformance",
+    "version": "0.1.0",
+    "owner": "platform-team",
+    "display": {
+      "titleKey": "conformance:title",
+      "fallbackTitle": "Conformance",
+      "iconKey": "feature"
+    },
+    "targets": [
+      "desktop"
+    ],
+    "requiredHostCapabilities": [],
+    "contributions": {
+      "pages": [],
+      "settings": [],
+      "conversation": [
+        {
+          "id": "trace",
+          "kind": "tool-result",
+          "surfaces": [
+            "main"
+          ],
+          "order": 100
+        }
+      ],
+      "locales": [
+        "en"
+      ]
+    }
+  }
+}

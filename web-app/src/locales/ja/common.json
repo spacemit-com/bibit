@@ -1,0 +1,405 @@
+{
+  "htmlArtifact": {
+    "code": "コード",
+    "preview": "プレビュー",
+    "previewStreaming": "生成が完了すると利用できます"
+  },
+  "assistants": "アシスタント",
+  "hardware": "ハードウェア",
+  "mcp-servers": "MCPサーバー",
+  "local_api_server": "ローカルAPIサーバー",
+  "remote_access": "リモートアクセス",
+  "integrations": "連携",
+  "experimental": "実験的",
+  "claude_code": "Claude Code",
+  "https_proxy": "HTTPSプロキシ",
+  "extensions": "拡張機能",
+  "attachments": "添付ファイル",
+  "general": "全般",
+  "settings": "設定",
+  "modelProviders": "モデルプロバイダー",
+  "localProviders": "ローカル",
+  "remoteProviders": "リモート",
+  "manageProviders": "プロバイダーを管理",
+  "hiddenProviders": "{{count}}件を無効化中",
+  "hideProvider": "プロバイダーを非表示",
+  "showProvider": "プロバイダーを表示",
+  "interface": "外観",
+  "appearance": "外観",
+  "privacy": "プライバシー",
+  "keyboardShortcuts": "ショートカット",
+  "newChat": "新しいチャット",
+  "newAgentChat": "新しいエージェントチャット",
+  "chats": "チャット",
+  "favorites": "お気に入り",
+  "recents": "最近の項目",
+  "helpSupport": "ヘルプとサポート",
+  "unstarAll": "すべてのスターを解除",
+  "unstar": "スターを解除",
+  "deleteAll": "すべて削除",
+  "star": "スターを付ける",
+  "rename": "名前を変更",
+  "delete": "削除",
+  "copied": "コピーしました！",
+  "dataFolder": "データフォルダ",
+  "others": "その他",
+  "language": "言語",
+  "login": "ログイン",
+  "loginWith": "{{provider}}でログイン",
+  "loginFailed": "ログインに失敗しました",
+  "logout": "ログアウト",
+  "loggingOut": "ログアウト中...",
+  "loggedOut": "正常にログアウトしました",
+  "logoutFailed": "ログアウトに失敗しました",
+  "profile": "プロフィール",
+  "reset": "リセット",
+  "search": "検索",
+  "searchThreads": "スレッドを検索...",
+  "toNavigate": "で移動",
+  "toSelect": "で選択",
+  "toClose": "で閉じる",
+  "clearRecent": "クリア",
+  "name": "名前",
+  "cancel": "キャンセル",
+  "dismiss": "閉じる",
+  "create": "作成",
+  "save": "保存",
+  "edit": "編集",
+  "copy": "コピー",
+  "back": "戻る",
+  "close": "閉じる",
+  "done": "完了",
+  "next": "次へ",
+  "finish": "完了",
+  "skip": "スキップ",
+  "allow": "許可",
+  "deny": "拒否",
+  "start": "開始",
+  "stop": "停止",
+  "preview": "プレビュー",
+  "compactWidth": "コンパクト幅",
+  "fullWidth": "全幅",
+  "dark": "ダーク",
+  "light": "ライト",
+  "system": "システム",
+  "auto": "自動",
+  "english": "英語",
+  "medium": "中",
+  "newThread": "新しいスレッド",
+  "noResultsFound": "結果が見つかりません",
+  "noThreadsYet": "スレッドはまだありません",
+  "noThreadsYetDesc": "新しい会話を始めると、ここにスレッドの履歴が表示されます。",
+  "downloads": "ダウンロード",
+  "downloading": "ダウンロード中",
+  "uploadingAttachments": "添付ファイルをアップロードしています…",
+  "cancelDownload": "ダウンロードをキャンセル",
+  "downloadCancelled": "ダウンロードがキャンセルされました",
+  "downloadComplete": "ダウンロード完了",
+  "thinking": "考え中...",
+  "thought": "思考",
+  "callingTool": "ツールを呼び出し中",
+  "completed": "完了",
+  "image": "画像",
+  "vision": "画像認識",
+  "multimodal": "マルチモーダル",
+  "embeddings": "埋め込み",
+  "tools": "ツール",
+  "webSearch": "ウェブ検索",
+  "reasoning": "推論",
+  "proactive": "プロアクティブ",
+  "selectAModel": "モデルを選択",
+  "noToolsAvailable": "利用可能なツールはありません",
+  "noModelsFoundFor": "\"{{searchValue}}\"に一致するモデルが見つかりません",
+  "failedToLoadModels": "モデルの読み込みに失敗しました",
+  "noModels": "モデルが見つかりません",
+  "noAssistant": "アシスタントなし",
+  "customAvatar": "カスタムアバター",
+  "editAssistant": "アシスタントを編集",
+  "jan": "Jan",
+  "metadata": "メタデータ",
+  "regenerate": "再生成",
+  "threadImage": "スレッド画像",
+  "editMessage": "メッセージを編集",
+  "deleteMessage": "メッセージを削除",
+  "deleteThread": "スレッドを削除",
+  "renameThread": "スレッド名を変更",
+  "threadTitle": "スレッドのタイトル",
+  "deleteAllThreads": "すべてのスレッドを削除",
+  "allThreadsUnfavorited": "すべてのスレッドのお気に入りを解除しました",
+  "deleteAllThreadsConfirm": "本当にすべてのスレッドを削除しますか？この操作は元に戻せません。",
+  "addProvider": "プロバイダーを追加",
+  "addOpenAIProvider": "OpenAIプロバイダーを追加",
+  "enterNameForProvider": "プロバイダーの名前を入力してください",
+  "providerAlreadyExists": "プロバイダー名「{{name}}」はすでに存在します。別の名前を選択してください。",
+  "adjustFontSize": "フォントサイズを調整",
+  "changeLanguage": "言語を変更",
+  "editTheme": "テーマを編集",
+  "editCodeBlockStyle": "コードブロックのスタイルを編集",
+  "editServerHost": "サーバーホストを編集",
+  "pickColorWindowBackground": "ウィンドウの背景色を選択",
+  "pickColorAppMainView": "アプリのメインビューの色を選択",
+  "pickColorAppPrimary": "アプリのプライマリカラーを選択",
+  "pickColorAppAccent": "アプリのアクセントカラーを選択",
+  "pickColorAppDestructive": "アプリの破壊的アクションの色を選択",
+  "apiKeyRequired": "APIキーが必要です",
+  "enterTrustedHosts": "信頼できるホストを入力してください",
+  "placeholder": {
+    "chatInput": "何でも聞いてください..."
+  },
+  "confirm": "確認",
+  "continue": "続ける",
+  "loading": "読み込み中...",
+  "settingUpJan": "Janを起動しています…",
+  "registeringExtensions": "拡張機能を登録しています…",
+  "loadingExtensions": "拡張機能を読み込んでいます… ({{done}}/{{total}})",
+  "error": "エラー",
+  "success": "成功",
+  "warning": "警告",
+  "conversationNotAvailable": "会話を利用できません",
+  "conversationNotAvailableDescription": "アクセスしようとしている会話は利用できないか、削除されています。",
+  "temporaryChat": "一時的なチャット",
+  "temporaryChatTooltip": "一時的なチャットは履歴に表示されません",
+  "noResultsFoundDesc": "検索に一致するチャットが見つかりませんでした。別のキーワードをお試しください。",
+  "searchModels": "モデルを検索...",
+  "searchStyles": "スタイルを検索...",
+  "createAssistant": "アシスタントを作成",
+  "enterApiKey": "APIキーを入力",
+  "scrollToBottom": "一番下までスクロール",
+  "generateAiResponse": "AIの応答を生成",
+  "continueAiResponse": "AIの応答を続ける",
+  "addModel": {
+    "title": "モデルを追加",
+    "modelId": "モデルID",
+    "enterModelId": "モデルIDを入力",
+    "addModel": "モデルを追加",
+    "description": "プロバイダーに新しいモデルを追加します",
+    "exploreModels": "プロバイダーのモデルリストを見る"
+  },
+  "mcpServers": {
+    "editServer": "サーバーを編集",
+    "addServer": "サーバーを追加",
+    "serverName": "サーバー名",
+    "enterServerName": "サーバー名を入力",
+    "command": "コマンド",
+    "enterCommand": "コマンドを入力",
+    "arguments": "引数",
+    "argument": "引数 {{index}}",
+    "envVars": "環境変数",
+    "key": "キー",
+    "value": "値",
+    "save": "保存"
+  },
+  "deleteServer": {
+    "title": "サーバーを削除",
+    "delete": "削除"
+  },
+  "editJson": {
+    "errorParse": "JSONの解析に失敗しました",
+    "errorPaste": "JSONの貼り付けに失敗しました",
+    "errorFormat": "無効なJSON形式です",
+    "titleAll": "すべてのサーバー構成を編集",
+    "placeholder": "JSON構成を入力...",
+    "save": "保存"
+  },
+  "editModel": {
+    "title": "モデルを編集: {{modelId}}",
+    "description": "以下のオプションを切り替えて、モデルの機能を設定します。",
+    "capabilities": "機能",
+    "tools": "ツール",
+    "vision": "画像認識",
+    "embeddings": "埋め込み",
+    "notAvailable": "まだ利用できません"
+  },
+  "outOfContextError": {
+    "truncateInput": "入力を切り詰める",
+    "title": "コンテキストエラー",
+    "description": "このチャットはAIのメモリ制限に近づいています。ホワイトボードがいっぱいになるようなものです。メモリウィンドウ（コンテキストサイズ）を拡張して記憶容量を増やすことができますが、コンピュータのメモリ使用量が増える可能性があります。また、入力を切り詰めることもできます。これは、新しいメッセージのためのスペースを確保するために、チャット履歴の一部を忘れることを意味します。",
+    "increaseContextSizeDescription": "コンテキストサイズを増やしますか？",
+    "increaseContextSize": "コンテキストサイズを増やす"
+  },
+  "toolApproval": {
+    "title": "ツール権限のリクエスト",
+    "description": "アシスタントは<strong>{{toolName}}</strong>を使用しようとしています",
+    "securityNotice": "信頼できるツールのみを許可してください。ツールはあなたのシステムやデータにアクセスする可能性があります。",
+    "deny": "拒否",
+    "allowOnce": "一度だけ許可",
+    "alwaysAllow": "常に許可"
+  },
+  "deleteModel": {
+    "title": "モデルを削除: {{modelId}}",
+    "description": "本当にこのモデルを削除しますか？この操作は元に戻せません。",
+    "success": "モデル {{modelId}} は完全に削除されました。",
+    "cancel": "キャンセル",
+    "delete": "削除"
+  },
+  "deleteProvider": {
+    "title": "プロバイダーを削除",
+    "description": "このプロバイダーとすべてのモデルを削除します。この操作は元に戻せません。",
+    "success": "プロバイダー {{provider}} は完全に削除されました。",
+    "confirmTitle": "プロバイダーを削除: {{provider}}",
+    "confirmDescription": "本当にこのプロバイダーを削除しますか？この操作は元に戻せません。",
+    "cancel": "キャンセル",
+    "delete": "削除"
+  },
+  "modelSettings": {
+    "title": "モデル設定 - {{modelId}}",
+    "description": "パフォーマンスと動作を最適化するためにモデル設定を構成します。",
+    "nglDisabledByFit": "Auto-fit is choosing GPU layers. Turn off Auto-fit to set this manually.",
+    "samplingDefaults": {
+      "title": "デフォルトのサンプリングパラメータ",
+      "description": "このモデルのデフォルトのサンプラー設定です。アシスタントごとまたはリクエストごとの値で上書きされない限り使用されます。"
+    },
+    "mtp": {
+      "section": "マルチトークン予測 (MTP)",
+      "enable": "MTPを有効にする",
+      "enableDescription": "モデルに内蔵されたMTPヘッドを使用して、ステップごとに複数のトークンを下書きします。モデルにMTPの重みがある場合（DeepSeek-V3、GLM-4.5/4.6、MiMo v2.5 など）、生成が高速化されます。",
+      "needsUpgrade": "MTPを有効にするには、llama.cppバックエンドをビルドb9193以降に更新してください。",
+      "nMax": "最大下書きトークン数",
+      "nMaxDescription": "ステップごとに下書きするトークンの最大数。デフォルトは16です。",
+      "nMin": "最小下書きトークン数",
+      "nMinDescription": "ステップごとに下書きするトークンの最小数。デフォルトは0です。",
+      "pMin": "最小下書き確率",
+      "pMinDescription": "貪欲な下書きの最小確率（0〜1）。デフォルトは0.75です。"
+    }
+  },
+  "dialogs": {
+    "changeDataFolder": {
+      "title": "データフォルダの場所を変更",
+      "description": "本当にデータフォルダの場所を変更しますか？これにより、すべてのデータが新しい場所に移動し、アプリケーションが再起動します。",
+      "currentLocation": "現在の場所:",
+      "newLocation": "新しい場所:",
+      "cancel": "キャンセル",
+      "changeLocation": "場所を変更"
+    },
+    "deleteAllThreads": {
+      "title": "すべてのスレッドを削除",
+      "description": "すべてのスレッドが削除されます。この操作は元に戻せません。"
+    },
+    "deleteThread": {
+      "description": "本当にこのスレッドを削除しますか？この操作は元に戻せません。"
+    },
+    "editMessage": {
+      "title": "メッセージを編集"
+    },
+    "messageMetadata": {
+      "title": "メッセージメタデータ"
+    }
+  },
+  "errorDialog": {
+    "titleFallback": "問題が発生しました",
+    "details": "詳細"
+  },
+  "missingDependenciesDialog": {
+    "title": "システムライブラリが見つかりません",
+    "description": "{{backend}}はインストールされましたが、必要なシステムライブラリの一部が見つかりませんでした。CPUにフォールバックするか、正しく動作しない可能性があります。",
+    "installLabel": "これを修正するには、次をインストールしてください:",
+    "download": "ダウンロード",
+    "additionalLibraries": "その他の不足しているライブラリ:",
+    "missingLibraries": "不足しているライブラリ:",
+    "showRawLibraries": "不足している{{count}}件のライブラリ名を表示"
+  },
+  "attachmentsIngestion": {
+    "title": "添付ファイルの取り込み方法を選択",
+    "description": "これらのファイルをチャットに直接含めるか、代わりに埋め込みとしてインデックス化するかを選択します。",
+    "inline": "チャットに挿入",
+    "embeddings": "埋め込みを使用"
+  },
+  "attachmentInjectedIndicator": "チャットに挿入済み",
+  "attachmentEmbeddedIndicator": "RAG用に埋め込み済み",
+  "viewInjectedContent": "挿入された内容を表示",
+  "injectedContentTitle": "挿入されたファイルの内容",
+  "toast": {
+    "allThreadsUnfavorited": {
+      "title": "すべてのスレッドのお気に入りを解除しました",
+      "description": "すべてのスレッドがお気に入りから削除されました。"
+    },
+    "deleteAllThreads": {
+      "title": "すべてのスレッドを削除",
+      "description": "すべてのスレッドが完全に削除されました。"
+    },
+    "renameThread": {
+      "title": "スレッド名を変更",
+      "description": "スレッドのタイトルが「{{title}}」に変更されました"
+    },
+    "deleteThread": {
+      "title": "スレッドを削除",
+      "description": "このスレッドは完全に削除されました。"
+    },
+    "errorCopied": {
+      "title": "コピーしました",
+      "description": "エラー情報をクリップボードにコピーしました"
+    },
+    "errorCopyFailed": {
+      "title": "コピーに失敗しました",
+      "description": "エラー情報をクリップボードにコピーできませんでした"
+    },
+    "editMessage": {
+      "title": "メッセージを編集",
+      "description": "メッセージは正常に編集されました。モデルの応答をお待ちください。"
+    },
+    "downloadComplete": {
+      "title": "ダウンロード完了",
+      "description": "{{item}}がダウンロードされました"
+    },
+    "downloadCancelled": {
+      "title": "ダウンロードがキャンセルされました",
+      "description": "ダウンロード処理はキャンセルされました"
+    },
+    "downloadFailed": {
+      "title": "ダウンロードに失敗しました",
+      "description": "{{item}}のダウンロードに失敗しました"
+    },
+    "modelValidationStarted": {
+      "title": "モデルを検証中",
+      "description": "ダウンロードしたモデル「{{modelId}}」を正常に完了しました。整合性を検証しています..."
+    },
+    "modelValidationFailed": {
+      "title": "モデルの検証に失敗しました",
+      "description": "ダウンロードしたモデル「{{modelId}}」は整合性検証に失敗し、削除されました。ファイルが破損または改ざんされている可能性があります。"
+    },
+    "downloadAndVerificationComplete": {
+      "title": "ダウンロード完了",
+      "description": "モデル「{{item}}」は正常にダウンロードおよび検証されました"
+    },
+    "fileUploaded": {
+      "title": "ファイルを処理しました",
+      "description": "ファイルは正常に処理され、インデックス化されました"
+    },
+    "uploadFailed": {
+      "title": "処理に失敗しました",
+      "description": "ファイルの処理に失敗しました",
+      "subjectThisFile": "このファイル",
+      "pdfMalformedXref": "{{subject}}のPDF相互参照テーブルが不正なため、解析できませんでした。PDFビューアで開いて保存し直し（ファイル → 印刷 → PDFとして保存）、もう一度アップロードしてください。",
+      "pdfScanned": "{{subject}}はスキャンまたは画像ベースのPDFのようです。OCRはまだサポートされていません。テキストベースのPDFをアップロードしてください。",
+      "pdfEncrypted": "{{subject}}はパスワードで保護されています。パスワードを解除してもう一度お試しください。",
+      "pdfGeneric": "{{subject}}をPDFとして解析できませんでした。ファイルが破損しているか、サポートされていないPDF機能を使用している可能性があります。",
+      "fileTooLarge": "{{subject}}は大きすぎます。{{message}}。",
+      "unsupportedType": "ファイル形式「{{type}}」はサポートされていません。",
+      "ioError": "{{subject}}を読み取れませんでした: {{message}}",
+      "parseGeneric": "{{subject}}を解析できませんでした: {{message}}",
+      "fallback": "{{subject}}の処理に失敗しました。"
+    },
+    "deleteFailed": {
+      "title": "削除に失敗しました",
+      "description": "ファイルの削除に失敗しました"
+    },
+    "attachmentsDisabledInfo": {
+      "title": "添付ファイルが無効です",
+      "description": "添付ファイルは設定で無効になっています"
+    }
+  },
+  "errors": {
+    "fileTooLarge": "ファイルが大きすぎます",
+    "fileTooLargeDescription": "{{fileName}}は{{maxFileSizeMB}}MBの上限を超えています"
+  },
+  "files": {
+    "chunksCount": "{{count}}個のチャンク"
+  },
+  "llamacppBusyOnExit": {
+    "title": "llama.cppはまだビジー状態です",
+    "description": "1つ以上のモデルが時間内にアンロードされませんでした。強制終了するとllama.cppが終了し、実行中の応答が中断される可能性があります。",
+    "forceQuit": "強制終了",
+    "forcing": "強制終了しています…",
+    "shuttingDown": "シャットダウンしています…"
+  }
+}

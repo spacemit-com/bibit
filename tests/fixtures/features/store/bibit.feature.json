@@ -1,0 +1,29 @@
+{
+  "manifestSchemaVersion": 1,
+  "sdkApiVersion": 1,
+  "id": "store",
+  "version": "0.1.0",
+  "owner": "store-team",
+  "display": {
+    "titleKey": "store:title",
+    "fallbackTitle": "Agent Store",
+    "descriptionKey": "store:description",
+    "fallbackDescription": "Discover agents and skills",
+    "iconKey": "store"
+  },
+  "targets": ["desktop"],
+  "requiredHostCapabilities": ["external-service:store"],
+  "contributions": {
+    "pages": [
+      {
+        "id": "catalog",
+        "path": "",
+        "surfaces": ["main"],
+        "navigation": { "group": "library", "order": 100 }
+      }
+    ],
+    "settings": [],
+    "conversation": [],
+    "locales": ["en", "zh-CN"]
+  }
+}

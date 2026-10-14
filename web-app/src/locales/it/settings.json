@@ -1,0 +1,78 @@
+{
+  "dataFolder": {
+    "appLogs": "Log dell'app",
+    "appLogsDesc": "Visualizza i log dettagliati dell'app."
+  },
+  "shortcuts": {
+    "application": "Applicazione",
+    "newChat": "Nuova chat",
+    "newChatDesc": "Crea una nuova chat.",
+    "toggleSidebar": "Attiva/Disattiva barra laterale",
+    "toggleSidebarDesc": "Mostra o nascondi la barra laterale.",
+    "zoomIn": "Aumenta zoom",
+    "zoomInDesc": "Aumenta il livello di zoom.",
+    "zoomOut": "Riduci zoom",
+    "zoomOutDesc": "Riduci il livello di zoom.",
+    "chat": "Chat",
+    "sendMessage": "Invia messaggio",
+    "sendMessageDesc": "Invia il messaggio corrente.",
+    "newLine": "Nuova riga",
+    "newLineDesc": "Inserisce una nuova riga.",
+    "navigation": "Navigazione",
+    "search": "Cerca",
+    "searchDesc": "Apre la finestra di dialogo di ricerca.",
+    "goToSettings": "Vai alle impostazioni",
+    "goToSettingsDesc": "Apre le impostazioni."
+  },
+  "interface": {
+    "title": "Interfaccia",
+    "theme": "Tema",
+    "themeDesc": "Usa lo stesso tema del sistema operativo.",
+    "fontSize": "Dimensione carattere",
+    "fontSizeDesc": "Regola la dimensione del carattere dell'app."
+  },
+  "hardware": {},
+  "httpsProxy": {
+    "authentication": "Autenticazione"
+  },
+  "localApiServer": {},
+  "privacy": {},
+  "general": {
+    "openContainingFolder": "Apri cartella contenitrice",
+    "appVersion": "Versione app",
+    "openLogs": "Apri i log",
+    "revealLogs": "Mostra i log"
+  },
+  "attachments": {
+    "enable": "Abilita allegati",
+    "enableDesc": "Consenti il caricamento e l'indicizzazione dei documenti per il recupero delle informazioni.",
+    "parseMode": "Preferenza di analisi (parsing)",
+    "parseModeDesc": "Scegli come i documenti analizzati vengono aggiunti alle conversazioni.",
+    "autoInlineThreshold": "Soglia inclusione automatica",
+    "autoInlineThresholdDesc": "Frazione del contesto del modello utilizzata come limite per includere i file analizzati nei modelli locali.",
+    "maxFile": "Dimensione massima file (MB)",
+    "maxFileDesc": "Dimensione massima per singolo file. Applicata al momento del caricamento e dell'elaborazione.",
+    "topK": "Top-K",
+    "topKDesc": "Numero massimo di citazioni da restituire.",
+    "threshold": "Soglia di affinità",
+    "thresholdDesc": "Punteggio minimo di somiglianza (0-1). Utilizzato solo per la ricerca lineare del coseno, non per l'ANN.",
+    "searchMode": "Modalità ricerca vettoriale",
+    "searchModeDesc": "Scegli tra sqlite-vec ANN, coseno lineare o automatico.",
+    "chunkSize": "Dimensione frammento (caratteri)",
+    "chunkSizeDesc": "Numero massimo approssimativo di caratteri per frammento (chunk) per gli embedding.",
+    "chunkOverlap": "Sovrapposizione (caratteri)",
+    "chunkOverlapDesc": "Sovrapposizione di caratteri tra frammenti consecutivi."
+  },
+  "dialogs": {
+    "changeDataFolder": {}
+  },
+  "backendUpdater": {
+    "newBackendVersion": "Nuova versione Llamacpp {{version}}",
+    "backendUpdateAvailable": "Aggiornamento Llamacpp disponibile",
+    "remindMeLater": "Ricordamelo più tardi",
+    "updating": "Aggiornamento in corso...",
+    "updateNow": "Aggiorna ora",
+    "updateSuccess": "Llamacpp aggiornato con successo",
+    "updateError": "Impossibile aggiornare Llamacpp"
+  }
+}

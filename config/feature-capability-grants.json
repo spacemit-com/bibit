@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "features": {
+    "agent-hub": ["service:store", "external-service:store"],
+    "security": ["service:security", "external-service:security", "runtime:permission"]
+  },
+  "serviceOperations": {
+    "agent-hub": {
+      "store": [
+        "agents.list.v1",
+        "settings.get.v1",
+        "settings.update.v1"
+      ]
+    },
+    "security": {
+      "security": [
+        "agents.list.v1",
+        "agents.get.v1",
+        "agents.suspend.v1",
+        "capabilities.grant.v1",
+        "capabilities.update.v1",
+        "permission.check.v1",
+        "dlp.matrix.v1",
+        "dlp.policy.update.v1",
+        "dlp.policy.delete.v1",
+        "dlp.scan.v1",
+        "dlp.stats.v1",
+        "audit.query.v1",
+        "audit.verify.v1",
+        "token-budget.get.v1",
+        "token-budget.update.v1",
+        "network-policy.get.v1",
+        "network-policy.update.v1"
+      ]
+    }
+  }
+}

@@ -1,0 +1,1048 @@
+{
+  "assistants": "助手",
+  "hardware": "硬件",
+  "mcp-servers": "MCP 服务",
+  "small": "小",
+  "large": "大",
+  "extraLarge": "特大",
+  "unnamedAssistant": "未命名助手",
+  "deleted": "（已删除）",
+  "toolExecutionFailed": "工具执行失败",
+  "uploadedAttachment": "已上传的附件",
+  "generatedImage": "生成的图片",
+  "more": "更多",
+  "menu": "菜单",
+  "none": "无",
+  "deleteMessageConfirm": "确定要删除这条消息吗？此操作无法撤销。",
+  "sliderMaxAllowed": "允许的最大值为",
+  "performanceEstimateHint": "根据文件大小和本机硬件估算。实际性能取决于量化方式和上下文长度。",
+  "downloadProgressEmpty": "下载进度将在此显示",
+  "providerLogoAlt": "{{provider}} 标志",
+  "samplingDropped": "已忽略采样参数",
+  "samplingDroppedDescription": "{{reason}} — 已改用默认采样参数重试本次请求，可在采样参数面板中调整。",
+  "ingestImageFailed": "图片附件读取失败",
+  "indexAttachmentsFailed": "附件索引失败",
+  "janBrowserMcp": {
+    "enabled": "Jan Browser MCP 已启用",
+    "disabled": "Jan Browser MCP 已停用",
+    "visionUnsupported": "已停用 Jan Browser MCP — 当前模型不支持视觉能力。",
+    "notFound": "未找到 Jan Browser MCP",
+    "notFoundDescription": "请检查 MCP 服务配置"
+  },
+  "local_api_server": "本地 API 服务",
+  "https_proxy": "HTTPS 代理",
+  "extensions": "扩展",
+  "attachments": "附件",
+  "experimental": "实验性",
+  "general": "通用",
+  "settings": "设置",
+  "modelProviders": "模型提供商",
+  "localProviders": "本地",
+  "remoteProviders": "远程",
+  "manageProviders": "管理服务商",
+  "hiddenProviders": "{{count}} 个已停用",
+  "interface": "外观",
+  "appearance": "外观",
+  "privacy": "隐私",
+  "keyboardShortcuts": "快捷键",
+  "newChat": "新建聊天",
+  "newAgentChat": "新建智能体聊天",
+  "chats": "聊天",
+  "favorites": "收藏",
+  "recents": "最近",
+  "helpSupport": "帮助与支持",
+  "unstarAll": "取消所有收藏",
+  "unstar": "取消收藏",
+  "deleteAll": "全部删除",
+  "star": "收藏",
+  "rename": "重命名",
+  "delete": "删除",
+  "copied": "已复制！",
+  "dataFolder": "数据文件夹",
+  "others": "其他",
+  "language": "语言",
+  "login": "登录",
+  "loginWith": "使用{{provider}}登录",
+  "loginFailed": "登录失败",
+  "logout": "退出登录",
+  "loggingOut": "正在退出...",
+  "loggedOut": "成功退出登录",
+  "logoutFailed": "退出登录失败",
+  "profile": "个人资料",
+  "reset": "重置",
+  "search": "搜索",
+  "name": "名称",
+  "cancel": "取消",
+  "create": "创建",
+  "save": "保存",
+  "edit": "编辑",
+  "copy": "复制",
+  "back": "返回",
+  "close": "关闭",
+  "done": "完成",
+  "next": "下一步",
+  "finish": "完成",
+  "skip": "跳过",
+  "allow": "允许",
+  "deny": "拒绝",
+  "start": "开始",
+  "stop": "停止",
+  "preview": "预览",
+  "compactWidth": "紧凑宽度",
+  "fullWidth": "全宽",
+  "dark": "深色",
+  "light": "浅色",
+  "system": "系统",
+  "auto": "自动",
+  "english": "英语",
+  "medium": "中等",
+  "newThread": "新会话",
+  "noResultsFound": "未找到结果",
+  "noThreadsYet": "暂无会话",
+  "noThreadsYetDesc": "开始新的对话以在此处查看您的会话历史记录。",
+  "downloads": "下载",
+  "downloading": "下载中",
+  "downloadingEllipsis": "正在下载…",
+  "initializingDownload": "正在初始化下载…",
+  "paused": "已暂停",
+  "uploadingAttachments": "正在上传附件…",
+  "cancelDownload": "取消下载",
+  "downloadCancelled": "下载已取消",
+  "downloadComplete": "下载完成",
+  "thinking": "思考中...",
+  "thought": "思考",
+  "callingTool": "调用工具",
+  "completed": "已完成",
+  "image": "图片",
+  "vision": "视觉",
+  "embeddings": "嵌入",
+  "tools": "工具",
+  "webSearch": "网页搜索",
+  "reasoning": "推理",
+  "proactive": "主动模式",
+  "selectAModel": "选择一个模型",
+  "noToolsAvailable": "无可用工具",
+  "noModelsFoundFor": "未找到“{{searchValue}}”的模型",
+  "failedToLoadModels": "加载模型失败",
+  "noModels": "未找到模型",
+  "conversationNotAvailable": "对话不可用",
+  "conversationNotAvailableDescription": "您尝试访问的对话不可用或已被删除。",
+  "temporaryChat": "临时聊天",
+  "temporaryChatTooltip": "临时聊天不会出现在您的历史记录中",
+  "generateAiResponse": "生成AI响应",
+  "outOfContextError": {
+    "truncateInput": "截断输入",
+    "title": "上下文错误",
+    "description": "此聊天正在达到AI的内存限制，就像白板被填满一样。我们可以扩展内存窗口（称为上下文大小），以便它记住更多内容，但这可能会使用更多计算机内存。我们也可以截断输入，这意味着它将忘记一些聊天历史记录以为新消息腾出空间。",
+    "increaseContextSizeDescription": "您想要增加上下文大小吗？",
+    "increaseContextSize": "增加上下文大小"
+  },
+  "customAvatar": "自定义头像",
+  "editAssistant": "编辑助手",
+  "jan": "BiBit",
+  "metadata": "元数据",
+  "regenerate": "重新生成",
+  "threadImage": "会话图片",
+  "editMessage": "编辑消息",
+  "deleteMessage": "删除消息",
+  "deleteThread": "删除会话",
+  "renameThread": "重命名会话",
+  "threadTitle": "会话标题",
+  "deleteAllThreads": "删除所有会话",
+  "allThreadsUnfavorited": "所有会话已取消收藏",
+  "deleteAllThreadsConfirm": "您确定要删除所有会话吗？此操作无法撤销。",
+  "addProvider": "添加提供商",
+  "addOpenAIProvider": "添加 OpenAI 提供商",
+  "enterNameForProvider": "为您的提供商输入一个名称",
+  "providerAlreadyExists": "名为“{{name}}”的提供商已存在。请选择其他名称。",
+  "adjustFontSize": "调整字号",
+  "changeLanguage": "更改语言",
+  "editTheme": "编辑主题",
+  "editCodeBlockStyle": "编辑代码块样式",
+  "editServerHost": "编辑服务器主机",
+  "pickColorWindowBackground": "选择窗口背景颜色",
+  "pickColorAppMainView": "选择应用主视图颜色",
+  "pickColorAppPrimary": "选择应用主颜色",
+  "pickColorAppAccent": "选择应用强调颜色",
+  "pickColorAppDestructive": "选择应用警示颜色",
+  "apiKeyRequired": "需要 API 密钥",
+  "enterTrustedHosts": "输入受信任的主机",
+  "placeholder": {
+    "chatInput": "随便问我什么..."
+  },
+  "confirm": "确认",
+  "continue": "继续",
+  "loading": "加载中...",
+  "error": "错误",
+  "success": "成功",
+  "warning": "警告",
+  "noResultsFoundDesc": "我们找不到任何与您的搜索匹配的聊天。请尝试其他关键字。",
+  "searchModels": "搜索模型...",
+  "searchStyles": "搜索样式...",
+  "createAssistant": "创建助手",
+  "enterApiKey": "输入 API 密钥",
+  "scrollToBottom": "滚动到底部",
+  "addModel": {
+    "title": "添加模型",
+    "modelId": "模型 ID",
+    "enterModelId": "输入模型 ID",
+    "addModel": "添加模型",
+    "description": "向提供商添加新模型",
+    "exploreModels": "查看提供商的模型列表"
+  },
+  "mcpServers": {
+    "editServer": "编辑服务器",
+    "addServer": "添加服务器",
+    "serverName": "服务器名称",
+    "enterServerName": "输入服务器名称",
+    "command": "命令",
+    "enterCommand": "输入命令",
+    "arguments": "参数",
+    "argument": "参数 {{index}}",
+    "envVars": "环境变量",
+    "key": "键",
+    "value": "值",
+    "save": "保存",
+    "addByJson": "通过 JSON 添加服务",
+    "urlPlaceholder": "输入地址",
+    "headers": "请求头",
+    "headerNamePlaceholder": "请求头名称",
+    "headerValuePlaceholder": "请求头值",
+    "timeoutPlaceholder": "输入超时秒数",
+    "transportType": "传输方式",
+    "stdio": "STDIO",
+    "timeoutLabel": "超时（秒）"
+  },
+  "deleteServer": {
+    "title": "删除服务器",
+    "delete": "删除"
+  },
+  "editJson": {
+    "errorParse": "解析 JSON 失败",
+    "errorPaste": "粘贴 JSON 失败",
+    "errorFormat": "JSON 格式无效",
+    "titleAll": "编辑所有服务器配置",
+    "placeholder": "输入 JSON 配置...",
+    "save": "保存"
+  },
+  "editModel": {
+    "title": "编辑模型：{{modelId}}",
+    "description": "通过切换以下选项来配置模型功能。",
+    "capabilities": "功能",
+    "tools": "工具",
+    "vision": "视觉",
+    "embeddings": "嵌入",
+    "notAvailable": "尚不可用"
+  },
+  "toolApproval": {
+    "title": "工具权限请求",
+    "description": "助手想要使用 <strong>{{toolName}}</strong>",
+    "securityNotice": "只允许您信任的工具。工具可以访问您的系统和数据。",
+    "deny": "拒绝",
+    "allowOnce": "允许一次",
+    "alwaysAllow": "始终允许"
+  },
+  "deleteModel": {
+    "title": "删除模型：{{modelId}}",
+    "description": "您确定要删除此模型吗？此操作无法撤销。",
+    "success": "模型 {{modelId}} 已被永久删除。",
+    "cancel": "取消",
+    "delete": "删除"
+  },
+  "deleteProvider": {
+    "title": "删除提供商",
+    "description": "删除此提供商及其所有模型。此操作无法撤销。",
+    "success": "提供商 {{provider}} 已被永久删除。",
+    "confirmTitle": "删除提供商：{{provider}}",
+    "confirmDescription": "您确定要删除此提供商吗？此操作无法撤销。",
+    "cancel": "取消",
+    "delete": "删除"
+  },
+  "modelSettings": {
+    "nglDisabledByFit": "自动适配正在决定 GPU 层数。关闭“自动适配”后可手动设置。",
+    "title": "模型设置 - {{modelId}}",
+    "description": "配置模型设置以优化性能和行为。",
+    "mtp": {
+      "enable": "启用 MTP",
+      "enableDescription": "使用模型内置的 MTP 头每步草拟多个 token。模型带 MTP 权重时可加速生成（DeepSeek-V3、GLM-4.5/4.6、MiMo v2.5 等）。",
+      "nMax": "最大草拟 token 数",
+      "nMaxDescription": "每步草拟的最大 token 数，默认 16。",
+      "nMin": "最小草拟 token 数",
+      "nMinDescription": "每步草拟的最小 token 数，默认 0。",
+      "needsUpgrade": "需将 llama.cpp 后端升级到 b9193 或更新版本才能启用 MTP。",
+      "pMin": "最小草拟概率",
+      "pMinDescription": "贪心草拟所需的最低概率（0–1），默认 0.75。",
+      "section": "多 token 预测（MTP）"
+    },
+    "samplingDefaults": {
+      "description": "该模型的默认采样参数，未被助手级或单次请求覆盖时使用。",
+      "title": "默认采样参数"
+    },
+    "templateKwargs": {
+      "add": "添加",
+      "addCustom": "添加自定义选项",
+      "cancel": "取消",
+      "description": "该模型对话模板支持的其他选项。每次请求会作为 chat_template_kwargs 发送；保持默认值即由模板决定。",
+      "keyPlaceholder": "名称",
+      "remove": "移除",
+      "section": "对话模板选项",
+      "valuePlaceholder": "值"
+    }
+  },
+  "dialogs": {
+    "changeDataFolder": {
+      "title": "更改数据文件夹位置",
+      "description": "您确定要更改数据文件夹位置吗？这将把您的所有数据移动到新位置并重新启动应用程序。",
+      "currentLocation": "当前位置：",
+      "newLocation": "新位置：",
+      "cancel": "取消",
+      "changeLocation": "更改位置"
+    },
+    "deleteAllThreads": {
+      "title": "删除所有会话",
+      "description": "所有会话将被删除。此操作无法撤销。"
+    },
+    "deleteThread": {
+      "description": "您确定要删除此对话吗？此操作无法撤销。"
+    },
+    "editMessage": {
+      "title": "编辑消息"
+    },
+    "messageMetadata": {
+      "title": "消息元数据"
+    }
+  },
+  "errorDialog": {
+    "titleFallback": "出了点问题",
+    "details": "详细信息"
+  },
+  "toast": {
+    "allThreadsUnfavorited": {
+      "title": "所有会话已取消收藏",
+      "description": "所有会话已从您的收藏中移除。"
+    },
+    "deleteAllThreads": {
+      "title": "删除所有会话",
+      "description": "所有会话已被永久删除。"
+    },
+    "renameThread": {
+      "title": "重命名会话",
+      "description": "会话标题已重命名为“{{title}}”"
+    },
+    "deleteThread": {
+      "title": "删除会话",
+      "description": "此会话已被永久删除。"
+    },
+    "errorCopied": {
+      "title": "复制成功",
+      "description": "错误信息已复制到剪贴板"
+    },
+    "errorCopyFailed": {
+      "title": "复制失败",
+      "description": "无法将错误信息复制到剪贴板"
+    },
+    "editMessage": {
+      "title": "编辑消息",
+      "description": "消息编辑成功。请等待模型响应。"
+    },
+    "downloadComplete": {
+      "title": "下载完成",
+      "description": "{{item}} 已下载"
+    },
+    "downloadCancelled": {
+      "title": "下载已取消",
+      "description": "下载过程已取消"
+    },
+    "downloadFailed": {
+      "title": "下载失败",
+      "description": "{{item}} 下载失败"
+    },
+    "modelValidationStarted": {
+      "title": "正在验证模型",
+      "description": "模型 \"{{modelId}}\" 下载成功。正在验证完整性..."
+    },
+    "modelValidationFailed": {
+      "title": "模型验证失败",
+      "description": "已下载的模型 \"{{modelId}}\" 未通过完整性验证并已被删除。文件可能损坏或被篡改。"
+    },
+    "downloadAndVerificationComplete": {
+      "title": "下载完成",
+      "description": "模型 \"{{item}}\" 下载并验证成功"
+    },
+    "attachmentsDisabledInfo": {
+      "title": "附件功能已停用",
+      "description": "附件功能已在设置中停用"
+    },
+    "deleteFailed": {
+      "title": "删除失败",
+      "description": "文件删除失败"
+    },
+    "fileUploaded": {
+      "title": "文件已处理",
+      "description": "文件已处理并建立索引"
+    },
+    "uploadFailed": {
+      "fallback": "处理 {{subject}} 失败。",
+      "fileTooLarge": "{{subject}} 太大。{{message}}。",
+      "ioError": "无法读取 {{subject}}：{{message}}",
+      "parseGeneric": "{{subject}} 解析失败：{{message}}",
+      "pdfEncrypted": "{{subject}} 有密码保护，请解除密码后重试。",
+      "pdfGeneric": "{{subject}} 无法按 PDF 解析，文件可能已损坏，或使用了不支持的 PDF 特性。",
+      "pdfMalformedXref": "{{subject}} 的 PDF 交叉引用表格式有误，无法解析。请用 PDF 阅读器打开后另存（文件 → 打印 → 存储为 PDF），再重新上传。",
+      "pdfScanned": "{{subject}} 似乎是扫描件或图片型 PDF。目前不支持 OCR，请上传文本型 PDF。",
+      "pdfUnsupportedFeature": "{{subject}} 使用了 BiBit 暂不支持的 PDF 特性（例如 PostScript 颜色/着色函数）。可另存（文件 → 打印 → 存储为 PDF）压平后重新上传。",
+      "subjectThisFile": "该文件",
+      "title": "处理失败",
+      "unsupportedType": "不支持 “{{type}}” 类型的文件。",
+      "description": "文件处理失败"
+    },
+    "fileProcessed": {
+      "title": "文件处理成功"
+    }
+  },
+  "llamacppBusyOnExit": {
+    "title": "llama.cpp 仍在运行",
+    "description": "有模型未及时卸载。强制退出会结束 llama.cpp，可能中断正在进行的回答。",
+    "forceQuit": "强制退出",
+    "forcing": "正在强制退出…",
+    "shuttingDown": "正在关闭…"
+  },
+  "attachmentsIngestion": {
+    "description": "选择把这些文件直接放进对话，还是建立向量索引。",
+    "embeddings": "使用向量索引",
+    "inline": "注入对话",
+    "title": "选择附件处理方式"
+  },
+  "clearRecent": "清除",
+  "dismiss": "忽略",
+  "errors": {
+    "fileTooLarge": "文件过大",
+    "fileTooLargeDescription": "{{fileName}} 超过 {{maxFileSizeMB}}MB 上限"
+  },
+  "features": "功能",
+  "files": {
+    "chunksCount": "{{count}} 个分块"
+  },
+  "integrations": "集成",
+  "missingDependenciesDialog": {
+    "additionalLibraries": "其他缺失的库：",
+    "description": "{{backend}} 已安装，但部分必需的系统库未找到，可能退回 CPU 运行或无法正常工作。",
+    "download": "下载",
+    "installLabel": "请安装以下组件以解决该问题：",
+    "missingLibraries": "缺失的库：",
+    "showRawLibraries": "查看 {{count}} 个缺失库名称",
+    "title": "缺少系统库"
+  },
+  "multimodal": "多模态",
+  "noAssistant": "未选择助手",
+  "searchThreads": "搜索对话...",
+  "searchGroupTitles": "会话",
+  "searchGroupMessages": "对话内容",
+  "searchingContent": "正在检索对话内容…",
+  "searchRoleUser": "我",
+  "searchRoleAssistant": "助手",
+  "settingUpJan": "正在启动 BiBit…",
+  "toClose": "关闭",
+  "toNavigate": "导航",
+  "toSelect": "选择",
+  "web_search": "网络搜索",
+  "htmlArtifact": {
+    "code": "代码",
+    "preview": "预览",
+    "previewStreaming": "生成完成后可用"
+  },
+  "remote_access": "远程访问",
+  "claude_code": "Claude Code",
+  "hideProvider": "隐藏服务商",
+  "showProvider": "显示服务商",
+  "registeringExtensions": "正在注册扩展…",
+  "loadingExtensions": "正在加载扩展…（{{done}}/{{total}}）",
+  "continueAiResponse": "用 AI 继续回答",
+  "attachmentInjectedIndicator": "已注入对话",
+  "attachmentEmbeddedIndicator": "已建立向量索引",
+  "viewInjectedContent": "查看注入内容",
+  "injectedContentTitle": "注入的文件内容",
+  "goBack": "返回",
+  "modelSleeping": "模型休眠中",
+  "visionInputSupported": "支持视觉输入",
+  "audioInputSupported": "支持音频输入",
+  "addImages": "添加图片",
+  "addAudio": "添加音频",
+  "addVideo": "添加视频",
+  "resumeDownload": "继续下载",
+  "pauseDownload": "暂停下载",
+  "customCliCommandPlaceholder": "输入自定义 CLI 命令",
+  "featureUnavailable": "功能不可用",
+  "loadingFeature": "正在加载功能",
+  "featureEntryUnavailable": "此入口加载失败",
+  "featureEntryUnavailableDetail": "插件没有为此入口提供组件（{{entry}}），请升级插件后重试。",
+  "moreOptions": "更多选项",
+  "samplingParameters": "采样参数",
+  "openAssistantSettings": "打开助手设置",
+  "recommendedModel": "推荐模型",
+  "logoAlt": "BiBit 标志",
+  "toolOutput": "工具输出",
+  "refreshModels": "刷新模型",
+  "viewOnHuggingFace": "在 HuggingFace 查看",
+  "enterDisplayName": "输入显示名称",
+  "securityConfig": {
+    "currentStatus": "当前状态",
+    "fieldUser": "用户：",
+    "fieldApproved": "已批准：",
+    "fieldLast": "最近一次：",
+    "fieldIp": "IP：",
+    "fieldDevice": "设备：",
+    "tokenWarning": "请立即保存此令牌，之后无法再次查看；若丢失只能重新生成。",
+    "authMode": "认证方式：",
+    "hasToken": "已设置令牌：",
+    "hasPassword": "已设置密码：",
+    "recentFailures": "近期失败次数：",
+    "accessToken": "访问令牌",
+    "setPassword": "设置密码",
+    "enterPassword": "输入密码",
+    "confirmPassword": "确认密码",
+    "passwordsDoNotMatch": "两次输入的密码不一致",
+    "requireDevicePairing": "需要设备配对",
+    "approvedDevices": "已批准的设备",
+    "noApprovedDevices": "暂无已批准的设备",
+    "recentAccessLogs": "近期访问日志",
+    "noAccessLogs": "暂无访问日志",
+    "title": "安全设置",
+    "devices": "设备",
+    "authModeTitle": "认证方式",
+    "tokenItem": "令牌",
+    "tokenDesc": "通过密钥令牌访问 API",
+    "passwordItem": "密码",
+    "passwordDesc": "通过密码访问",
+    "noneItem": "无",
+    "noneDesc": "无需认证（不推荐）",
+    "generating": "正在生成...",
+    "generateToken": "生成新令牌",
+    "passwordTooShort": "密码至少需要 8 个字符",
+    "setting": "正在设置...",
+    "devicesHint": "设备需批准后才能访问",
+    "description": "配置认证、设备管理并查看访问日志",
+    "logsTab": "日志",
+    "toast": {
+      "loadSettingsFailed": "加载安全设置失败",
+      "loadDevicesFailed": "加载设备失败",
+      "loadAccessLogsFailed": "加载访问日志失败",
+      "changeAuthModeFailed": "切换认证方式失败",
+      "tokenGenerated": "已生成新的访问令牌",
+      "generateTokenFailed": "生成令牌失败",
+      "tokenCopied": "令牌已复制到剪贴板",
+      "copyTokenFailed": "复制令牌失败",
+      "passwordSet": "密码设置成功",
+      "setPasswordFailed": "设置密码失败",
+      "updatePairingFailed": "更新配对设置失败",
+      "pairingRequired": "需要设备配对",
+      "pairingDisabled": "设备配对已关闭",
+      "deviceRevoked": "已撤销该设备的访问权限",
+      "revokeDeviceFailed": "撤销设备访问失败",
+      "logsCleared": "访问日志已清空",
+      "clearLogsFailed": "清空日志失败"
+    },
+    "noTokenConfigured": "尚未配置令牌。生成令牌即可启用令牌认证。",
+    "enterNewPassword": "输入新密码以替换现有密码。",
+    "setPasswordToEnable": "设置密码即可启用密码认证。",
+    "confirm": {
+      "revokeTitle": "撤销设备访问权限",
+      "revokeDescription": "确定要撤销该设备的访问权限吗？撤销后该设备需要重新审批才能访问。",
+      "revokeConfirm": "撤销",
+      "clearLogsTitle": "清空访问日志",
+      "clearLogsDescription": "确定要清空所有访问日志吗？此操作无法撤销。",
+      "clearLogsConfirm": "清空日志",
+      "changeAuthModeTitle": "切换认证方式",
+      "changeAuthModeDescription": "切换认证方式会影响客户端访问 BiBit 的方式，确定要继续吗？"
+    }
+  },
+  "tokenSpeedDetails": "Token 速度详情",
+  "generation": "生成",
+  "reading": "读取",
+  "tokens": "Token 数",
+  "importModel": {
+    "multimodalSupport": "多模态支持",
+    "draftModelSupport": "草稿模型支持",
+    "mmprojFile": "MMPROJ 文件",
+    "draftModelFile": "草稿模型文件（GGUF）",
+    "title": "导入模型",
+    "savedAs": "模型将保存为：",
+    "modelFile": "模型文件（GGUF）",
+    "required": "必填",
+    "validationError": "模型校验失败",
+    "validatingModel": "正在校验模型文件...",
+    "embeddingDetected": "检测到向量模型",
+    "description": "导入 GGUF 模型文件以添加到模型库。可启用多模态支持以附加 mmproj（用于图像或音频输入），或启用草稿模型支持以进行投机解码。嵌入模型会被自动识别。",
+    "multimodalDescription": "当模型使用 mmproj 处理图像或音频输入时启用。模态会从投影文件自动识别。",
+    "embeddingOnlyDescription": "该模型将仅作为嵌入模型导入，多模态选项不可用。",
+    "selectGguf": "选择 GGUF 文件",
+    "requiredForMultimodal": "多模态功能必填",
+    "detected": "已检测到：",
+    "mmprojValidationError": "MMPROJ 校验失败",
+    "validatingMmproj": "正在校验 MMPROJ 文件...",
+    "selectMmproj": "选择 MMPROJ 文件",
+    "requiredForDraft": "草稿模型必填",
+    "draftValidationError": "草稿模型校验失败",
+    "validatingDraft": "正在校验草稿模型文件...",
+    "selectDraftGguf": "选择草稿 GGUF 文件",
+    "clipModelUnsupported": "该模型是 CLIP 架构，无法作为文本生成模型导入。CLIP 模型面向视觉任务，需要另行处理。",
+    "clipDraftUnsupported": "该文件是 CLIP 架构，不能用作草稿模型。",
+    "readMetadataFailed": "读取 {{type}} 元数据失败：{{message}}",
+    "unknownError": "未知错误",
+    "selectModelFile": "请选择模型文件",
+    "selectBothFiles": "多模态模型需要同时选择模型文件和 MMPROJ 文件",
+    "selectDraftFile": "请选择草稿模型文件",
+    "nameUnknown": "无法从文件中确定模型名称",
+    "alreadyExistsDescription": "{{name}} 已导入",
+    "imported": "模型导入成功",
+    "importedDescription": "{{name}} 已导入",
+    "importFailed": "模型导入失败",
+    "unknownErrorOccurred": "发生未知错误",
+    "tokenizerTypeMismatch": "分词器类型 \"{{draft}}\" 与主模型的分词器类型 \"{{main}}\" 不一致",
+    "bosTokenMismatch": "BOS token id {{draft}} 与主模型的 {{main}} 不一致",
+    "eosTokenMismatch": "EOS token id {{draft}} 与主模型的 {{main}} 不一致",
+    "vocabSizeMismatch": "词表大小 {{draft}} 与主模型的 {{main}} 相差超过 {{threshold}} 个 token",
+    "draftNotCompatible": "草稿模型与主模型不兼容：{{mismatch}}。",
+    "draftValidationFailed": "草稿模型校验失败",
+    "mmprojArchitectureMismatch": "该 MMProj 文件的架构为 \"{{architecture}}\"，应为 \"clip\"。MMProj 必须是 CLIP 模型才能用于视觉或音频处理。"
+  },
+  "exportTable": "导出表格",
+  "export": "导出",
+  "dragWindow": "拖动窗口",
+  "windowDragArea": "窗口拖动区域",
+  "paramStrippedOnSend": "不支持，发送时会被移除",
+  "paramMayBeIgnored": "服务商可能会忽略该项",
+  "decrement": "减少",
+  "increment": "增加",
+  "featureNotAvailable": "功能不可用",
+  "noAssistantsAvailable": "暂无可用助手",
+  "runtimeBackend": "Runtime 后端",
+  "errorLabel": "错误：",
+  "clickToEdit": "点击编辑",
+  "toggleFavorite": "收藏/取消收藏",
+  "loadingModel": "正在加载模型...",
+  "copyAsMarkdown": "复制为 Markdown",
+  "copyAsCsv": "复制为 CSV",
+  "downloadMd": "下载 .md",
+  "downloadCsv": "下载 .csv",
+  "diagramError": "图表渲染出错",
+  "contextWindow": "上下文窗口",
+  "tokenUsage": "Token 用量",
+  "apply": "应用",
+  "importing": "正在导入...",
+  "deviceCompatibility": "设备兼容性",
+  "later": "稍后",
+  "noTunableParameters": "该服务商没有可调参数。",
+  "addParameter": "添加参数",
+  "availableTools": "可用工具",
+  "allTools": "全部工具",
+  "resetAll": "全部重置",
+  "pickAssistantForSampling": "请先在上方选择助手，再配置采样参数。",
+  "unexpectedError": "哎呀！发生了意外错误。",
+  "displayName": "显示名称",
+  "saving": "正在保存...",
+  "change": "更改",
+  "conversationContributionUnavailable": "对话扩展不可用",
+  "loadingConversationContribution": "正在加载对话扩展",
+  "featureLoadFailed": "功能加载失败",
+  "audio": "音频",
+  "unavailable": "不可用",
+  "yes": "是",
+  "no": "否",
+  "statusPopup": {
+    "handoffInputBusy": "正在交接输入，请稍后重试",
+    "waitAttachments": "请等待附件处理完成后打开主窗口",
+    "inputChangedDuringHandoff": "交接期间输入已更新，已保留浮窗，请再次打开主窗口",
+    "running": "运行中",
+    "streaming": "流式",
+    "pinned": "固定",
+    "submitBusy": "正在提交输入，请稍后开始新对话",
+    "pendingWork": "本地任务仍在执行或有未提交输入，请完成后开始新对话",
+    "clearDraftFirst": "请先发送或清空当前草稿和附件",
+    "runtimeSwitched": "Runtime 已切换，无法继续上次对话",
+    "continueLast": "继续上次",
+    "selectSession": "选择会话",
+    "unpin": "取消置顶",
+    "pinWindow": "置顶窗口",
+    "openMainWindow": "打开主窗口",
+    "minimizeQuickChat": "最小化快速对话",
+    "closeInputPopup": "关闭输入弹窗",
+    "hideQuickChat": "隐藏快速对话",
+    "openQuickChat": "打开快速对话"
+  },
+  "missingDependencies": {
+    "backend": {
+      "cuda13": "NVIDIA CUDA 13 后端",
+      "cuda12": "NVIDIA CUDA 12 后端",
+      "cuda11": "NVIDIA CUDA 11 后端",
+      "cuda": "NVIDIA CUDA 后端",
+      "vulkan": "Vulkan 后端",
+      "metal": "Apple Metal 后端",
+      "cpu": "CPU 后端"
+    },
+    "redownloadBackend": {
+      "label": "重新下载后端",
+      "description": "后端核心文件缺失或已损坏——通常是下载中断，或压缩包只解出了一部分。请删除该后端并在 BiBit 设置中重新下载。"
+    },
+    "nccl": {
+      "label": "NVIDIA NCCL",
+      "description": "通过 NVIDIA 软件源安装 NCCL。Debian/Ubuntu：sudo apt install libnccl2 libnccl-dev。具体步骤请参考 NVIDIA NCCL 安装指南。"
+    },
+    "cudnn": {
+      "label": "NVIDIA cuDNN",
+      "description": "通过 NVIDIA 软件源安装 cuDNN，或下载压缩包后把库文件复制到 /usr/local/cuda/lib64。"
+    },
+    "vulkan": {
+      "label": "Vulkan 运行时",
+      "description": "安装 Vulkan 加载器：Ubuntu/Debian 执行 sudo apt install libvulkan1；Arch 执行 sudo pacman -S vulkan-icd-loader；RHEL/Fedora 执行 sudo dnf install vulkan-loader。"
+    }
+  },
+  "install": "安装",
+  "uninstall": "卸载",
+  "downloadErrors": {
+    "hfTokenRequired": "需要 Hugging Face 令牌",
+    "hfTokenRequiredDescription": "该模型需要 Hugging Face 访问令牌。请在设置中添加令牌后重试。",
+    "acceptLicense": "请在 Hugging Face 上接受模型许可",
+    "acceptLicenseDescription": "下载前需要先在 Hugging Face 页面接受该模型的许可。",
+    "rateLimited": "被 Hugging Face 限流",
+    "rateLimitedDescription": "你已被限流。添加令牌可提高限额，请稍后重试。"
+  },
+  "openSettings": "打开设置",
+  "fileCategory": {
+    "documentsAndCode": "文档与代码",
+    "allFiles": "所有文件"
+  },
+  "tokenPrompt": "输入",
+  "tokenCompletion": "输出",
+  "tokenUsed": "已用",
+  "tokenRemaining": "剩余",
+  "configuredCtxLen": "配置的 ctx_len：{{value}}",
+  "runtimeStatus": {
+    "disconnected": "{{name}} 未连接",
+    "checking": "正在检查 {{name}}",
+    "starting": "正在启动 {{name}}",
+    "connected": "{{name}} 已连接",
+    "failed": "{{name}} 连接失败"
+  },
+  "runtimeSwitchConfirmKeepSession": "切换后当前服务端任务仍在后台继续，返回后可恢复对话和审批。确认切换到 {{name}}?",
+  "runtimeSwitchConfirmInterrupt": "切换 Runtime 会结束当前运行并中断未决审批，确认切换到 {{name}}?",
+  "runtimeUnavailableOption": "（不可用）",
+  "runtimeRetryConnection": "重试连接 {{name}}",
+  "fittedTo": "已适配 {{value}}",
+  "awaitingApprovalInMainWindow": "主窗口中等待审批",
+  "openMainWindow": "打开主窗口",
+  "permissionPresenterUnavailable": "权限审批界面不可用；请求将在 {{time}} 后由 Runtime 拒绝。",
+  "fitTier": {
+    "fits": "可以运行",
+    "fitsDetail": "在你的设备上可以流畅运行",
+    "mayBeSlow": "可能较慢",
+    "mayBeSlowDetail": "可以运行，但内存余量不多",
+    "wontFit": "无法运行",
+    "wontFitDetail": "很可能超出可用内存",
+    "unknown": "兼容性未知",
+    "unknownDetail": "无法估算内存需求"
+  },
+  "modelVariantInformation": "模型变体信息",
+  "modelInformation": "模型信息",
+  "defaultQuantization": "默认量化",
+  "quantization": "量化",
+  "deviceCompatibilityLabel": "设备兼容性：{{label}}",
+  "errorIntro": "出了点问题，请尝试",
+  "errorRefreshPage": "刷新本页",
+  "errorContactPrompt": "或直接",
+  "errorContactUs": "联系我们",
+  "errorPersists": "（如果问题仍然存在）。",
+  "showLess": "收起",
+  "showMore": "展开",
+  "progress": {
+    "loadingStage": "正在加载 {{stage}}：{{percent}}%",
+    "reading": "正在读取：{{percent}}%",
+    "working": "处理中…",
+    "tokens": "{{processed}} / {{total}} Token",
+    "etaLeft": "约剩 {{eta}}",
+    "stageModel": "模型",
+    "stageTextModel": "文本模型",
+    "stageVisionEncoder": "视觉编码器",
+    "stageDraftModel": "草稿模型"
+  },
+  "handoffPayloadInvalid": "浮窗交接内容无效",
+  "handoffRuntimeMismatch": "Runtime 模式不一致",
+  "handoffRuntimeSwitched": "Runtime 已切换，未接收浮窗输入",
+  "handoffTargetSessionFailed": "主窗口未能打开目标会话，已保留浮窗输入",
+  "fitEstimated": "{{label}}（估算）",
+  "pendingApprovalLocating": "正在定位审批…",
+  "pendingApprovalLocateAction": "{{count}} 项待审批 · 定位处理",
+  "pendingApprovalLocateUnavailable": "暂时无法定位审批，请读取会话后重试",
+  "pendingApprovalHistoryFailed": "读取审批所在历史失败，请重试",
+  "saveChanges": "保存更改",
+  "hide": "隐藏",
+  "reveal": "显示",
+  "minimize": "最小化",
+  "maximize": "最大化",
+  "key": "键",
+  "value": "值",
+  "submenu": "子菜单",
+  "noMessagesYet": "暂无消息",
+  "startConversationHint": "开始对话后，消息会显示在这里",
+  "removeItem": "移除 {{title}}",
+  "typeOrSelectModel": "输入或选择模型...",
+  "parametersNoOverrides": "无覆盖项，使用模型默认值。",
+  "parameterNotSupported": "不支持，将被跳过。",
+  "capabilityWebSearch": "网页搜索",
+  "capabilityEmbeddings": "嵌入模型（用于 RAG/向量，不用于对话）",
+  "attachedImage": "附件图片 {{index}}",
+  "cudaToolkit": "NVIDIA CUDA Toolkit{{version}}",
+  "cudaToolkitDescription": "从 NVIDIA 安装 CUDA Toolkit{{version}}。Debian/Ubuntu：sudo apt install cuda-toolkit-{{major}}；RHEL/Fedora：使用 NVIDIA 源。",
+  "demoRuntime": "演示 Runtime",
+  "demoRuntimeResponseMode": "演示 Runtime 响应模式",
+  "streamingMode": "流式",
+  "fixedMode": "固定",
+  "modelParamDefs": {
+    "ctx_len": {
+      "title": "上下文大小",
+      "description": "提示上下文的尺寸。留空时在开启 --fit 的情况下自动适配。"
+    },
+    "ngl": {
+      "title": "GPU 层数",
+      "description": "卸载到 GPU 的模型层数（-1 表示全部层，0 表示仅用 CPU）。"
+    },
+    "temperature": {
+      "title": "温度",
+      "description": "采样温度（越高越随机）。这是加载时的默认设置，可被助手设置覆盖。"
+    },
+    "top_k": {
+      "title": "Top K",
+      "description": "Top-K 采样（0 = 关闭）。这是加载时的默认设置，可被助手设置覆盖。"
+    },
+    "top_p": {
+      "title": "Top P",
+      "description": "Top-P 采样（1.0 = 关闭）。这是加载时的默认设置，可被助手设置覆盖。"
+    },
+    "min_p": {
+      "title": "Min P",
+      "description": "Min-P 采样（0.0 = 关闭）。这是加载时的默认设置，可被助手设置覆盖。"
+    },
+    "repeat_last_n": {
+      "title": "重复惩罚范围",
+      "description": "计算重复惩罚时考虑的 token 数（0 = 关闭，-1 = 上下文大小）。这是加载时的默认设置，可被助手设置覆盖。"
+    },
+    "repeat_penalty": {
+      "title": "重复惩罚",
+      "description": "惩罚重复的 token 序列（1.0 = 关闭）。这是加载时的默认设置，可被助手设置覆盖。"
+    },
+    "presence_penalty": {
+      "title": "存在惩罚",
+      "description": "重复 alpha 存在惩罚（0.0 = 关闭）。这是加载时的默认设置，可被助手设置覆盖。"
+    },
+    "frequency_penalty": {
+      "title": "频率惩罚",
+      "description": "重复 alpha 频率惩罚（0.0 = 关闭）。这是加载时的默认设置，可被助手设置覆盖。"
+    },
+    "chat_template": {
+      "title": "自定义 Jinja 对话模板",
+      "description": "该模型使用的自定义 Jinja chat_template"
+    },
+    "cpu_moe": {
+      "title": "全部专家保留在 CPU",
+      "description": "将所有混合专家（MoE）权重保留在 CPU（在使用 GPU 时）。"
+    },
+    "n_cpu_moe": {
+      "title": "CPU 上的专家权重层数",
+      "description": "将前 N 层的混合专家（MoE）权重保留在 CPU（在使用 GPU 时）"
+    },
+    "override_tensor_buffer_t": {
+      "title": "覆盖 Tensor 缓冲类型",
+      "description": "覆盖该模型的 tensor 缓冲类型"
+    },
+    "no_kv_offload": {
+      "title": "禁用 KV 卸载",
+      "description": "禁止将 KV 缓存卸载到 GPU（在使用 GPU 时）。"
+    },
+    "batch_size": {
+      "title": "批大小",
+      "description": "处理提示时的逻辑最大批大小。"
+    },
+    "reasoning": {
+      "title": "推理",
+      "description": "在对话中使用推理/思考。'auto' 由对话模板自动判断。"
+    }
+  },
+  "paramDefs": {
+    "stream": {
+      "title": "流式输出",
+      "description": "启用实时流式响应。"
+    },
+    "max_context_tokens": {
+      "title": "最大上下文 token 数",
+      "description": "token 总预算（输入 + 输出）。超出时会裁剪/压缩较早的消息以保持在此范围内。0 表示不裁剪。"
+    },
+    "max_output_tokens": {
+      "title": "最大输出 token 数",
+      "description": "模型单次回复可生成的最大 token 数。该值以 max_tokens 发送给 OpenAI 兼容 API。"
+    },
+    "auto_compact": {
+      "title": "自动压缩",
+      "description": "达到上下文上限时，摘要较早的消息而不是直接丢弃。需要先设置最大上下文 token 数。"
+    },
+    "temperature": {
+      "title": "温度",
+      "description": "控制回复的随机性。",
+      "effectHint": "越高越多样；0 = 确定性输出。"
+    },
+    "top_p": {
+      "title": "Top P",
+      "description": "核采样阈值。值越高允许的用词越多样。"
+    },
+    "top_k": {
+      "title": "Top K",
+      "description": "从概率最高的 K 个 token 中采样。0 = 关闭。"
+    },
+    "min_p": {
+      "title": "Min P",
+      "description": "token 被纳入采样所需的最低相对概率。"
+    },
+    "frequency_penalty": {
+      "title": "频率惩罚",
+      "description": "按此前的出现频率降低用词重复。"
+    },
+    "presence_penalty": {
+      "title": "存在惩罚",
+      "description": "鼓励模型引入新话题。"
+    },
+    "repeat_penalty": {
+      "title": "重复惩罚",
+      "description": "llama.cpp 风格的对重复 token 的乘法惩罚。1.0 = 关闭。"
+    },
+    "mirostat": {
+      "title": "Mirostat",
+      "description": "自适应困惑度目标采样器。",
+      "effectHint": "启用后会覆盖 Top K / Top P / Min P。"
+    },
+    "mirostat_tau": {
+      "title": "Mirostat Tau",
+      "description": "目标熵。值越低越聚焦。"
+    },
+    "mirostat_eta": {
+      "title": "Mirostat Eta",
+      "description": "Mirostat 学习率。"
+    },
+    "grammar": {
+      "title": "语法约束（GBNF）",
+      "description": "用 GBNF 语法约束生成内容。"
+    },
+    "json_schema": {
+      "title": "JSON Schema",
+      "description": "用 JSON schema 约束输出为合法 JSON。"
+    },
+    "typical_p": {
+      "title": "Typical P",
+      "description": "局部典型采样。1.0 = 关闭。"
+    },
+    "top_n_sigma": {
+      "title": "Top N Sigma",
+      "description": "按高于最大 logit 的标准差倍数过滤。-1 = 关闭。"
+    },
+    "dynatemp_range": {
+      "title": "动态温度范围",
+      "description": "实际温度在 [temperature - range, temperature + range] 区间内采样。0 = 关闭。"
+    },
+    "dynatemp_exp": {
+      "title": "动态温度指数",
+      "description": "决定温度在区间内的分布形态。"
+    },
+    "xtc_probability": {
+      "title": "XTC 概率",
+      "description": "启用 Exclude-Top-Choices 采样器的概率。"
+    },
+    "xtc_threshold": {
+      "title": "XTC 阈值",
+      "description": "可被 XTC 排除的 token 最低概率。"
+    },
+    "dry_multiplier": {
+      "title": "DRY 惩罚系数",
+      "description": "Don't-Repeat-Yourself 惩罚的倍数。0 = 关闭。"
+    },
+    "dry_base": {
+      "title": "DRY 基数",
+      "description": "惩罚增长的指数底数。"
+    },
+    "dry_allowed_length": {
+      "title": "DRY 允许长度",
+      "description": "触发 DRY 前的最小重复序列长度。"
+    },
+    "dry_penalty_last_n": {
+      "title": "DRY 惩罚窗口",
+      "description": "DRY 扫描的近期 token 窗口。-1 = 整个上下文，0 = 关闭。"
+    },
+    "ignore_eos": {
+      "title": "忽略 EOS",
+      "description": "越过序列结束 token 继续生成。"
+    },
+    "repeat_last_n": {
+      "title": "重复惩罚范围",
+      "description": "计算重复惩罚时考虑的近期 token 数。-1 = 整个上下文，0 = 关闭。"
+    },
+    "samplers": {
+      "title": "采样器顺序",
+      "description": "采样器的应用顺序，以逗号分隔（例如 \"top_k,typ_p,top_p,min_p,xtc,temperature\"）。留空 = 使用服务端默认顺序。"
+    },
+    "backend_sampling": {
+      "title": "后端采样",
+      "description": "使用模型后端自带的采样器，而不是 llama.cpp 的。"
+    },
+    "thinking_budget_tokens": {
+      "title": "思考预算 token 数",
+      "description": "模型在被强制作答前可用于推理的最大 token 数。-1 = 不限制。"
+    }
+  },
+  "paramGroups": {
+    "mirostat": {
+      "title": "Mirostat",
+      "description": "自适应困惑度目标采样器，会覆盖 Top K / Top P / Min P。"
+    },
+    "dry": {
+      "title": "DRY",
+      "description": "针对长重复序列的 Don't-Repeat-Yourself 惩罚。"
+    },
+    "xtc": {
+      "title": "XTC",
+      "description": "Exclude-Top-Choices 采样器 —— 按概率剔除高概率 token。"
+    },
+    "dynatemp": {
+      "title": "动态温度",
+      "description": "在基准温度附近的区间内采样实际温度。"
+    }
+  },
+  "paramCategories": {
+    "common": "常用",
+    "penalties": "惩罚",
+    "output": "输出控制",
+    "advanced": "高级采样器"
+  },
+  "paramDisabled": {
+    "ignoredWhenTemperatureIsZero": "温度为 0 时忽略",
+    "controlledByMirostat": "由 Mirostat 控制",
+    "enableMirostat": "启用 Mirostat 后可用",
+    "setDynatempRange": "将动态温度范围设为大于 0",
+    "setXtcProbability": "将 XTC 概率设为大于 0",
+    "setDryMultiplier": "将 DRY 惩罚系数设为大于 0"
+  },
+  "optionValues": {
+    "auto": "自动",
+    "on": "开启",
+    "off": "关闭",
+    "noSplit": "不切分",
+    "byLayer": "按层切分",
+    "byRow": "按行切分",
+    "noScaling": "不缩放",
+    "linear": "线性",
+    "yarn": "YaRN",
+    "autoRecommended": "自动（推荐）",
+    "ann": "ANN（sqlite-vec）",
+    "includeInChat": "随对话发送",
+    "ingestAsEmbeddings": "转为向量入库",
+    "askEveryTime": "每次询问"
+  },
+  "runtimeCommandFailed": "Runtime 命令失败",
+  "windowControlUnavailable": "工作台正被其他 Bibit 客户端占用，请先退出它再重试"
+}

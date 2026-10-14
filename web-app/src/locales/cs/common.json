@@ -1,0 +1,316 @@
+{
+  "assistants": "Asistenti",
+  "hardware": "Hardware",
+  "mcp-servers": "MCP servery",
+  "local_api_server": "Lokální API server",
+  "https_proxy": "HTTPS Proxy",
+  "extensions": "Rozšíření",
+  "experimental": "Experimentální",
+  "general": "Obecné",
+  "settings": "Nastavení",
+  "modelProviders": "Poskytovatelé modelů",
+  "localProviders": "Lokální",
+  "remoteProviders": "Vzdálené",
+  "manageProviders": "Manage providers",
+  "hiddenProviders": "{{count}} disabled",
+  "attachments": "Přílohy",
+  "interface": "Rozhraní",
+  "appearance": "Rozhraní",
+  "privacy": "Soukromí",
+  "keyboardShortcuts": "Klávesové zkratky",
+  "newChat": "Nový chat",
+  "newAgentChat": "Nový chat agenta",
+  "chats": "Chaty",
+  "favorites": "Oblíbené",
+  "recents": "Nedávné",
+  "helpSupport": "Nápověda a podpora",
+  "unstarAll": "Odebrat vše z oblíbených",
+  "unstar": "Odebrat z oblíbených",
+  "deleteAll": "Smazat vše",
+  "star": "Přidat do oblíbených",
+  "rename": "Přejmenovat",
+  "delete": "Smazat",
+  "copied": "Zkopírováno!",
+  "dataFolder": "Složka s daty",
+  "others": "Ostatní",
+  "language": "Jazyk",
+  "login": "Přihlásit se",
+  "loginWith": "Přihlásit se pomocí {{provider}}",
+  "loginFailed": "Přihlášení se nezdařilo",
+  "logout": "Odhlásit se",
+  "loggingOut": "Odhlašování...",
+  "loggedOut": "Úspěšně odhlášeno",
+  "logoutFailed": "Odhlášení se nezdařilo",
+  "profile": "Profil",
+  "reset": "Obnovit",
+  "search": "Hledat",
+  "name": "Název",
+  "cancel": "Zrušit",
+  "create": "Vytvořit",
+  "save": "Uložit",
+  "edit": "Upravit",
+  "copy": "Kopírovat",
+  "back": "Zpět",
+  "close": "Zavřít",
+  "done": "Hotovo",
+  "next": "Další",
+  "finish": "Dokončit",
+  "skip": "Přeskočit",
+  "allow": "Povolit",
+  "deny": "Zamítnout",
+  "start": "Spustit",
+  "stop": "Zastavit",
+  "preview": "Náhled",
+  "compactWidth": "Kompaktní šířka",
+  "fullWidth": "Plná šířka",
+  "dark": "Tmavý",
+  "light": "Světlý",
+  "system": "Systémový",
+  "auto": "Automaticky",
+  "english": "Angličtina",
+  "medium": "Střední",
+  "newThread": "Nové vlákno",
+  "noResultsFound": "Nebyly nalezeny žádné výsledky",
+  "noThreadsYet": "Zatím žádná vlákna",
+  "noThreadsYetDesc": "Začněte novou konverzaci a uvidíte zde historii vláken.",
+  "downloads": "Stahování",
+  "downloading": "Stahování",
+  "uploadingAttachments": "Nahrávání příloh…",
+  "cancelDownload": "Zrušit stahování",
+  "downloadCancelled": "Stahování zrušeno",
+  "downloadComplete": "Stahování dokončeno",
+  "thinking": "Přemýšlím...",
+  "thought": "Myšlenka",
+  "callingTool": "Volání nástroje",
+  "completed": "Dokončeno",
+  "image": "Obrázek",
+  "vision": "Vidění",
+  "embeddings": "Embeddingy",
+  "tools": "Nástroje",
+  "webSearch": "Webové vyhledávání",
+  "reasoning": "Uvažování",
+  "proactive": "Proaktivní",
+  "selectAModel": "Vyberte model",
+  "noToolsAvailable": "Nejsou k dispozici žádné nástroje",
+  "noModelsFoundFor": "Nebyly nalezeny žádné modely pro \"{{searchValue}}\"",
+  "failedToLoadModels": "Načítání modelů se nezdařilo",
+  "noModels": "Nebyly nalezeny žádné modely",
+  "customAvatar": "Vlastní avatar",
+  "editAssistant": "Upravit asistenta",
+  "jan": "Jan",
+  "metadata": "Metadata",
+  "regenerate": "Regenerovat",
+  "threadImage": "Obrázek vlákna",
+  "editMessage": "Upravit zprávu",
+  "deleteMessage": "Smazat zprávu",
+  "deleteThread": "Smazat vlákno",
+  "renameThread": "Přejmenovat vlákno",
+  "threadTitle": "Název vlákna",
+  "deleteAllThreads": "Smazat všechna vlákna",
+  "allThreadsUnfavorited": "Všechna vlákna odebrána z oblíbených",
+  "deleteAllThreadsConfirm": "Opravdu chcete smazat všechna vlákna? Tuto akci nelze vrátit zpět.",
+  "addProvider": "Přidat poskytovatele",
+  "addOpenAIProvider": "Přidat OpenAI poskytovatele",
+  "enterNameForProvider": "Zadejte název pro vašeho poskytovatele",
+  "providerAlreadyExists": "Poskytovatel s názvem \"{{name}}\" již existuje. Zvolte prosím jiný název.",
+  "adjustFontSize": "Upravit velikost písma",
+  "changeLanguage": "Změnit jazyk",
+  "editTheme": "Upravit motiv",
+  "editCodeBlockStyle": "Upravit styl bloku kódu",
+  "editServerHost": "Upravit hostitele serveru",
+  "pickColorWindowBackground": "Vybrat barvu pozadí okna",
+  "pickColorAppMainView": "Vybrat barvu hlavního zobrazení aplikace",
+  "pickColorAppPrimary": "Vybrat primární barvu aplikace",
+  "pickColorAppAccent": "Vybrat zvýrazňující barvu aplikace",
+  "pickColorAppDestructive": "Vybrat barvu destruktivních akcí",
+  "apiKeyRequired": "API klíč je vyžadován",
+  "enterTrustedHosts": "Zadejte důvěryhodné hostitele",
+  "placeholder": {
+    "chatInput": "Zeptejte se na cokoliv..."
+  },
+  "confirm": "Potvrdit",
+  "continue": "Pokračovat",
+  "loading": "Načítání...",
+  "error": "Chyba",
+  "success": "Úspěch",
+  "warning": "Varování",
+  "conversationNotAvailable": "Konverzace není k dispozici",
+  "conversationNotAvailableDescription": "Konverzace, ke které se snažíte přistoupit, není k dispozici nebo byla smazána.",
+  "temporaryChat": "Dočasný chat",
+  "temporaryChatTooltip": "Dočasný chat se nezobrazí ve vaší historii",
+  "noResultsFoundDesc": "Nenašli jsme žádné chaty odpovídající vašemu vyhledávání. Zkuste jiné klíčové slovo.",
+  "searchModels": "Hledat modely...",
+  "searchStyles": "Hledat styly...",
+  "createAssistant": "Vytvořit asistenta",
+  "enterApiKey": "Zadejte API klíč",
+  "scrollToBottom": "Posunout dolů",
+  "generateAiResponse": "Generovat AI odpověď",
+  "continueAiResponse": "Pokračovat s AI odpovědí",
+  "addModel": {
+    "title": "Přidat model",
+    "modelId": "ID modelu",
+    "enterModelId": "Zadejte ID modelu",
+    "addModel": "Přidat model",
+    "description": "Přidejte nový model k poskytovateli",
+    "exploreModels": "Zobrazit seznam modelů od poskytovatele"
+  },
+  "mcpServers": {
+    "editServer": "Upravit server",
+    "addServer": "Přidat server",
+    "serverName": "Název serveru",
+    "enterServerName": "Zadejte název serveru",
+    "command": "Příkaz",
+    "enterCommand": "Zadejte příkaz",
+    "arguments": "Argumenty",
+    "argument": "Argument {{index}}",
+    "envVars": "Proměnné prostředí",
+    "key": "Klíč",
+    "value": "Hodnota",
+    "save": "Uložit"
+  },
+  "deleteServer": {
+    "title": "Smazat server",
+    "delete": "Smazat"
+  },
+  "editJson": {
+    "errorParse": "Nepodařilo se analyzovat JSON",
+    "errorPaste": "Nepodařilo se vložit JSON",
+    "errorFormat": "Neplatný formát JSON",
+    "titleAll": "Upravit konfiguraci všech serverů",
+    "placeholder": "Zadejte konfiguraci JSON...",
+    "save": "Uložit"
+  },
+  "editModel": {
+    "title": "Upravit model: {{modelId}}",
+    "description": "Nakonfigurujte schopnosti modelu přepnutím níže uvedených možností.",
+    "capabilities": "Schopnosti",
+    "tools": "Nástroje",
+    "vision": "Vidění",
+    "embeddings": "Embeddingy",
+    "notAvailable": "Zatím není k dispozici"
+  },
+  "outOfContextError": {
+    "truncateInput": "Zkrátit vstup",
+    "title": "Chyba mimo kontext",
+    "description": "Tento chat se blíží k limitu paměti AI, jako tabule, která se plní. Můžeme rozšířit paměťové okno (nazývané velikost kontextu), aby si pamatoval více, ale může to využít více paměti vašeho počítače. Můžeme také zkrátit vstup, což znamená, že zapomene část historie chatu, aby uvolnil místo pro nové zprávy.",
+    "increaseContextSizeDescription": "Chcete zvýšit velikost kontextu?",
+    "increaseContextSize": "Zvýšit velikost kontextu"
+  },
+  "toolApproval": {
+    "title": "Žádost o povolení nástroje",
+    "description": "Asistent chce použít <strong>{{toolName}}</strong>",
+    "securityNotice": "Povolte pouze nástroje, kterým důvěřujete. Nástroje mohou přistupovat k vašemu systému a datům.",
+    "deny": "Zamítnout",
+    "allowOnce": "Povolit jednou",
+    "alwaysAllow": "Vždy povolit"
+  },
+  "deleteModel": {
+    "title": "Smazat model: {{modelId}}",
+    "description": "Opravdu chcete smazat tento model? Tuto akci nelze vrátit zpět.",
+    "success": "Model {{modelId}} byl trvale smazán.",
+    "cancel": "Zrušit",
+    "delete": "Smazat"
+  },
+  "deleteProvider": {
+    "title": "Smazat poskytovatele",
+    "description": "Smazat tohoto poskytovatele a všechny jeho modely. Tuto akci nelze vrátit zpět.",
+    "success": "Poskytovatel {{provider}} byl trvale smazán.",
+    "confirmTitle": "Smazat poskytovatele: {{provider}}",
+    "confirmDescription": "Opravdu chcete smazat tohoto poskytovatele? Tuto akci nelze vrátit zpět.",
+    "cancel": "Zrušit",
+    "delete": "Smazat"
+  },
+  "modelSettings": {
+    "nglDisabledByFit": "Auto-fit is choosing GPU layers. Turn off Auto-fit to set this manually.",
+    "title": "Nastavení modelu - {{modelId}}",
+    "description": "Nakonfigurujte nastavení modelu pro optimalizaci výkonu a chování."
+  },
+  "dialogs": {
+    "changeDataFolder": {
+      "title": "Změnit umístění složky s daty",
+      "description": "Opravdu chcete změnit umístění složky s daty? Tím přesunete všechna vaše data do nového umístění a restartujete aplikaci.",
+      "currentLocation": "Aktuální umístění:",
+      "newLocation": "Nové umístění:",
+      "cancel": "Zrušit",
+      "changeLocation": "Změnit umístění"
+    },
+    "deleteAllThreads": {
+      "title": "Smazat všechna vlákna",
+      "description": "Všechna vlákna budou smazána. Tuto akci nelze vrátit zpět."
+    },
+    "deleteThread": {
+      "description": "Opravdu chcete smazat toto vlákno? Tuto akci nelze vrátit zpět."
+    },
+    "editMessage": {
+      "title": "Upravit zprávu"
+    },
+    "messageMetadata": {
+      "title": "Metadata zprávy"
+    }
+  },
+  "errorDialog": {
+    "titleFallback": "Něco se pokazilo",
+    "details": "Podrobnosti"
+  },
+  "toast": {
+    "allThreadsUnfavorited": {
+      "title": "Všechna vlákna odebrána z oblíbených",
+      "description": "Všechna vlákna byla odebrána z vašich oblíbených."
+    },
+    "deleteAllThreads": {
+      "title": "Smazat všechna vlákna",
+      "description": "Všechna vlákna byla trvale smazána."
+    },
+    "renameThread": {
+      "title": "Přejmenovat vlákno",
+      "description": "Název vlákna byl přejmenován na '{{title}}'"
+    },
+    "deleteThread": {
+      "title": "Smazat vlákno",
+      "description": "Toto vlákno bylo trvale smazáno."
+    },
+    "errorCopied": {
+      "title": "Zkopírování se podařilo",
+      "description": "Informace o chybě byly zkopírovány do schránky"
+    },
+    "errorCopyFailed": {
+      "title": "Nepodařilo se zkopírovat",
+      "description": "Nepodařilo se zkopírovat informace o chybě do schránky"
+    },
+    "editMessage": {
+      "title": "Upravit zprávu",
+      "description": "Zpráva byla úspěšně upravena. Počkejte prosím na odpověď modelu."
+    },
+    "downloadComplete": {
+      "title": "Stahování dokončeno",
+      "description": "{{item}} byl stažen"
+    },
+    "downloadCancelled": {
+      "title": "Stahování zrušeno",
+      "description": "Proces stahování byl zrušen"
+    },
+    "downloadFailed": {
+      "title": "Stahování selhalo",
+      "description": "Stahování {{item}} selhalo"
+    },
+    "modelValidationStarted": {
+      "title": "Ověřování modelu",
+      "description": "Model \"{{modelId}}\" byl úspěšně stažen. Ověřování integrity..."
+    },
+    "modelValidationFailed": {
+      "title": "Ověření modelu selhalo",
+      "description": "Stažený model \"{{modelId}}\" selhal při ověření integrity a byl odstraněn. Soubor může být poškozen nebo zmanipulován."
+    },
+    "downloadAndVerificationComplete": {
+      "title": "Stahování dokončeno",
+      "description": "Model \"{{item}}\" byl úspěšně stažen a ověřen"
+    }
+  },
+  "llamacppBusyOnExit": {
+    "title": "llama.cpp is still busy",
+    "description": "One or more models did not unload in time. Force-quitting will terminate llama.cpp and may interrupt active responses.",
+    "forceQuit": "Force quit",
+    "forcing": "Force quitting…",
+    "shuttingDown": "Shutting down…"
+  }
+}

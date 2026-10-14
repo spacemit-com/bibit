@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "keys": [
+    {
+      "keyId": "agent-hub-development",
+      "publicKey": "LAZehiB6ST/pKRAF6wqrKpTNJdIAo/L9o3LUeTbiIqM="
+    },
+    {
+      "keyId": "memory-development",
+      "publicKey": "KvjaWdivZ5p/0qD+eRDgzQugNQMD6ae91ZsUATASWpY="
+    },
+    {
+      "keyId": "security-development",
+      "publicKey": "uSeTFUJHS7T+uFh5RhkUcTF3WNsllHb0qdtTsG6ZGIM="
+    }
+  ]
+}

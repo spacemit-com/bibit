@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "lib": ["ES2021", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+    "strict": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "baseUrl": "../../..",
+    "typeRoots": ["../../../web-app/node_modules/@types"],
+    "types": ["react", "react-dom"],
+    "paths": {
+      "react": ["web-app/node_modules/@types/react/index.d.ts"],
+      "react/jsx-runtime": ["web-app/node_modules/@types/react/jsx-runtime.d.ts"],
+      "react/jsx-dev-runtime": ["web-app/node_modules/@types/react/jsx-dev-runtime.d.ts"],
+      "@bibit/feature-contracts": ["packages/feature-contracts/src/index.ts"],
+      "@bibit/feature-sdk": ["packages/feature-sdk/src/index.ts"],
+      "@bibit/feature-ui": ["packages/feature-ui/src/index.ts"]
+    }
+  },
+  "include": ["*/src/**/*.ts", "*/src/**/*.tsx"]
+}

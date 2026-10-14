@@ -1,0 +1,15 @@
+# Feature SDK platform-owned contracts and host integration.
+/packages/feature-contracts/ @shaominghao
+/packages/feature-sdk/ @shaominghao
+/packages/feature-ui/ @shaominghao
+/scripts/feature-registry/ @shaominghao
+/config/feature-capability-grants.json @shaominghao
+/web-app/src/features/ @shaominghao
+/web-app/src/routes/features/ @shaominghao
+/web-app/src/routes/settings/features/ @shaominghao
+/web-app/src/containers/FeatureSettingsShell.tsx @shaominghao
+
+# Proof fixtures model module-team ownership. Replace owners during real migration.
+/tests/fixtures/features/store/ @shaominghao
+/tests/fixtures/features/memory/ @shaominghao
+/tests/fixtures/features/security/ @shaominghao

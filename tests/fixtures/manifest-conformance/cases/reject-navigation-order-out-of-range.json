@@ -1,0 +1,41 @@
+{
+  "name": "reject-navigation-order-out-of-range",
+  "expect": "reject",
+  "note": "Navigation order is bounded to +-10000.",
+  "manifest": {
+    "manifestSchemaVersion": 1,
+    "sdkApiVersion": 1,
+    "id": "conformance",
+    "version": "0.1.0",
+    "owner": "platform-team",
+    "display": {
+      "titleKey": "conformance:title",
+      "fallbackTitle": "Conformance",
+      "iconKey": "feature"
+    },
+    "targets": [
+      "desktop"
+    ],
+    "requiredHostCapabilities": [],
+    "contributions": {
+      "pages": [],
+      "settings": [
+        {
+          "id": "configure",
+          "path": "",
+          "surfaces": [
+            "main"
+          ],
+          "navigation": {
+            "group": "privacy",
+            "order": 10001
+          }
+        }
+      ],
+      "conversation": [],
+      "locales": [
+        "en"
+      ]
+    }
+  }
+}

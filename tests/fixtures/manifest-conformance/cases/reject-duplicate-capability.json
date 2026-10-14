@@ -1,0 +1,32 @@
+{
+  "name": "reject-duplicate-capability",
+  "expect": "reject",
+  "note": "requiredHostCapabilities must be unique.",
+  "manifest": {
+    "manifestSchemaVersion": 1,
+    "sdkApiVersion": 1,
+    "id": "conformance",
+    "version": "0.1.0",
+    "owner": "platform-team",
+    "display": {
+      "titleKey": "conformance:title",
+      "fallbackTitle": "Conformance",
+      "iconKey": "feature"
+    },
+    "targets": [
+      "desktop"
+    ],
+    "requiredHostCapabilities": [
+      "service:store",
+      "service:store"
+    ],
+    "contributions": {
+      "pages": [],
+      "settings": [],
+      "conversation": [],
+      "locales": [
+        "en"
+      ]
+    }
+  }
+}

@@ -1,0 +1,3 @@
+# unsafe-libyaml is a Rust implementation linked through serde_yaml, not a
+# bundled copy that can be replaced by Debian's shared libyaml library.
+bi-bit: embedded-library libyaml [usr/bin/bibit-gui]

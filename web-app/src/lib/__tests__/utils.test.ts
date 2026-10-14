@@ -1,0 +1,450 @@
+import { describe, it, expect, vi } from 'vitest'
+import {
+  getProviderLogo,
+  getProviderTitle,
+  getReadableLanguageName,
+  toGigabytes,
+  formatBytes,
+  formatMegaBytes,
+  formatDuration,
+  getModelDisplayName,
+  splitHtmlArtifacts,
+} from '../utils'
+
+describe('getProviderLogo', () => {
+  it('returns correct logo paths for known providers', () => {
+    expect(getProviderLogo('llamacpp')).toBe(
+      '/images/model-provider/llamacpp.svg'
+    )
+    expect(getProviderLogo('anthropic')).toBe(
+      '/images/model-provider/anthropic.svg'
+    )
+    expect(getProviderLogo('openai')).toBe('/images/model-provider/openai.svg')
+    expect(getProviderLogo('gemini')).toBe('/images/model-provider/gemini.svg')
+    expect(getProviderLogo('nvidia')).toBe('/images/model-provider/nvidia.svg')
+  })
+
+  it('returns undefined for unknown providers', () => {
+    expect(getProviderLogo('unknown')).toBeUndefined()
+    expect(getProviderLogo('')).toBeUndefined()
+  })
+})
+
+describe('getProviderTitle', () => {
+  it('returns formatted titles for special providers', () => {
+    expect(getProviderTitle('llamacpp')).toBe('Llama.cpp')
+    expect(getProviderTitle('openai')).toBe('OpenAI')
+    expect(getProviderTitle('openrouter')).toBe('OpenRouter')
+    expect(getProviderTitle('gemini')).toBe('Gemini')
+    expect(getProviderTitle('nvidia')).toBe('NVIDIA NIM')
+  })
+
+  it('capitalizes first letter for unknown providers', () => {
+    expect(getProviderTitle('anthropic')).toBe('Anthropic')
+    expect(getProviderTitle('mistral')).toBe('Mistral')
+    expect(getProviderTitle('test')).toBe('Test')
+  })
+
+  it('handles empty strings', () => {
+    expect(getProviderTitle('')).toBe('')
+  })
+})
+
+describe('getReadableLanguageName', () => {
+  it('returns full language names for known languages', () => {
+    expect(getReadableLanguageName('js')).toBe('JavaScript')
+    expect(getReadableLanguageName('ts')).toBe('TypeScript')
+    expect(getReadableLanguageName('jsx')).toBe('React JSX')
+    expect(getReadableLanguageName('py')).toBe('Python')
+    expect(getReadableLanguageName('cpp')).toBe('C++')
+    expect(getReadableLanguageName('yml')).toBe('YAML')
+  })
+
+  it('capitalizes first letter for unknown languages', () => {
+    expect(getReadableLanguageName('rust')).toBe('Rust')
+    expect(getReadableLanguageName('unknown')).toBe('Unknown')
+    expect(getReadableLanguageName('test')).toBe('Test')
+  })
+
+  it('handles empty strings', () => {
+    expect(getReadableLanguageName('')).toBe('')
+  })
+})
+
+describe('toGigabytes', () => {
+  it('returns empty string for falsy inputs', () => {
+    expect(toGigabytes(0)).toBe('')
+    expect(toGigabytes(null as unknown as number)).toBe('')
+    expect(toGigabytes(undefined as unknown as number)).toBe('')
+  })
+
+  it('formats bytes correctly', () => {
+    expect(toGigabytes(500)).toBe('500B')
+    expect(toGigabytes(1000)).toBe('1000B')
+  })
+
+  it('formats kilobytes correctly', () => {
+    expect(toGigabytes(1025)).toBe('1.00KB')
+    expect(toGigabytes(2048)).toBe('2.00KB')
+    expect(toGigabytes(1536)).toBe('1.50KB')
+  })
+
+  it('formats exactly 1024 bytes as bytes', () => {
+    expect(toGigabytes(1024)).toBe('1024B')
+  })
+
+  it('formats megabytes correctly', () => {
+    expect(toGigabytes(1024 ** 2 + 1)).toBe('1.00MB')
+    expect(toGigabytes(1024 ** 2 * 2.5)).toBe('2.50MB')
+  })
+
+  it('formats exactly 1024^2 bytes as KB', () => {
+    expect(toGigabytes(1024 ** 2)).toBe('1024.00KB')
+  })
+
+  it('formats gigabytes correctly', () => {
+    expect(toGigabytes(1024 ** 3 + 1)).toBe('1.00GB')
+    expect(toGigabytes(1024 ** 3 * 1.5)).toBe('1.50GB')
+  })
+
+  it('formats exactly 1024^3 bytes as MB', () => {
+    expect(toGigabytes(1024 ** 3)).toBe('1024.00MB')
+  })
+
+  it('respects hideUnit option', () => {
+    expect(toGigabytes(1025, { hideUnit: true })).toBe('1.00')
+    expect(toGigabytes(1024 ** 2 + 1, { hideUnit: true })).toBe('1.00')
+    expect(toGigabytes(500, { hideUnit: true })).toBe('500')
+    expect(toGigabytes(1024, { hideUnit: true })).toBe('1024')
+  })
+
+  it('respects toFixed option', () => {
+    expect(toGigabytes(1536, { toFixed: 1 })).toBe('1.5KB')
+    expect(toGigabytes(1536, { toFixed: 3 })).toBe('1.500KB')
+    expect(toGigabytes(1024 ** 2 * 1.5, { toFixed: 0 })).toBe('2MB')
+  })
+})
+
+describe('formatMegaBytes', () => {
+  it('formats values less than 1024 MB as GB', () => {
+    expect(formatMegaBytes(512)).toBe('0.50 GB')
+    expect(formatMegaBytes(1000)).toBe('0.98 GB')
+    expect(formatMegaBytes(1023)).toBe('1.00 GB')
+  })
+
+  it('formats values 1024*1024 MB and above as TB', () => {
+    expect(formatMegaBytes(1024 * 1024)).toBe('1.00 TB')
+    expect(formatMegaBytes(1024 * 1024 * 2.5)).toBe('2.50 TB')
+  })
+
+  it('formats exactly 1024 MB as GB', () => {
+    expect(formatMegaBytes(1024)).toBe('1.00 GB')
+  })
+
+  it('handles zero and small values', () => {
+    expect(formatMegaBytes(0)).toBe('0.00 GB')
+    expect(formatMegaBytes(1)).toBe('0.00 GB')
+  })
+})
+
+describe('formatBytes', () => {
+  it('returns fallback for undefined or non-finite input', () => {
+    expect(formatBytes(undefined)).toBe('')
+    expect(formatBytes(undefined, { fallback: 'N/A' })).toBe('N/A')
+    expect(formatBytes(Number.NaN, { fallback: '-' })).toBe('-')
+    expect(formatBytes(Number.POSITIVE_INFINITY, { fallback: 'INF' })).toBe(
+      'INF'
+    )
+  })
+
+  it('formats bytes with default options', () => {
+    expect(formatBytes(0)).toBe('0.0 B')
+    expect(formatBytes(512)).toBe('512.0 B')
+    expect(formatBytes(1536)).toBe('1.5 KB')
+    expect(formatBytes(1024 ** 2 * 2.25)).toBe('2.3 MB')
+    expect(formatBytes(1024 ** 3 * 3)).toBe('3.0 GB')
+  })
+
+  it('uses 1024 boundaries for unit transitions', () => {
+    expect(formatBytes(1023)).toBe('1023.0 B')
+    expect(formatBytes(1024)).toBe('1.0 KB')
+    expect(formatBytes(1024 ** 2)).toBe('1.0 MB')
+    expect(formatBytes(1024 ** 3)).toBe('1.0 GB')
+  })
+
+  it('supports numeric decimals option', () => {
+    expect(formatBytes(1536, { decimals: 2 })).toBe('1.50 KB')
+    expect(formatBytes(1536, { decimals: 0 })).toBe('2 KB')
+    expect(formatBytes(1536, { decimals: 3 })).toBe('1.500 KB')
+  })
+
+  it('clamps and truncates decimal precision into toFixed range', () => {
+    expect(formatBytes(1536, { decimals: -5 })).toBe('2 KB')
+    expect(formatBytes(1536, { decimals: 2.9 })).toBe('1.50 KB')
+    expect(formatBytes(1536, { decimals: 999 })).toBe(
+      '1.50000000000000000000 KB'
+    )
+  })
+
+  it('supports function-based decimals per unit', () => {
+    const decimals = vi.fn((value: number, unit: 'B' | 'KB' | 'MB' | 'GB') => {
+      if (unit === 'B') return 0
+      if (unit === 'KB') return value < 2 ? 3 : 1
+      if (unit === 'MB') return 2
+      return 4
+    })
+
+    expect(formatBytes(900, { decimals })).toBe('900 B')
+    expect(formatBytes(1536, { decimals })).toBe('1.500 KB')
+    expect(formatBytes(4096, { decimals })).toBe('4.0 KB')
+    expect(formatBytes(1024 ** 2 * 1.25, { decimals })).toBe('1.25 MB')
+    expect(formatBytes(1024 ** 3 * 1.5, { decimals })).toBe('1.5000 GB')
+    expect(decimals).toHaveBeenCalledTimes(5)
+  })
+
+  it('supports separator and hideUnit options', () => {
+    expect(formatBytes(1536, { separator: '' })).toBe('1.5KB')
+    expect(formatBytes(1536, { separator: ' - ' })).toBe('1.5 - KB')
+    expect(formatBytes(1536, { hideUnit: true })).toBe('1.5')
+    expect(formatBytes(1536, { hideUnit: true, separator: ' / ' })).toBe('1.5')
+  })
+
+  it('honors minUnit floor', () => {
+    expect(formatBytes(1, { minUnit: 'KB', decimals: 4 })).toBe('0.0010 KB')
+    expect(formatBytes(1024, { minUnit: 'MB', decimals: 4 })).toBe('0.0010 MB')
+    expect(formatBytes(1024 ** 2, { minUnit: 'GB', decimals: 4 })).toBe(
+      '0.0010 GB'
+    )
+    expect(formatBytes(1024 ** 2 * 2, { minUnit: 'KB', decimals: 2 })).toBe(
+      '2.00 MB'
+    )
+  })
+})
+
+describe('formatDuration', () => {
+  it('formats milliseconds when duration is less than 1 second', () => {
+    const start = Date.now()
+    const end = start + 500
+    expect(formatDuration(start, end)).toBe('500ms')
+  })
+
+  it('formats seconds when duration is less than 1 minute', () => {
+    const start = Date.now()
+    const end = start + 30000 // 30 seconds
+    expect(formatDuration(start, end)).toBe('30s')
+  })
+
+  it('formats minutes and seconds when duration is less than 1 hour', () => {
+    const start = Date.now()
+    const end = start + 150000 // 2 minutes 30 seconds
+    expect(formatDuration(start, end)).toBe('2m 30s')
+  })
+
+  it('formats hours, minutes and seconds when duration is less than 1 day', () => {
+    const start = Date.now()
+    const end = start + 7890000 // 2 hours 11 minutes 30 seconds
+    expect(formatDuration(start, end)).toBe('2h 11m 30s')
+  })
+
+  it('formats days, hours, minutes and seconds for longer durations', () => {
+    const start = Date.now()
+    const end = start + 180000000 // 2 days 2 hours
+    expect(formatDuration(start, end)).toBe('2d 2h 0m 0s')
+  })
+
+  it('uses current time when endTime is not provided', () => {
+    vi.useFakeTimers()
+    const now = new Date('2023-01-01T12:00:00Z').getTime()
+    vi.setSystemTime(now)
+
+    const start = now - 5000 // 5 seconds ago
+    expect(formatDuration(start)).toBe('5s')
+
+    vi.useRealTimers()
+  })
+
+  it('handles negative durations (future start time)', () => {
+    const start = Date.now() + 1000 // 1 second in the future
+    const end = Date.now()
+    expect(formatDuration(start, end)).toBe(
+      'Invalid duration (start time is in the future)'
+    )
+  })
+
+  it('handles exact time boundaries', () => {
+    const start = 0
+    expect(formatDuration(start, 1000)).toBe('1s') // exactly 1 second
+    expect(formatDuration(start, 60000)).toBe('1m 0s') // exactly 1 minute
+    expect(formatDuration(start, 3600000)).toBe('1h 0m 0s') // exactly 1 hour
+    expect(formatDuration(start, 86400000)).toBe('1d 0h 0m 0s') // exactly 1 day
+  })
+})
+
+describe('getModelDisplayName', () => {
+  it('returns displayName when it exists', () => {
+    const model = {
+      id: 'llama-3.2-1b-instruct-q4_k_m.gguf',
+      displayName: 'My Custom Model',
+    } as Model
+    expect(getModelDisplayName(model)).toBe('My Custom Model')
+  })
+
+  it('returns model.id when displayName is undefined', () => {
+    const model = {
+      id: 'llama-3.2-1b-instruct-q4_k_m.gguf',
+    } as Model
+    expect(getModelDisplayName(model)).toBe('llama-3.2-1b-instruct-q4_k_m.gguf')
+  })
+
+  it('returns model.id when displayName is empty string', () => {
+    const model = {
+      id: 'llama-3.2-1b-instruct-q4_k_m.gguf',
+      displayName: '',
+    } as Model
+    expect(getModelDisplayName(model)).toBe('llama-3.2-1b-instruct-q4_k_m.gguf')
+  })
+
+  it('returns model.id when displayName is null', () => {
+    const model = {
+      id: 'llama-3.2-1b-instruct-q4_k_m.gguf',
+      displayName: null as any,
+    } as Model
+    expect(getModelDisplayName(model)).toBe('llama-3.2-1b-instruct-q4_k_m.gguf')
+  })
+
+  it('handles models with complex display names', () => {
+    const model = {
+      id: 'very-long-model-file-name-with-lots-of-details.gguf',
+      displayName: 'Short Name 🤖',
+    } as Model
+    expect(getModelDisplayName(model)).toBe('Short Name 🤖')
+  })
+
+  it('handles models with special characters in displayName', () => {
+    const model = {
+      id: 'model.gguf',
+      displayName: 'Model (Version 2.0) - Fine-tuned',
+    } as Model
+    expect(getModelDisplayName(model)).toBe('Model (Version 2.0) - Fine-tuned')
+  })
+})
+
+describe('splitHtmlArtifacts', () => {
+  it.each([
+    '```text\n<svg><rect/></svg>\n```',
+    '```shell\n<svg><rect/></svg>\n```',
+    '~~~\n<svg><rect/></svg>\n~~~',
+    '~~~text\n<svg><rect/></svg>\n~~~',
+    '`<svg><rect/></svg>`',
+    '`` `<svg><rect/></svg>` ``',
+    '```text\n<svg><rect/></svg>',
+    '````text\n```html\n<svg><rect/></svg>\n```\n````',
+    '> ```text\n> <svg><rect/></svg>\n> ```',
+  ])('never promotes SVG inside literal code: %s', (content) => {
+    expect(splitHtmlArtifacts(content)).toEqual([{ type: 'markdown', content }])
+  })
+
+  it('returns a single markdown segment when there is no html block', () => {
+    const segs = splitHtmlArtifacts('hello **world**')
+    expect(segs).toEqual([{ type: 'markdown', content: 'hello **world**' }])
+  })
+
+  it('extracts a standalone html block with surrounding prose', () => {
+    const content = 'before\n\n```html\n<h1>hi</h1>\n```\n\nafter'
+    const segs = splitHtmlArtifacts(content)
+    expect(segs.map((s) => s.type)).toEqual(['markdown', 'html', 'markdown'])
+    expect(segs[1].content).toBe('<h1>hi</h1>')
+    expect(segs[0].content).toContain('before')
+    expect(segs[2].content).toContain('after')
+  })
+
+  it('handles an html block as the entire content (no trailing newline)', () => {
+    const segs = splitHtmlArtifacts('```html\n<p>x</p>\n```')
+    expect(segs).toEqual([{ type: 'html', content: '<p>x</p>' }])
+  })
+
+  it('extracts multiple html blocks', () => {
+    const content = '```html\n<a>1</a>\n```\nmid\n```html\n<b>2</b>\n```'
+    const segs = splitHtmlArtifacts(content)
+    expect(segs.map((s) => s.type)).toEqual([
+      'html',
+      'markdown',
+      'html',
+    ])
+    expect(segs[0].content).toBe('<a>1</a>')
+    expect(segs[2].content).toBe('<b>2</b>')
+  })
+
+  it('is case-insensitive on the language tag', () => {
+    const segs = splitHtmlArtifacts('```HTML\n<i>y</i>\n```')
+    expect(segs).toEqual([{ type: 'html', content: '<i>y</i>' }])
+  })
+
+  it('does not match languages that merely start with html', () => {
+    const content = '```html5\n<x/>\n```'
+    const segs = splitHtmlArtifacts(content)
+    expect(segs.map((s) => s.type)).toEqual(['markdown'])
+  })
+
+  it('does not match non-html code fences', () => {
+    const content = '```js\nconst x = 1\n```'
+    const segs = splitHtmlArtifacts(content)
+    expect(segs).toEqual([{ type: 'markdown', content }])
+  })
+
+  it('matches a fence with more than three backticks via the closing backref', () => {
+    const segs = splitHtmlArtifacts('````html\n<p>z</p>\n````')
+    expect(segs).toEqual([{ type: 'html', content: '<p>z</p>' }])
+  })
+
+  it('extracts a ```svg fenced block as an svg segment', () => {
+    const segs = splitHtmlArtifacts('```svg\n<svg><rect/></svg>\n```')
+    expect(segs).toEqual([{ type: 'svg', content: '<svg><rect/></svg>' }])
+  })
+
+  it('extracts a raw <svg> block from prose', () => {
+    const content = 'before\n<svg width="10"><circle/></svg>\nafter'
+    const segs = splitHtmlArtifacts(content)
+    expect(segs.map((s) => s.type)).toEqual(['markdown', 'svg', 'markdown'])
+    expect(segs[1].content).toBe('<svg width="10"><circle/></svg>')
+    expect(segs[0].content).toContain('before')
+    expect(segs[2].content).toContain('after')
+  })
+
+  it('keeps adjacent raw <svg> blocks separate (non-greedy)', () => {
+    const segs = splitHtmlArtifacts('<svg>a</svg>\n<svg>b</svg>')
+    const svgs = segs.filter((s) => s.type === 'svg')
+    expect(svgs.map((s) => s.content)).toEqual(['<svg>a</svg>', '<svg>b</svg>'])
+  })
+
+  it('extracts html and svg artifacts side by side', () => {
+    const content = '```html\n<p>x</p>\n```\nmid\n```svg\n<svg/>\n```'
+    const segs = splitHtmlArtifacts(content)
+    expect(segs.map((s) => s.type)).toEqual(['html', 'markdown', 'svg'])
+  })
+
+  it('promotes a lone <svg> wrapped in a non-svg fence to an svg artifact', () => {
+    const content = 'intro\n```xml\n<svg viewBox="0 0 1 1"><rect/></svg>\n```\noutro'
+    const segs = splitHtmlArtifacts(content)
+    expect(segs.map((s) => s.type)).toEqual(['markdown', 'svg', 'markdown'])
+    expect(segs[1].content).toBe('<svg viewBox="0 0 1 1"><rect/></svg>')
+  })
+
+  it('promotes a lone <svg> in a bare ``` fence to an svg artifact', () => {
+    const segs = splitHtmlArtifacts('```\n<svg><circle/></svg>\n```')
+    expect(segs).toEqual([{ type: 'svg', content: '<svg><circle/></svg>' }])
+  })
+
+  it('leaves <svg> mixed into other code inside a fence as code', () => {
+    const content = '```xml\n<note>see</note>\n<svg><rect/></svg>\n```'
+    const segs = splitHtmlArtifacts(content)
+    expect(segs).toEqual([{ type: 'markdown', content }])
+  })
+
+  it('still extracts a raw <svg> outside any code fence', () => {
+    const content = '```xml\n<note/>\n```\n<svg><circle/></svg>'
+    const segs = splitHtmlArtifacts(content)
+    expect(segs.map((s) => s.type)).toEqual(['markdown', 'svg'])
+    expect(segs[1].content).toBe('<svg><circle/></svg>')
+  })
+})

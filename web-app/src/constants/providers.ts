@@ -1,0 +1,434 @@
+export const anthropicProviderSettings = [
+  {
+    key: 'api-key',
+    title: 'API Key',
+    titleKey: 'providers:predefined.anthropicProviderSettings.api-key.title',
+    description:
+      "The Anthropic API uses API keys for authentication. Visit your [API Keys](https://console.anthropic.com/settings/keys) page to retrieve the API key you'll use in your requests.",
+    descriptionKey: 'providers:predefined.anthropicProviderSettings.api-key.description',
+    controller_type: 'input',
+    controller_props: {
+      placeholder: 'Insert API Key',
+      value: '',
+      type: 'password',
+      input_actions: ['unobscure', 'copy'],
+    },
+  },
+  {
+    key: 'base-url',
+    title: 'Base URL',
+    titleKey: 'providers:predefined.anthropicProviderSettings.base-url.title',
+    description:
+      'The base endpoint to use. See the [Anthropic API documentation](https://docs.anthropic.com/en/api/getting-started) for more information.',
+    descriptionKey: 'providers:predefined.anthropicProviderSettings.base-url.description',
+    controller_type: 'input',
+    controller_props: {
+      placeholder: 'https://api.anthropic.com/v1',
+      value: 'https://api.anthropic.com/v1',
+    },
+  },
+]
+
+export const openAIProviderSettings = [
+  {
+    key: 'api-key',
+    title: 'API Key',
+    titleKey: 'providers:predefined.openAIProviderSettings.api-key.title',
+    description:
+      "The OpenAI API uses API keys for authentication. Visit your [API Keys](https://platform.openai.com/account/api-keys) page to retrieve the API key you'll use in your requests.",
+    descriptionKey: 'providers:predefined.openAIProviderSettings.api-key.description',
+    controller_type: 'input',
+    controller_props: {
+      placeholder: 'Insert API Key',
+      value: '',
+      type: 'password',
+      input_actions: ['unobscure', 'copy'],
+    },
+  },
+  {
+    key: 'base-url',
+    title: 'Base URL',
+    titleKey: 'providers:predefined.openAIProviderSettings.base-url.title',
+    description:
+      'The base endpoint to use. See the [OpenAI API documentation](https://platform.openai.com/docs/api-reference/chat/create) for more information.',
+    descriptionKey: 'providers:predefined.openAIProviderSettings.base-url.description',
+    controller_type: 'input',
+    controller_props: {
+      placeholder: 'https://api.openai.com/v1',
+      value: 'https://api.openai.com/v1',
+    },
+  },
+]
+export const predefinedProviders = [
+  {
+    active: true,
+    api_key: '',
+    base_url: 'https://api.openai.com/v1',
+    explore_models_url: 'https://platform.openai.com/docs/models',
+    provider: 'openai',
+    settings: [
+      {
+        key: 'api-key',
+        title: 'API Key',
+        titleKey: 'providers:predefined.openai.api-key.title',
+        description:
+          "The OpenAI API uses API keys for authentication. Visit your [API Keys](https://platform.openai.com/account/api-keys) page to retrieve the API key you'll use in your requests.",
+        descriptionKey: 'providers:predefined.openai.api-key.description',
+        controller_type: 'input',
+        controller_props: {
+          placeholder: 'Insert API Key',
+          value: '',
+          type: 'password',
+          input_actions: ['unobscure', 'copy'],
+        },
+      },
+    ],
+    models: [],
+  },
+  {
+    active: true,
+    api_key: '',
+    base_url: 'https://YOUR-RESOURCE-NAME.openai.azure.com/openai/v1',
+    explore_models_url: 'https://oai.azure.com/deployments',
+    provider: 'azure',
+    settings: [
+      {
+        key: 'api-key',
+        title: 'API Key',
+        titleKey: 'providers:predefined.azure.api-key.title',
+        description:
+          'The Azure OpenAI API uses API keys for authentication. Visit your [Azure OpenAI Studio](https://oai.azure.com/) to retrieve the API key from your resource.',
+        descriptionKey: 'providers:predefined.azure.api-key.description',
+        controller_type: 'input',
+        controller_props: {
+          placeholder: 'Insert API Key',
+          value: '',
+          type: 'password',
+          input_actions: ['unobscure', 'copy'],
+        },
+      },
+      {
+        key: 'base-url',
+        title: 'Base URL',
+        titleKey: 'providers:predefined.azure.base-url.title',
+        description:
+          'Your Azure OpenAI resource endpoint, e.g. https://YOUR-RESOURCE-NAME.openai.azure.com/openai/v1',
+        descriptionKey: 'providers:predefined.azure.base-url.description',
+        controller_type: 'input',
+        controller_props: {
+          placeholder: 'https://YOUR-RESOURCE-NAME.openai.azure.com/openai/v1',
+          value: 'https://YOUR-RESOURCE-NAME.openai.azure.com/openai/v1',
+        },
+      },
+    ],
+    models: [],
+  },
+  {
+    active: true,
+    api_key: '',
+    base_url: 'https://api.anthropic.com/v1',
+    provider: 'anthropic',
+    api_type: 'anthropic',
+    explore_models_url:
+      'https://docs.anthropic.com/en/docs/about-claude/models',
+    settings: [
+      {
+        key: 'api-key',
+        title: 'API Key',
+        titleKey: 'providers:predefined.anthropic.api-key.title',
+        description:
+          "The Anthropic API uses API keys for authentication. Visit your [API Keys](https://console.anthropic.com/settings/keys) page to retrieve the API key you'll use in your requests.",
+        descriptionKey: 'providers:predefined.anthropic.api-key.description',
+        controller_type: 'input',
+        controller_props: {
+          placeholder: 'Insert API Key',
+          value: '',
+          type: 'password',
+          input_actions: ['unobscure', 'copy'],
+        },
+      },
+    ],
+    models: [],
+    custom_header: [
+      {
+        header: 'anthropic-version',
+        value: '2023-06-01'
+      },
+      {
+        header: 'anthropic-dangerous-direct-browser-access',
+        value: 'true'
+      }
+    ]
+  },
+  {
+    active: true,
+    api_key: '',
+    base_url: 'https://openrouter.ai/api/v1',
+    explore_models_url: 'https://openrouter.ai/models',
+    provider: 'openrouter',
+    settings: [
+      {
+        key: 'api-key',
+        title: 'API Key',
+        titleKey: 'providers:predefined.openrouter.api-key.title',
+        description:
+          "The OpenRouter API uses API keys for authentication. Visit your [API Keys](https://openrouter.ai/settings/keys) page to retrieve the API key you'll use in your requests.",
+        descriptionKey: 'providers:predefined.openrouter.api-key.description',
+        controller_type: 'input',
+        controller_props: {
+          placeholder: 'Insert API Key',
+          value: '',
+          type: 'password',
+          input_actions: ['unobscure', 'copy'],
+        },
+      },
+    ],
+    models: [
+      {
+        id: 'deepseek/deepseek-r1:free',
+        name: 'DeepSeek-R1 (free)',
+        version: '1.0',
+        description: '',
+        capabilities: ['completion'],
+      },
+      {
+        id: 'qwen/qwen3-30b-a3b:free',
+        name: 'Qwen3 30B A3B (free)',
+        version: '1.0',
+        description: '',
+        capabilities: ['completion'],
+      },
+    ],
+  },
+  {
+    active: true,
+    api_key: '',
+    base_url: 'https://api.mistral.ai/v1',
+    explore_models_url:
+      'https://docs.mistral.ai/getting-started/models/models_overview/',
+    provider: 'mistral',
+    settings: [
+      {
+        key: 'api-key',
+        title: 'API Key',
+        titleKey: 'providers:predefined.mistral.api-key.title',
+        description:
+          "The Mistral API uses API keys for authentication. Visit your [API Keys](https://console.mistral.ai/api-keys/) page to retrieve the API key you'll use in your requests.",
+        descriptionKey: 'providers:predefined.mistral.api-key.description',
+        controller_type: 'input',
+        controller_props: {
+          placeholder: 'Insert API Key',
+          value: '',
+          type: 'password',
+          input_actions: ['unobscure', 'copy'],
+        },
+      },
+    ],
+    models: [],
+  },
+  {
+    active: true,
+    api_key: '',
+    base_url: 'https://api.groq.com/openai/v1',
+    explore_models_url: 'https://console.groq.com/docs/models',
+    provider: 'groq',
+    settings: [
+      {
+        key: 'api-key',
+        title: 'API Key',
+        titleKey: 'providers:predefined.groq.api-key.title',
+        description:
+          "The Groq API uses API keys for authentication. Visit your [API Keys](https://console.groq.com/keys) page to retrieve the API key you'll use in your requests.",
+        descriptionKey: 'providers:predefined.groq.api-key.description',
+        controller_type: 'input',
+        controller_props: {
+          placeholder: 'Insert API Key',
+          value: '',
+          type: 'password',
+          input_actions: ['unobscure', 'copy'],
+        },
+      },
+    ],
+    models: [],
+  },
+  {
+    active: true,
+    api_key: '',
+    base_url: 'https://api.x.ai/v1',
+    explore_models_url: 'https://docs.x.ai/overview',
+    provider: 'xai',
+    settings: [
+      {
+        key: 'api-key',
+        title: 'API Key',
+        titleKey: 'providers:predefined.xai.api-key.title',
+        description:
+          "The xAI API uses API keys for authentication. Visit your [API Keys](https://console.x.ai/) page to retrieve the API key you'll use in your requests.",
+        descriptionKey: 'providers:predefined.xai.api-key.description',
+        controller_type: 'input',
+        controller_props: {
+          placeholder: 'Insert API Key',
+          value: '',
+          type: 'password',
+          input_actions: ['unobscure', 'copy'],
+        },
+      },
+    ],
+    models: [],
+  },
+  {
+    active: true,
+    api_key: '',
+    base_url: 'https://generativelanguage.googleapis.com/v1beta/openai',
+    explore_models_url: 'https://ai.google.dev/gemini-api/docs/models/gemini',
+    provider: 'gemini',
+    settings: [
+      {
+        key: 'api-key',
+        title: 'API Key',
+        titleKey: 'providers:predefined.gemini.api-key.title',
+        description:
+          "The Google API uses API keys for authentication. Visit your [API Keys](https://aistudio.google.com/apikey) page to retrieve the API key you'll use in your requests.",
+        descriptionKey: 'providers:predefined.gemini.api-key.description',
+        controller_type: 'input',
+        controller_props: {
+          placeholder: 'Insert API Key',
+          value: '',
+          type: 'password',
+          input_actions: ['unobscure', 'copy'],
+        },
+      },
+    ],
+    models: [],
+  },
+  {
+    active: true,
+    api_key: '',
+    base_url: 'https://api.minimax.io/v1',
+    explore_models_url: 'https://platform.minimax.io/docs/api-reference/text-openai-api',
+    provider: 'minimax',
+    settings: [
+      {
+        key: 'api-key',
+        title: 'API Key',
+        titleKey: 'providers:predefined.minimax.api-key.title',
+        description:
+          "The MiniMax API uses API keys for authentication. Visit your [API Keys](https://platform.minimax.io/user-center/basic-information/interface-key) page to retrieve the API key you'll use in your requests.",
+        descriptionKey: 'providers:predefined.minimax.api-key.description',
+        controller_type: 'input',
+        controller_props: {
+          placeholder: 'Insert API Key',
+          value: '',
+          type: 'password',
+          input_actions: ['unobscure', 'copy'],
+        },
+      },
+    ],
+    models: [
+      {
+        id: 'MiniMax-M2.7',
+        name: 'MiniMax-M2.7',
+        version: '1.0',
+        description: 'Latest flagship model with enhanced reasoning and coding.',
+        capabilities: ['completion', 'tools'],
+      },
+      {
+        id: 'MiniMax-M2.7-highspeed',
+        name: 'MiniMax-M2.7-highspeed',
+        version: '1.0',
+        description: 'High-speed version of M2.7 for low-latency scenarios.',
+        capabilities: ['completion', 'tools'],
+      },
+      {
+        id: 'MiniMax-M2.5',
+        name: 'MiniMax-M2.5',
+        version: '1.0',
+        description: 'Peak Performance. Ultimate Value. Master the Complex. 204K context window.',
+        capabilities: ['completion', 'tools'],
+      },
+      {
+        id: 'MiniMax-M2.5-highspeed',
+        name: 'MiniMax-M2.5-highspeed',
+        version: '1.0',
+        description: 'Same performance, faster and more agile. 204K context window.',
+        capabilities: ['completion', 'tools'],
+      },
+    ],
+  },
+  {
+    active: true,
+    api_key: '',
+    base_url: 'https://router.huggingface.co/v1',
+    explore_models_url:
+      'https://huggingface.co/models?pipeline_tag=text-generation&inference_provider=all',
+    provider: 'huggingface',
+    settings: [
+      {
+        key: 'api-key',
+        title: 'API Key',
+        titleKey: 'providers:predefined.huggingface.api-key.title',
+        description:
+          "The Hugging Face API uses tokens for authentication. Visit your [Access Tokens](https://huggingface.co/settings/tokens) page to retrieve the token you'll use in your requests.",
+        descriptionKey: 'providers:predefined.huggingface.api-key.description',
+        controller_type: 'input',
+        controller_props: {
+          placeholder: 'Insert API Token',
+          value: '',
+          type: 'password',
+          input_actions: ['unobscure', 'copy'],
+        },
+      },
+    ],
+    models: [
+      {
+        id: 'moonshotai/Kimi-K2-Instruct:groq',
+        name: 'Kimi-K2-Instruct',
+        version: '1.0',
+        description:
+          '1T parameters Moonshot chat model tuned for tool-aware, nuanced responses.',
+        capabilities: ['completion', 'tools'],
+      },
+      {
+        id: 'deepseek-ai/DeepSeek-R1-0528',
+        name: 'DeepSeek-R1-0528',
+        version: '1.0',
+        description:
+          "DeepSeek's flagship reasoning engine with open weights and advanced tool control.",
+        capabilities: ['completion', 'tools'],
+      },
+      {
+        id: 'deepseek-ai/DeepSeek-V3-0324',
+        name: 'DeepSeek-V3-0324',
+        version: '1.0',
+        description:
+          'Streamlined DeepSeek model focused on fast, high-quality completions and tool use.',
+        capabilities: ['completion', 'tools'],
+      },
+    ],
+  },
+  {
+    active: true,
+    api_key: '',
+    base_url: 'https://integrate.api.nvidia.com/v1',
+    explore_models_url: 'https://build.nvidia.com/models',
+    provider: 'nvidia',
+    settings: [
+      {
+        key: 'api-key',
+        title: 'API Key',
+        titleKey: 'providers:predefined.nvidia.api-key.title',
+        description:
+          "The NVIDIA NIM API uses API keys for authentication. Visit [NVIDIA NGC API Keys](https://org.ngc.nvidia.com/setup/api-keys) to create an API key for your requests.",
+        descriptionKey: 'providers:predefined.nvidia.api-key.description',
+        controller_type: 'input',
+        controller_props: {
+          placeholder: 'Insert API Key',
+          value: '',
+          type: 'password',
+          input_actions: ['unobscure', 'copy'],
+        },
+      },
+    ],
+    models: [],
+  },
+]

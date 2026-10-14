@@ -1,0 +1,23 @@
+{
+  "manifestSchemaVersion": 1,
+  "sdkApiVersion": 1,
+  "id": "store",
+  "version": "0.1.0",
+  "owner": "agent-store-team",
+  "display": {
+    "titleKey": "store:title",
+    "fallbackTitle": "Store",
+    "iconKey": "store"
+  },
+  "targets": ["desktop"],
+  "requiredHostCapabilities": ["external-service:store"],
+  "contributions": {
+    "pages": [
+      { "id": "agents", "path": "agents", "surfaces": ["main"] },
+      { "id": "agent-detail", "path": "agents/detail", "surfaces": ["main"] }
+    ],
+    "settings": [],
+    "conversation": [],
+    "locales": ["en"]
+  }
+}

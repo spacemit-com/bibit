@@ -1,0 +1,62 @@
+<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_100_12326)">
+<path d="M196 0H60C26.8629 0 0 26.8629 0 60V196C0 229.137 26.8629 256 60 256H196C229.137 256 256 229.137 256 196V60C256 26.8629 229.137 0 196 0Z" fill="url(#paint0_linear_100_12326)"/>
+<path d="M196 256C229.14 256 256 229.14 256 196V77.7301C200.81 54.6001 135.03 61.5301 84.99 101.54C40.83 136.85 19.11 189.79 21.77 242.25C32.15 250.84 45.47 256 59.99 256H196Z" fill="url(#paint1_radial_100_12326)"/>
+<path d="M28.52 211.72C33.28 168.98 54.4 130.65 87.99 103.79C117.61 80.0999 153.11 68.5999 188.37 68.5999C211.59 68.5999 234.71 73.5999 256 83.3799V74.6199C200.38 50.5099 133.54 57.1199 82.99 97.5399C47.73 125.73 25.57 165.96 20.57 210.83C19.46 220.82 19.23 230.76 19.85 240.59C22.5 242.98 25.38 245.14 28.43 247.03C27.19 235.43 27.2 223.6 28.52 211.72Z" fill="url(#paint2_linear_100_12326)"/>
+<path d="M142 143H132V153H142V143Z" fill="#7BFF47"/>
+<path d="M142 156H132V166H142V156Z" fill="#7BFF47"/>
+<path d="M142 169H132V179H142V169Z" fill="#7BFF47"/>
+<path d="M103 143H93V153H103V143Z" fill="#7BFF47"/>
+<path d="M103 156H93V166H103V156Z" fill="#7BFF47"/>
+<path d="M103 169H93V179H103V169Z" fill="#7BFF47"/>
+<path d="M116 130H106V140H116V130Z" fill="#7BFF47"/>
+<path d="M116 143H106V153H116V143Z" fill="#7BFF47"/>
+<path d="M116 156H106V166H116V156Z" fill="#7BFF47"/>
+<path d="M116 169H106V179H116V169Z" fill="#7BFF47"/>
+<path d="M116 182H106V192H116V182Z" fill="#7BFF47"/>
+<path d="M129 130H119V140H129V130Z" fill="#7BFF47"/>
+<path d="M129 143H119V153H129V143Z" fill="#7BFF47"/>
+<path d="M129 156H119V166H129V156Z" fill="#7BFF47"/>
+<path d="M129 169H119V179H129V169Z" fill="#7BFF47"/>
+<path d="M129 182H119V192H129V182Z" fill="#7BFF47"/>
+<path d="M219 143H209V153H219V143Z" fill="#7BFF47"/>
+<path d="M219 156H209V166H219V156Z" fill="#7BFF47"/>
+<path d="M219 169H209V179H219V169Z" fill="#7BFF47"/>
+<path d="M180 143H170V153H180V143Z" fill="#7BFF47"/>
+<path d="M180 156H170V166H180V156Z" fill="#7BFF47"/>
+<path d="M180 169H170V179H180V169Z" fill="#7BFF47"/>
+<path d="M193 130H183V140H193V130Z" fill="#7BFF47"/>
+<path d="M193 143H183V153H193V143Z" fill="#7BFF47"/>
+<path d="M193 156H183V166H193V156Z" fill="#7BFF47"/>
+<path d="M193 169H183V179H193V169Z" fill="#7BFF47"/>
+<path d="M193 182H183V192H193V182Z" fill="#7BFF47"/>
+<path d="M206 130H196V140H206V130Z" fill="#7BFF47"/>
+<path d="M206 143H196V153H206V143Z" fill="#7BFF47"/>
+<path d="M206 156H196V166H206V156Z" fill="#7BFF47"/>
+<path d="M206 169H196V179H206V169Z" fill="#7BFF47"/>
+<path d="M206 182H196V192H206V182Z" fill="#7BFF47"/>
+</g>
+<defs>
+<linearGradient id="paint0_linear_100_12326" x1="128" y1="0" x2="128" y2="256" gradientUnits="userSpaceOnUse">
+<stop stop-color="white"/>
+<stop offset="1" stop-color="#7BFF47"/>
+</linearGradient>
+<radialGradient id="paint1_radial_100_12326" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(219.52 252.2) scale(312.15 312.15)">
+<stop offset="0.44"/>
+<stop offset="0.49" stop-color="#030601"/>
+<stop offset="0.55" stop-color="#0B1706"/>
+<stop offset="0.62" stop-color="#19340E"/>
+<stop offset="0.71" stop-color="#2D5D19"/>
+<stop offset="0.79" stop-color="#469128"/>
+<stop offset="0.88" stop-color="#64CF39"/>
+<stop offset="0.95" stop-color="#7BFF47"/>
+</radialGradient>
+<linearGradient id="paint2_linear_100_12326" x1="20.56" y1="211.35" x2="234.26" y2="37.8899" gradientUnits="userSpaceOnUse">
+<stop offset="0.15" stop-color="#84E161"/>
+<stop offset="0.82" stop-color="#C7FFB0"/>
+</linearGradient>
+<clipPath id="clip0_100_12326">
+<rect width="256" height="256" fill="white"/>
+</clipPath>
+</defs>
+</svg>

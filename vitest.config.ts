@@ -1,0 +1,41 @@
+import { defineConfig } from 'vitest/config'
+
+export default defineConfig({
+  test: {
+    projects: [
+      // Core package - use its own vitest config
+      './core',
+
+      // Web-app package - use its own vitest config
+      './web-app',
+
+      // Internal Feature SDK packages
+      './packages/feature-contracts',
+      './packages/feature-sdk',
+      './packages/feature-ui',
+      './packages/feature-plugin-sdk',
+      './packages/feature-dev-host',
+
+      // Extensions - each ships its own vitest config
+      './extensions/assistant-extension',
+      './extensions/conversational-extension',
+      './extensions/download-extension',
+      './extensions/llamacpp-extension',
+      './extensions/rag-extension',
+      './extensions/vector-db-extension',
+    ],
+    coverage: {
+      provider: 'v8',
+      reporter: ['text', 'json', 'html', 'lcov'],
+      exclude: [
+        'docs',
+        '**/*/dist',
+        'node_modules',
+        '**/src/**/*.test.ts',
+        '**/src/**/*.test.tsx',
+        '**/src/test/**/*',
+        'src-tauri',
+      ],
+    },
+  },
+})

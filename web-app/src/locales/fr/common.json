@@ -1,0 +1,319 @@
+{
+  "assistants": "Assistants",
+  "hardware": "Matériel",
+  "mcp-servers": "Serveurs MCP",
+  "local_api_server": "Serveur Local API",
+  "https_proxy": "Mandataire Proxy HTTPS",
+  "extensions": "Extensions",
+  "experimental": "Expérimental",
+  "attachments": "Pièces jointes",
+  "general": "Général",
+  "settings": "Configurations",
+  "modelProviders": "Fournisseurs de Modèles",
+  "localProviders": "Local",
+  "remoteProviders": "Distant",
+  "manageProviders": "Manage providers",
+  "hiddenProviders": "{{count}} disabled",
+  "interface": "Interface",
+  "appearance": "Interface",
+  "privacy": "Confidentialité",
+  "keyboardShortcuts": "Raccourcis Clavier",
+  "newChat": "Nouvelle discussion",
+  "newAgentChat": "Nouvelle discussion Agent",
+  "chats": "Discussions",
+  "favorites": "Favoris",
+  "recents": "Récents",
+  "helpSupport": "Aide & Support",
+  "unstarAll": "Enlever toutes les étoiles",
+  "unstar": "Désélectionner",
+  "deleteAll": "Tout supprimer",
+  "star": "Étoile",
+  "rename": "Renommer",
+  "delete": "Supprimer",
+  "copied": "Copié!",
+  "dataFolder": "Dossier données",
+  "others": "Autre",
+  "language": "Langage",
+  "login": "Connexion",
+  "loginWith": "Connexion avec {{provider}}",
+  "loginFailed": "Échec de la connexion",
+  "logout": "Déconnexion",
+  "loggingOut": "Déconnexion en cours...",
+  "loggedOut": "Déconnexion réussie",
+  "logoutFailed": "Échec de la déconnexion",
+  "profile": "Profil",
+  "reset": "Réinitialiser",
+  "search": "Rechercher",
+  "name": "Nom",
+  "cancel": "Annuler",
+  "create": "Créer",
+  "save": "Sauvegarder",
+  "edit": "Modifier",
+  "copy": "Copier",
+  "back": "Retour",
+  "close": "Fermer",
+  "done": "Terminé",
+  "next": "Suivant",
+  "finish": "Terminer",
+  "skip": "Passer",
+  "allow": "Autoriser",
+  "deny": "Refuser",
+  "start": "Démarrer",
+  "stop": "Arrêter",
+  "preview": "Aperçu",
+  "compactWidth": "Largeur compacte",
+  "fullWidth": "Pleine largeur",
+  "dark": "Sombre",
+  "light": "Clair",
+  "system": "Système",
+  "auto": "Auto",
+  "english": "Anglais",
+  "medium": "Moyen",
+  "newThread": "Nouvelle discussion",
+  "noResultsFound": "Aucun résultat trouvé",
+  "noThreadsYet": "Aucune discussion pour le moment",
+  "noThreadsYetDesc": "Commencez une nouvelle conversation pour voir l'historique de vos discussions ici.",
+  "downloads": "Téléchargements",
+  "downloading": "Téléchargement en cours",
+  "uploadingAttachments": "Téléversement des pièces jointes…",
+  "cancelDownload": "Annuler le téléchargement",
+  "downloadCancelled": "Téléchargement annulé",
+  "downloadComplete": "Téléchargement terminé",
+  "thinking": "Réflexion...",
+  "thought": "Pensée",
+  "callingTool": "Appel de l'outil",
+  "completed": "Terminé",
+  "image": "Image",
+  "vision": "Vision",
+  "embeddings": "Embeddings",
+  "tools": "Outils",
+  "webSearch": "Recherche Web",
+  "reasoning": "Raisonnement",
+  "proactive": "Proactif",
+  "selectAModel": "Sélectionnez un modèle",
+  "noToolsAvailable": "Aucun outil disponible",
+  "noModelsFoundFor": "Aucun modèle trouvé pour \"{{searchValue}}\"",
+  "failedToLoadModels": "Échec du chargement des modèles",
+  "noModels": "Aucun modèle trouvé",
+  "customAvatar": "Avatar personnalisé",
+  "editAssistant": "Modifier l'assistant",
+  "jan": "Jan",
+  "metadata": "Métadonnées",
+  "regenerate": "Régénérer",
+  "threadImage": "Image de la discussion",
+  "editMessage": "Modifier le message",
+  "deleteMessage": "Supprimer le message",
+  "deleteThread": "Supprimer la discussion",
+  "renameThread": "Renommer la discussion",
+  "threadTitle": "Titre de la discussion",
+  "deleteAllThreads": "Supprimer toutes les discussions",
+  "allThreadsUnfavorited": "Toutes les discussions retirées des favoris",
+  "deleteAllThreadsConfirm": "Êtes-vous sûr de vouloir supprimer toutes les discussions ? Cette action ne peut pas être annulée.",
+  "addProvider": "Ajouter un fournisseur",
+  "addOpenAIProvider": "Ajouter un fournisseur OpenAI",
+  "enterNameForProvider": "Entrez un nom pour votre fournisseur",
+  "providerAlreadyExists": "Un fournisseur avec le nom \"{{name}}\" existe déjà. Veuillez choisir un nom différent.",
+  "adjustFontSize": "Ajuster la taille de la police",
+  "changeLanguage": "Changer de langue",
+  "editTheme": "Modifier le thème",
+  "editCodeBlockStyle": "Modifier le style du bloc de code",
+  "editServerHost": "Modifier l'hôte du serveur",
+  "pickColorWindowBackground": "Choisir la couleur de l'arrière-plan de la fenêtre",
+  "pickColorAppMainView": "Choisir la couleur de la vue principale de l'application",
+  "pickColorAppPrimary": "Choisir la couleur principale de l'application",
+  "pickColorAppAccent": "Choisir la couleur d'accentuation de l'application",
+  "pickColorAppDestructive": "Choisir la couleur destructive de l'application",
+  "apiKeyRequired": "La clé API est requise",
+  "enterTrustedHosts": "Entrez les hôtes de confiance",
+  "placeholder": {
+    "chatInput": "Demandez-moi n'importe quoi..."
+  },
+  "confirm": "Confirmer",
+  "continue": "Continuer",
+  "loading": "Chargement...",
+  "error": "Erreur",
+  "success": "Succès",
+  "warning": "Avertissement",
+  "conversationNotAvailable": "Conversation non disponible",
+  "conversationNotAvailableDescription": "La conversation que vous essayez d'accéder n'est pas disponible ou a été supprimée.",
+  "temporaryChat": "Discussion temporaire",
+  "temporaryChatTooltip": "La discussion temporaire n'apparaîtra pas dans votre historique",
+  "noResultsFoundDesc": "Nous n'avons trouvé aucune discussion correspondant à votre recherche. Essayez un autre mot-clé.",
+  "searchModels": "Rechercher des modèles...",
+  "searchStyles": "Rechercher des styles...",
+  "createAssistant": "Créer un assistant",
+  "enterApiKey": "Entrez la clé API",
+  "scrollToBottom": "Faire défiler vers le bas",
+  "generateAiResponse": "Générer une réponse de l'IA",
+  "addModel": {
+    "title": "Ajouter un modèle",
+    "modelId": "ID du modèle",
+    "enterModelId": "Entrez l'ID du modèle",
+    "addModel": "Ajouter un modèle",
+    "description": "Ajouter un nouveau modèle au fournisseur",
+    "exploreModels": "Voir la liste des modèles du fournisseur"
+  },
+  "mcpServers": {
+    "editServer": "Modifier le serveur",
+    "addServer": "Ajouter un serveur",
+    "serverName": "Nom du serveur",
+    "enterServerName": "Entrez le nom du serveur",
+    "command": "Commande",
+    "enterCommand": "Entrez la commande",
+    "arguments": "Arguments",
+    "argument": "Argument {{index}}",
+    "envVars": "Variables d'environnement",
+    "key": "Clé",
+    "value": "Valeur",
+    "save": "Sauvegarder"
+  },
+  "deleteServer": {
+    "title": "Supprimer le serveur",
+    "delete": "Supprimer"
+  },
+  "editJson": {
+    "errorParse": "Échec de l'analyse JSON",
+    "errorPaste": "Échec du collage JSON",
+    "errorFormat": "Format JSON invalide",
+    "titleAll": "Modifier la configuration de tous les serveurs",
+    "placeholder": "Entrez la configuration JSON...",
+    "save": "Sauvegarder"
+  },
+  "editModel": {
+    "title": "Modifier le modèle : {{modelId}}",
+    "description": "Configurez les capacités du modèle en activant/désactivant les options ci-dessous.",
+    "capabilities": "Capacités",
+    "tools": "Outils",
+    "vision": "Vision",
+    "embeddings": "Embeddings",
+    "notAvailable": "Pas encore disponible"
+  },
+  "outOfContextError": {
+    "truncateInput": "Tronquer l'entrée",
+    "title": "Erreur de contexte dépassé",
+    "description": "Cette discussion atteint la limite de mémoire de l'IA, comme un tableau blanc qui se remplit. Nous pouvons étendre la fenêtre de mémoire (appelée taille de contexte) pour qu'elle se souvienne de plus, mais cela peut utiliser plus de mémoire de votre ordinateur. Nous pouvons également tronquer l'entrée, ce qui signifie qu'elle oubliera une partie de l'historique de la discussion pour faire de la place aux nouveaux messages.",
+    "increaseContextSizeDescription": "Voulez-vous augmenter la taille du contexte ?",
+    "increaseContextSize": "Augmenter la taille du contexte"
+  },
+  "toolApproval": {
+    "title": "Demande d'autorisation d'outil",
+    "description": "L'assistant veut utiliser <strong>{{toolName}}</strong>",
+    "securityNotice": "N'autorisez que les outils auxquels vous faites confiance. Les outils peuvent accéder à votre système et à vos données.",
+    "deny": "Refuser",
+    "allowOnce": "Autoriser une fois",
+    "alwaysAllow": "Toujours autoriser"
+  },
+  "deleteModel": {
+    "title": "Supprimer le modèle : {{modelId}}",
+    "description": "Êtes-vous sûr de vouloir supprimer ce modèle ? Cette action ne peut pas être annulée.",
+    "success": "Le modèle {{modelId}} a été supprimé définitivement.",
+    "cancel": "Annuler",
+    "delete": "Supprimer"
+  },
+  "deleteProvider": {
+    "title": "Supprimer le fournisseur",
+    "description": "Supprimer ce fournisseur et tous ses modèles. Cette action ne peut pas être annulée.",
+    "success": "Le fournisseur {{provider}} a été supprimé définitivement.",
+    "confirmTitle": "Supprimer le fournisseur : {{provider}}",
+    "confirmDescription": "Êtes-vous sûr de vouloir supprimer ce fournisseur ? Cette action ne peut pas être annulée.",
+    "cancel": "Annuler",
+    "delete": "Supprimer"
+  },
+  "modelSettings": {
+    "nglDisabledByFit": "Auto-fit is choosing GPU layers. Turn off Auto-fit to set this manually.",
+    "title": "Paramètres du modèle - {{modelId}}",
+    "description": "Configurez les paramètres du modèle pour optimiser les performances et le comportement."
+  },
+  "dialogs": {
+    "changeDataFolder": {
+      "title": "Changer l'emplacement du dossier de données",
+      "description": "Êtes-vous sûr de vouloir changer l'emplacement du dossier de données ? Cela déplacera toutes vos données vers le nouvel emplacement et redémarrera l'application.",
+      "currentLocation": "Emplacement actuel :",
+      "newLocation": "Nouvel emplacement :",
+      "cancel": "Annuler",
+      "changeLocation": "Changer l'emplacement"
+    },
+    "deleteAllThreads": {
+      "title": "Supprimer toutes les discussions",
+      "description": "Toutes les discussions seront supprimées. Cette action ne peut pas être annulée."
+    },
+    "deleteThread": {
+      "description": "Êtes-vous sûr de vouloir supprimer cette discussion ? Cette action ne peut pas être annulée."
+    },
+    "editMessage": {
+      "title": "Modifier le message"
+    },
+    "messageMetadata": {
+      "title": "Métadonnées du message"
+    }
+  },
+  "errorDialog": {
+    "titleFallback": "Une erreur s'est produite",
+    "details": "Détails"
+  },
+  "toast": {
+    "allThreadsUnfavorited": {
+      "title": "Toutes les discussions retirées des favoris",
+      "description": "Toutes les discussions ont été retirées de vos favoris."
+    },
+    "deleteAllThreads": {
+      "title": "Supprimer toutes les discussions",
+      "description": "Toutes les discussions ont été supprimées définitivement."
+    },
+    "renameThread": {
+      "title": "Renommer la discussion",
+      "description": "Le titre de la discussion a été renommé en '{{title}}'"
+    },
+    "deleteThread": {
+      "title": "Supprimer la discussion",
+      "description": "Cette discussion a été supprimée définitivement."
+    },
+    "errorCopied": {
+      "title": "Copie réussie",
+      "description": "Les informations d'erreur ont été copiées dans le presse-papiers"
+    },
+    "errorCopyFailed": {
+      "title": "Échec de la copie",
+      "description": "Impossible de copier les informations d'erreur dans le presse-papiers"
+    },
+    "editMessage": {
+      "title": "Modifier le message",
+      "description": "Message modifié avec succès. Veuillez attendre la réponse du modèle."
+    },
+    "downloadComplete": {
+      "title": "Téléchargement terminé",
+      "description": "{{item}} a été téléchargé"
+    },
+    "downloadCancelled": {
+      "title": "Téléchargement annulé",
+      "description": "Le processus de téléchargement a été annulé"
+    },
+    "downloadFailed": {
+      "title": "Échec du téléchargement",
+      "description": "Le téléchargement de {{item}} a échoué"
+    },
+    "modelValidationStarted": {
+      "title": "Validation du modèle",
+      "description": "Modèle \"{{modelId}}\" téléchargé avec succès. Vérification de l'intégrité..."
+    },
+    "modelValidationFailed": {
+      "title": "Échec de la validation du modèle",
+      "description": "Le modèle téléchargé \"{{modelId}}\" a échoué à la vérification d'intégrité et a été supprimé. Le fichier peut être corrompu ou altéré."
+    },
+    "downloadAndVerificationComplete": {
+      "title": "Téléchargement terminé",
+      "description": "Le modèle \"{{item}}\" a été téléchargé et vérifié avec succès"
+    }
+  },
+  "attachmentInjectedIndicator": "Injecté dans la discussion",
+  "attachmentEmbeddedIndicator": "Intégré pour RAG",
+  "viewInjectedContent": "Voir le contenu injecté",
+  "injectedContentTitle": "Contenu du fichier injecté",
+  "llamacppBusyOnExit": {
+    "title": "llama.cpp is still busy",
+    "description": "One or more models did not unload in time. Force-quitting will terminate llama.cpp and may interrupt active responses.",
+    "forceQuit": "Force quit",
+    "forcing": "Force quitting…",
+    "shuttingDown": "Shutting down…"
+  }
+}

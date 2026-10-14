@@ -1,0 +1,366 @@
+{
+  "refreshModelsError": "提供商必须配置基本 URL 和 API 密钥才能获取模型。",
+  "refreshModelsSuccess": "从 {{provider}} 添加了 {{count}} 个新模型。",
+  "noNewModels": "未找到新模型。所有可用模型均已添加。",
+  "refreshModelsFailed": "从 {{provider}} 获取模型失败。请检查您的 API 密钥和基本 URL。",
+  "models": "模型",
+  "refreshing": "刷新中...",
+  "refresh": "刷新",
+  "import": "导入",
+  "importModelSuccess": "模型 {{provider}} 已成功导入。",
+  "importModelError": "导入模型失败：",
+  "stop": "停止",
+  "start": "开始",
+  "noModelFound": "未找到模型",
+  "noModelFoundDesc": "可用模型将在此处列出。如果您还没有任何模型，请访问中心下载。",
+  "configuration": "配置",
+  "apiEndpoint": "API 端点",
+  "testConnection": "测试连接",
+  "addModel": {
+    "title": "添加新模型",
+    "description": "向 {{provider}} 提供商添加新模型。",
+    "modelId": "模型 ID",
+    "enterModelId": "输入模型 ID",
+    "exploreModels": "查看 {{provider}} 的模型列表",
+    "addModel": "添加模型",
+    "modelExists": "模型已存在",
+    "modelExistsDesc": "请选择不同的模型 ID。"
+  },
+  "deleteModel": {
+    "title": "删除模型：{{modelId}}",
+    "description": "您确定要删除此模型吗？此操作无法撤销。",
+    "success": "模型 {{modelId}} 已被永久删除。",
+    "cancel": "取消",
+    "delete": "删除",
+    "importedDescription": "从 BiBit 中移除这个导入的模型？磁盘上的本地文件不会被删除。",
+    "removeFromJan": "从 BiBit 移除"
+  },
+  "deleteProvider": {
+    "title": "删除提供商",
+    "description": "删除此提供商及其所有模型。此操作无法撤销。",
+    "success": "提供商 {{provider}} 已被永久删除。",
+    "confirmTitle": "删除提供商：{{provider}}",
+    "confirmDescription": "您确定要删除此提供商吗？此操作无法撤销。",
+    "cancel": "取消",
+    "delete": "删除"
+  },
+  "editModel": {
+    "title": "编辑模型：{{modelId}}",
+    "description": "通过切换以下选项来配置模型功能。",
+    "capabilities": "功能",
+    "tools": "工具",
+    "vision": "视觉",
+    "proactive": "主动模式（实验性）",
+    "embeddings": "嵌入",
+    "notAvailable": "尚不可用",
+    "warning": {
+      "title": "谨慎操作",
+      "description": "修改模型功能可能会影响性能和功能。错误的设置可能导致意外行为或错误。"
+    },
+    "audio": "音频",
+    "video": "视频"
+  },
+  "addProvider": "添加提供商",
+  "addOpenAIProvider": "添加 OpenAI 提供商",
+  "enterNameForProvider": "输入提供商名称",
+  "apiKeys": {
+    "addKey": "添加密钥",
+    "advanced": "高级",
+    "description": "填入你的 API 密钥。可在“高级”中添加备用密钥，某个密钥失败时 BiBit 会自动尝试下一个。",
+    "hideAdvanced": "收起高级选项",
+    "keyPlaceholder": "输入 API 密钥",
+    "oneKeyHint": "可在“高级”中配置可选的备用密钥。",
+    "primaryKeyNote": "优先使用 #1 密钥，仅在遇到 401/403/429 时才尝试下一个密钥。",
+    "primaryPlaceholder": "输入主 API 密钥",
+    "removeKey": "移除密钥",
+    "test": "测试密钥",
+    "testHint": "对每个密钥请求 /models，并显示各自状态。",
+    "testing": "测试中...",
+    "title": "API 密钥",
+    "placeholder": "sk-…\nsk-…",
+    "primaryBadge": "主密钥"
+  },
+  "backendHistoryEmpty": "暂无后端更新记录。",
+  "backendHistoryHide": "收起更新历史",
+  "backendHistoryLoading": "正在加载更新历史...",
+  "backendHistoryNone": "无",
+  "backendHistoryShow": "查看更新历史",
+  "backendInstalled": "已安装",
+  "baseUrl": {
+    "azureDescription": "你的 Azure OpenAI 接口地址。把 YOUR-RESOURCE-NAME 替换为你的 Azure 资源名。",
+    "title": "接口地址"
+  },
+  "chatModels": "对话模型",
+  "deleteAllModels": {
+    "button": "全部删除",
+    "calculating": "计算中…",
+    "confirm": "删除 {{count}} 个模型",
+    "deleting": "删除中…",
+    "description": "将从磁盘永久删除 {{count}} 个模型。",
+    "importedExcluded": "{{count}} 个导入的模型会保留（其文件不是由 BiBit 下载的）。",
+    "partialFailure": "有 {{count}} 个模型删除失败，详情见控制台。",
+    "sizeLabel": "将释放的磁盘空间：",
+    "success": "已删除 {{count}} 个模型。",
+    "title": "删除全部已下载的模型？",
+    "warning": "此操作无法撤销。"
+  },
+  "embeddingModelDefault": "默认",
+  "embeddingModelIsDefault": "默认向量模型",
+  "embeddingModelSetDefault": "设为默认向量模型",
+  "embeddingModels": "向量模型",
+  "imported": "已导入",
+  "importedTooltip": "从本地文件导入。从 BiBit 中移除不会删除磁盘上的文件。",
+  "limitedSupport": "该服务商可能未被完全支持。工具、视觉、音频等能力不会自动识别——请手动添加模型并逐个配置能力。",
+  "noModelFoundRemoteDesc": "可用模型会显示在这里。点击上方刷新按钮从服务商获取模型，或用 + 按钮手动添加。",
+  "backendHistoryUpdated": "已更新",
+  "backendHistoryRolledBack": "已回滚",
+  "backendHistoryRollbackFailed": "回滚失败",
+  "backendHistoryFailed": "失败",
+  "embeddingModelsDesc": "用于 RAG 和向量检索。所选模型在生成向量时作为默认模型。",
+  "apiKeyFallbacks": "API Key 备用密钥",
+  "keyStatusOk": "正常",
+  "keyStatusUnauthorized": "密钥无效或已撤销（401）",
+  "keyStatusForbidden": "无权访问（403）",
+  "keyStatusRateLimited": "触发限流或额度不足（429）",
+  "keyStatusNetworkError": "网络错误",
+  "keyStatusFailed": "失败",
+  "unknownError": "未知错误",
+  "unknownErrorOccurred": "发生未知错误",
+  "backendArchives": "后端安装包",
+  "backendInstalledWithFile": "{{provider}} {{file}} 已安装",
+  "recommendedBackendSuffix": " 是推荐的后端。",
+  "settingDefs": {
+    "llamacpp_version": {
+      "title": "版本",
+      "description": "llama.cpp 发布版本"
+    },
+    "llamacpp_backend": {
+      "title": "后端",
+      "description": "llama.cpp 使用的硬件后端（CUDA、HIP/ROCm、Vulkan、CPU 等）"
+    },
+    "llamacpp_env": {
+      "title": "环境变量",
+      "description": "llama.cpp 的环境变量（KEY=VALUE），以 ';' 分隔"
+    },
+    "check_for_updates": {
+      "title": "检查更新",
+      "description": "获取远端 llama.cpp 发布列表。版本下拉框要显示本机已安装版本之外的发布，以及接收更新提醒，都需要开启此项。"
+    },
+    "auto_update_engine": {
+      "title": "自动更新引擎",
+      "description": "有可用的新版 llamacpp 引擎时自动下载并切换。需要开启“检查更新”。"
+    },
+    "verify_backend_deps": {
+      "title": "校验后端依赖",
+      "description": "启动时检查 GPU 后端共享库（CUDA、Vulkan 等）能否正常加载，缺失时给出提示。"
+    },
+    "models_max": {
+      "title": "同时加载的模型上限",
+      "description": "路由器同时保持加载的模型数量上限。0 = 不限制。"
+    },
+    "timeout": {
+      "title": "llamacpp 超时",
+      "description": "llamacpp 的连接与加载超时时间（秒）"
+    },
+    "fit": {
+      "title": "Fit（自动适配设备内存）",
+      "description": "是否调整未显式设置的参数以适配设备内存（'on' 或 'off'）。（环境变量：LLAMA_ARG_FIT）"
+    },
+    "fit_target": {
+      "title": "Fit 目标余量（每设备 MiB）",
+      "description": "fit 时每个设备保留的目标余量，逗号分隔的 MiB 列表。填单个值会应用到所有设备。（环境变量：LLAMA_ARG_FIT_TARGET）"
+    },
+    "fit_ctx": {
+      "title": "Fit 最小上下文大小",
+      "description": "自动适配（Fit）可设置的最小上下文大小（token 数）。"
+    },
+    "threads": {
+      "title": "线程数",
+      "description": "生成时使用的线程数（-1 表示逻辑核心数）。"
+    },
+    "threads_batch": {
+      "title": "线程数（批处理）",
+      "description": "批处理与提示处理的线程数（默认与“线程数”相同）。"
+    },
+    "ctx_shift": {
+      "title": "上下文平移",
+      "description": "允许模型裁掉开头的文本，以便在上下文中容纳新内容"
+    },
+    "n_predict": {
+      "title": "最大预测 token 数",
+      "description": "最多生成的 token 数（-1 = 不限制）。"
+    },
+    "ubatch_size": {
+      "title": "uBatch 大小",
+      "description": "处理提示时的物理最大批大小。"
+    },
+    "device": {
+      "title": "卸载使用的设备",
+      "description": "用于卸载的设备列表，逗号分隔（例如 'CUDA0'、'CUDA0,CUDA1'）。留空表示使用默认设备或仅用 CPU。"
+    },
+    "split_mode": {
+      "title": "GPU 切分模式",
+      "description": "如何在多块 GPU 之间切分模型。"
+    },
+    "main_gpu": {
+      "title": "主 GPU 序号",
+      "description": "使用模型（split-mode=none）或存放中间结果（split-mode=row）的 GPU。"
+    },
+    "flash_attn": {
+      "title": "Flash Attention",
+      "description": "启用 Flash Attention 以获得更好的性能。"
+    },
+    "parallel": {
+      "title": "并行序列数",
+      "description": "为你的对话请求并行解码的序列数（0 = llama.cpp 默认的 4）。BiBit 会在此基础上额外保留一个内部槽位用于后台请求（例如会话自动命名），避免它们挤掉对话的 KV 缓存。"
+    },
+    "cont_batching": {
+      "title": "连续批处理",
+      "description": "为并发请求启用连续批处理（又称动态批处理）。"
+    },
+    "no_mmap": {
+      "title": "禁用 mmap",
+      "description": "不使用内存映射加载模型（加载更慢，但未启用 mlock 时可减少换页）。"
+    },
+    "mlock": {
+      "title": "MLock",
+      "description": "强制系统将模型常驻内存，避免换出或被压缩。"
+    },
+    "cache_type_k": {
+      "title": "KV 缓存 K 类型",
+      "description": "Keys 的 KV 缓存数据类型（默认 f16）。"
+    },
+    "cache_type_v": {
+      "title": "KV 缓存 V 类型",
+      "description": "Values 的 KV 缓存数据类型（默认 f16）。"
+    },
+    "rope_scaling": {
+      "title": "RoPE 缩放方式",
+      "description": "RoPE 频率缩放方式。"
+    },
+    "rope_scale": {
+      "title": "RoPE 缩放系数",
+      "description": "RoPE 上下文缩放系数。"
+    },
+    "rope_freq_base": {
+      "title": "RoPE 基础频率",
+      "description": "RoPE 基础频率（0 = 从模型读取）。"
+    },
+    "rope_freq_scale": {
+      "title": "RoPE 频率缩放系数",
+      "description": "RoPE 频率缩放系数。"
+    },
+    "cache_ram": {
+      "title": "提示缓存内存（MiB）",
+      "description": "提示缓存的最大大小（MiB）。-1 = 不限制，0 = 关闭。"
+    },
+    "cache_reuse": {
+      "title": "缓存复用",
+      "description": "从缓存复用所需的最小匹配前缀 token 块大小。0 = 关闭。"
+    },
+    "swa_full": {
+      "title": "完整 SWA 缓存",
+      "description": "为滑动窗口注意力模型（例如 Gemma）使用完整大小的 KV 缓存。如果这类模型每轮都重新处理整个提示而不复用缓存，可开启此项；会占用更多内存。"
+    },
+    "kv_unified": {
+      "title": "统一 KV 缓存",
+      "description": "使用所有槽位共享的单一 KV 缓冲。运行多个并行槽位时可节省内存。"
+    },
+    "keep": {
+      "title": "保留开头 N 个 token",
+      "description": "上下文平移时保留初始提示中的 token 数。-1 = 全部保留。"
+    }
+  },
+  "predefined": {
+    "anthropicProviderSettings": {
+      "api-key": {
+        "title": "API 密钥",
+        "description": "Anthropic API 使用 API 密钥进行身份验证。请访问 [API 密钥](https://console.anthropic.com/settings/keys) 页面获取请求时使用的 API 密钥。"
+      },
+      "base-url": {
+        "title": "接口地址",
+        "description": "要使用的接口地址。详见 [Anthropic API 文档](https://docs.anthropic.com/en/api/getting-started)。"
+      }
+    },
+    "openAIProviderSettings": {
+      "api-key": {
+        "title": "API 密钥",
+        "description": "OpenAI API 使用 API 密钥进行身份验证。请访问 [API 密钥](https://platform.openai.com/account/api-keys) 页面获取请求时使用的 API 密钥。"
+      },
+      "base-url": {
+        "title": "接口地址",
+        "description": "要使用的接口地址。详见 [OpenAI API 文档](https://platform.openai.com/docs/api-reference/chat/create)。"
+      }
+    },
+    "openai": {
+      "api-key": {
+        "title": "API 密钥",
+        "description": "OpenAI API 使用 API 密钥进行身份验证。请访问 [API 密钥](https://platform.openai.com/account/api-keys) 页面获取请求时使用的 API 密钥。"
+      }
+    },
+    "azure": {
+      "api-key": {
+        "title": "API 密钥",
+        "description": "Azure OpenAI API 使用 API 密钥进行身份验证。请访问 [Azure OpenAI Studio](https://oai.azure.com/) 获取你的资源对应的 API 密钥。"
+      },
+      "base-url": {
+        "title": "接口地址",
+        "description": "你的 Azure OpenAI 资源终结点，例如 https://YOUR-RESOURCE-NAME.openai.azure.com/openai/v1"
+      }
+    },
+    "anthropic": {
+      "api-key": {
+        "title": "API 密钥",
+        "description": "Anthropic API 使用 API 密钥进行身份验证。请访问 [API 密钥](https://console.anthropic.com/settings/keys) 页面获取请求时使用的 API 密钥。"
+      }
+    },
+    "openrouter": {
+      "api-key": {
+        "title": "API 密钥",
+        "description": "OpenRouter API 使用 API 密钥进行身份验证。请访问 [API 密钥](https://openrouter.ai/settings/keys) 页面获取请求时使用的 API 密钥。"
+      }
+    },
+    "mistral": {
+      "api-key": {
+        "title": "API 密钥",
+        "description": "Mistral API 使用 API 密钥进行身份验证。请访问 [API 密钥](https://console.mistral.ai/api-keys/) 页面获取请求时使用的 API 密钥。"
+      }
+    },
+    "groq": {
+      "api-key": {
+        "title": "API 密钥",
+        "description": "Groq API 使用 API 密钥进行身份验证。请访问 [API 密钥](https://console.groq.com/keys) 页面获取请求时使用的 API 密钥。"
+      }
+    },
+    "xai": {
+      "api-key": {
+        "title": "API 密钥",
+        "description": "xAI API 使用 API 密钥进行身份验证。请访问 [API 密钥](https://console.x.ai/) 页面获取请求时使用的 API 密钥。"
+      }
+    },
+    "gemini": {
+      "api-key": {
+        "title": "API 密钥",
+        "description": "Google API 使用 API 密钥进行身份验证。请访问 [API 密钥](https://aistudio.google.com/apikey) 页面获取请求时使用的 API 密钥。"
+      }
+    },
+    "minimax": {
+      "api-key": {
+        "title": "API 密钥",
+        "description": "MiniMax API 使用 API 密钥进行身份验证。请访问 [API 密钥](https://platform.minimax.io/user-center/basic-information/interface-key) 页面获取请求时使用的 API 密钥。"
+      }
+    },
+    "huggingface": {
+      "api-key": {
+        "title": "API 密钥",
+        "description": "Hugging Face API 使用访问令牌进行身份验证。请访问 [访问令牌](https://huggingface.co/settings/tokens) 页面获取请求时使用的访问令牌。"
+      }
+    },
+    "nvidia": {
+      "api-key": {
+        "title": "API 密钥",
+        "description": "NVIDIA NIM API 使用 API 密钥进行身份验证。请访问 [NVIDIA NGC API 密钥](https://org.ngc.nvidia.com/setup/api-keys) 创建请求时使用的 API 密钥。"
+      }
+    }
+  }
+}

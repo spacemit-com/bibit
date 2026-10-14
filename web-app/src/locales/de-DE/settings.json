@@ -1,0 +1,56 @@
+{
+  "dataFolder": {
+    "appLogs": "App Logs",
+    "appLogsDesc": "Zeige detaillierte Logs der App an."
+  },
+  "shortcuts": {
+    "application": "Anwendung",
+    "newChat": "Neuer Chat",
+    "newChatDesc": "Neuen Chat anlegen.",
+    "toggleSidebar": "Seitenleiste umschalten",
+    "toggleSidebarDesc": "Seitenleiste ein- oder ausblenden.",
+    "zoomIn": "Vergrößern",
+    "zoomInDesc": "Erhöhe die Zoomstufe.",
+    "zoomOut": "Verkleinern",
+    "zoomOutDesc": "Verringere die Zoomstufe.",
+    "chat": "Chat",
+    "sendMessage": "Nachricht senden",
+    "sendMessageDesc": "Aktuelle Nachricht senden",
+    "newLine": "Neue Zeile",
+    "newLineDesc": "Neue Zeile einfügen.",
+    "navigation": "Navigation",
+    "goToSettings": "Gehe zu den Einstellungen",
+    "goToSettingsDesc": "Einstellungen öffnen."
+  },
+  "interface": {
+    "title": "Erscheinungsbild",
+    "theme": "Theme",
+    "themeDesc": "Dem Betriebssystem anpassen.",
+    "fontSize": "Schriftgröße",
+    "fontSizeDesc": "Einstellen der App Schriftgröße"
+  },
+  "hardware": {},
+  "httpsProxy": {
+    "authentication": "Authentifizierung"
+  },
+  "localApiServer": {},
+  "privacy": {},
+  "general": {
+    "openContainingFolder": "Enthaltenen Ordner öffnen",
+    "appVersion": "App Version",
+    "openLogs": "Logs öffnen",
+    "revealLogs": "Logs anzeigen"
+  },
+  "dialogs": {
+    "changeDataFolder": {}
+  },
+  "backendUpdater": {
+    "newBackendVersion": "Neue Llamacpp Version {{version}}",
+    "backendUpdateAvailable": "Llamacpp Update verfügbar",
+    "remindMeLater": "Später erinnern",
+    "updating": "Aktualisiere...",
+    "updateNow": "Jetzt aktualisieren",
+    "updateSuccess": "Llamacpp erfolgreich aktualisiert",
+    "updateError": "Fehler beim Aktualisieren von Llamacpp"
+  }
+}

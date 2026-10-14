@@ -1,0 +1,76 @@
+{
+  "dataFolder": {
+    "appLogs": "Registres de l’app",
+    "appLogsDesc": "Consulta els registres detallats de l’aplicació."
+  },
+  "shortcuts": {
+    "application": "Aplicació",
+    "newChat": "Xat nou",
+    "newChatDesc": "Crea un xat nou.",
+    "toggleSidebar": "Mostra/oculta la barra lateral",
+    "toggleSidebarDesc": "Mostra o amaga la barra lateral.",
+    "zoomIn": "Amplia",
+    "zoomInDesc": "Augmenta el nivell de zoom.",
+    "zoomOut": "Redueix",
+    "zoomOutDesc": "Disminueix el nivell de zoom.",
+    "chat": "Xat",
+    "sendMessage": "Envia el missatge",
+    "sendMessageDesc": "Envia el missatge actual.",
+    "newLine": "Línia nova",
+    "newLineDesc": "Insereix una línia nova.",
+    "navigation": "Navegació",
+    "goToSettings": "Vés a Configuració",
+    "goToSettingsDesc": "Obre la configuració."
+  },
+  "interface": {
+    "title": "Interfície",
+    "theme": "Tema",
+    "themeDesc": "Fes coincidir el tema amb el del sistema operatiu.",
+    "fontSize": "Mida de la lletra",
+    "fontSizeDesc": "Ajusta la mida de la lletra de l’aplicació."
+  },
+  "hardware": {},
+  "httpsProxy": {
+    "authentication": "Autenticació"
+  },
+  "localApiServer": {},
+  "privacy": {},
+  "general": {
+    "openContainingFolder": "Obre la carpeta contenedora",
+    "appVersion": "Versió de l’app",
+    "openLogs": "Obre els registres",
+    "revealLogs": "Mostra els registres"
+  },
+  "attachments": {
+    "enable": "Activa els adjunts",
+    "enableDesc": "Permet pujar i indexar documents per recuperar-los.",
+    "parseMode": "Preferència d’anàlisi",
+    "parseModeDesc": "Tria com s’afegeixen els documents analitzats a les converses.",
+    "autoInlineThreshold": "Llindar d’inclusió automàtica",
+    "autoInlineThresholdDesc": "Fracció del context del model que s’utilitza com a tall per injectar fitxers analitzats en models locals.",
+    "maxFile": "Mida màxima de fitxer (MB)",
+    "maxFileDesc": "Mida màxima per fitxer. S’aplica en la càrrega i el processament.",
+    "topK": "Top-K",
+    "topKDesc": "Nombre màxim de cites a retornar.",
+    "threshold": "Llindar d’afinitat",
+    "thresholdDesc": "Puntuació mínima de similitud (0-1). Només s’utilitza per a cerques cosinus lineals, no ANN.",
+    "searchMode": "Mode de cerca vectorial",
+    "searchModeDesc": "Tria entre sqlite-vec ANN, cosinus lineal o automàtic.",
+    "chunkSize": "Mida del fragment (caràcters)",
+    "chunkSizeDesc": "Nombre aproximat de caràcters per fragment per a les incrustacions.",
+    "chunkOverlap": "Solapament (caràcters)",
+    "chunkOverlapDesc": "Caràcters coincidents entre fragments consecutius."
+  },
+  "dialogs": {
+    "changeDataFolder": {}
+  },
+  "backendUpdater": {
+    "newBackendVersion": "Nova versió de Llamacpp {{version}}",
+    "backendUpdateAvailable": "Actualització de Llamacpp disponible",
+    "remindMeLater": "Recorda-m’ho més tard",
+    "updating": "S’està actualitzant...",
+    "updateNow": "Actualitza ara",
+    "updateSuccess": "Llamacpp s’ha actualitzat correctament",
+    "updateError": "No s’ha pogut actualitzar Llamacpp"
+  }
+}

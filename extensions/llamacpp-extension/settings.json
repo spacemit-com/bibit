@@ -1,0 +1,486 @@
+[
+  {
+    "key": "llamacpp_version",
+    "title": "Version",
+    "titleKey": "providers:settingDefs.llamacpp_version.title",
+    "description": "llama.cpp release version",
+    "descriptionKey": "providers:settingDefs.llamacpp_version.description",
+    "controllerType": "dropdown",
+    "controllerProps": {
+      "value": "none",
+      "options": [],
+      "recommended": ""
+    }
+  },
+  {
+    "key": "llamacpp_backend",
+    "title": "Backend",
+    "titleKey": "providers:settingDefs.llamacpp_backend.title",
+    "description": "Hardware backend for llama.cpp (CUDA, HIP/ROCm, Vulkan, CPU, etc.)",
+    "descriptionKey": "providers:settingDefs.llamacpp_backend.description",
+    "controllerType": "dropdown",
+    "controllerProps": {
+      "value": "none",
+      "options": [],
+      "recommended": ""
+    }
+  },
+  {
+    "key": "llamacpp_env",
+    "title": "Environmental variables",
+    "titleKey": "providers:settingDefs.llamacpp_env.title",
+    "description": "Environmental variables for llama.cpp(KEY=VALUE), separated by ';'",
+    "descriptionKey": "providers:settingDefs.llamacpp_env.description",
+    "controllerType": "input",
+    "controllerProps": {
+      "value": "",
+      "placeholder": "Eg. GGML_VK_VISIBLE_DEVICES=0,1",
+      "type": "text",
+      "textAlign": "right"
+    }
+  },
+  {
+    "key": "check_for_updates",
+    "title": "Check for updates",
+    "titleKey": "providers:settingDefs.check_for_updates.title",
+    "description": "Fetch the remote llama.cpp release list. Required for the version dropdown to show releases beyond what's installed locally, and for update notifications.",
+    "descriptionKey": "providers:settingDefs.check_for_updates.description",
+    "controllerType": "checkbox",
+    "controllerProps": { "value": true }
+  },
+  {
+    "key": "auto_update_engine",
+    "title": "Auto update engine",
+    "titleKey": "providers:settingDefs.auto_update_engine.title",
+    "description": "Automatically download and switch to the latest llamacpp engine when available. Requires \"Check for updates\" to be on.",
+    "descriptionKey": "providers:settingDefs.auto_update_engine.description",
+    "controllerType": "checkbox",
+    "controllerProps": { "value": true }
+  },
+  {
+    "key": "verify_backend_deps",
+    "title": "Verify backend dependencies",
+    "titleKey": "providers:settingDefs.verify_backend_deps.title",
+    "description": "Check that GPU backend shared libraries (CUDA, Vulkan, etc.) resolve on startup and warn if any are missing.",
+    "descriptionKey": "providers:settingDefs.verify_backend_deps.description",
+    "controllerType": "checkbox",
+    "controllerProps": { "value": true }
+  },
+  {
+    "key": "models_max",
+    "title": "Max Concurrently Loaded Models",
+    "titleKey": "providers:settingDefs.models_max.title",
+    "description": "Maximum number of models the router will keep loaded at once. 0 = unlimited.",
+    "descriptionKey": "providers:settingDefs.models_max.description",
+    "controllerType": "input",
+    "controllerProps": {
+      "value": "1",
+      "placeholder": "e.g 1",
+      "type": "number",
+      "textAlign": "right"
+    }
+  },
+  {
+    "key": "timeout",
+    "title": "Timeout for llamacpp",
+    "titleKey": "providers:settingDefs.timeout.title",
+    "description": "Llamacpp connection and load timeout in seconds",
+    "descriptionKey": "providers:settingDefs.timeout.description",
+    "controllerType": "input",
+    "controllerProps": {
+      "value": "600",
+      "placeholder": "e.g 600",
+      "type": "number",
+      "textAlign": "right"
+    }
+  },
+  {
+    "key": "fit",
+    "title": "Fit (auto-adjust to device memory)",
+    "titleKey": "providers:settingDefs.fit.title",
+    "description": "Whether to adjust unset arguments to fit in device memory ('on' or 'off'). (env: LLAMA_ARG_FIT)",
+    "descriptionKey": "providers:settingDefs.fit.description",
+    "controllerType": "checkbox",
+    "controllerProps": {
+      "value": false
+    }
+  },
+  {
+    "key": "fit_target",
+    "title": "Fit Target per Device (MiB)",
+    "titleKey": "providers:settingDefs.fit_target.title",
+    "description": "Target margin per device for fit, comma-separated list of MiB values. Single value is broadcast across all devices. (env: LLAMA_ARG_FIT_TARGET)",
+    "descriptionKey": "providers:settingDefs.fit_target.description",
+    "controllerType": "input",
+    "controllerProps": {
+      "value": "1024",
+      "placeholder": "1024 or MiB0,MiB1,...",
+      "type": "text",
+      "textAlign": "right"
+    }
+  },
+  {
+    "key": "fit_ctx",
+    "title": "Fit Minimum Context Size",
+    "titleKey": "providers:settingDefs.fit_ctx.title",
+    "description": "Minimum context size (tokens) that can be set by the auto-fit option.",
+    "descriptionKey": "providers:settingDefs.fit_ctx.description",
+    "controllerType": "input",
+    "controllerProps": {
+      "value": 4096,
+      "placeholder": "4096",
+      "type": "number",
+      "textAlign": "right"
+    }
+  },
+  {
+    "key": "threads",
+    "title": "Threads",
+    "titleKey": "providers:settingDefs.threads.title",
+    "description": "Number of threads to use during generation (-1 for logical cores).",
+    "descriptionKey": "providers:settingDefs.threads.description",
+    "controllerType": "input",
+    "controllerProps": {
+      "value": -1,
+      "placeholder": "-1",
+      "type": "number",
+      "textAlign": "right"
+    }
+  },
+  {
+    "key": "threads_batch",
+    "title": "Threads (Batch)",
+    "titleKey": "providers:settingDefs.threads_batch.title",
+    "description": "Number of threads for batch and prompt processing (default: same as Threads).",
+    "descriptionKey": "providers:settingDefs.threads_batch.description",
+    "controllerType": "input",
+    "controllerProps": {
+      "value": -1,
+      "placeholder": "-1 (same as Threads)",
+      "type": "number",
+      "textAlign": "right"
+    }
+  },
+  {
+    "key": "ctx_shift",
+    "title": "Context Shift",
+    "titleKey": "providers:settingDefs.ctx_shift.title",
+    "description": "Allow model to cut text in the beginning to accommodate new text in its memory",
+    "descriptionKey": "providers:settingDefs.ctx_shift.description",
+    "controllerType": "checkbox",
+    "controllerProps": {
+      "value": false
+    }
+  },
+  {
+    "key": "n_predict",
+    "title": "Max Tokens to Predict",
+    "titleKey": "providers:settingDefs.n_predict.title",
+    "description": "Maximum number of tokens to generate (-1 = infinity).",
+    "descriptionKey": "providers:settingDefs.n_predict.description",
+    "controllerType": "input",
+    "controllerProps": {
+      "value": -1,
+      "placeholder": "-1",
+      "type": "number",
+      "textAlign": "right"
+    }
+  },
+  {
+    "key": "ubatch_size",
+    "title": "uBatch Size",
+    "titleKey": "providers:settingDefs.ubatch_size.title",
+    "description": "Physical maximum batch size for processing prompts.",
+    "descriptionKey": "providers:settingDefs.ubatch_size.description",
+    "controllerType": "input",
+    "controllerProps": {
+      "value": 512,
+      "placeholder": "512",
+      "type": "number",
+      "textAlign": "right"
+    }
+  },
+  {
+    "key": "device",
+    "title": "Devices for Offload",
+    "titleKey": "providers:settingDefs.device.title",
+    "description": "Comma-separated list of devices to use for offloading (e.g., 'CUDA0', 'CUDA0,CUDA1'). Leave empty to use default/CPU only.",
+    "descriptionKey": "providers:settingDefs.device.description",
+    "controllerType": "input",
+    "controllerProps": {
+      "value": "",
+      "placeholder": "CUDA0",
+      "type": "text"
+    }
+  },
+  {
+    "key": "split_mode",
+    "title": "GPU Split Mode",
+    "titleKey": "providers:settingDefs.split_mode.title",
+    "description": "How to split the model across multiple GPUs.",
+    "descriptionKey": "providers:settingDefs.split_mode.description",
+    "controllerType": "dropdown",
+    "controllerProps": {
+      "value": "layer",
+      "options": [
+        { "value": "none", "name": "None", "nameKey": "common:optionValues.noSplit" },
+        { "value": "layer", "name": "Layer", "nameKey": "common:optionValues.byLayer" },
+        { "value": "row", "name": "Row", "nameKey": "common:optionValues.byRow" }
+      ]
+    }
+  },
+  {
+    "key": "main_gpu",
+    "title": "Main GPU Index",
+    "titleKey": "providers:settingDefs.main_gpu.title",
+    "description": "The GPU to use for the model (split-mode=none) or intermediate results (split-mode=row).",
+    "descriptionKey": "providers:settingDefs.main_gpu.description",
+    "controllerType": "input",
+    "controllerProps": {
+      "value": 0,
+      "placeholder": "0",
+      "type": "number",
+      "textAlign": "right"
+    }
+  },
+  {
+    "key": "flash_attn",
+    "title": "Flash Attention",
+    "titleKey": "providers:settingDefs.flash_attn.title",
+    "description": "Enable Flash Attention for optimized performance.",
+    "descriptionKey": "providers:settingDefs.flash_attn.description",
+    "controllerType": "dropdown",
+    "controllerProps": {
+      "value": "auto",
+      "options": [
+        { "value": "auto", "name": "Auto", "nameKey": "common:optionValues.auto" },
+        { "value": "on", "name": "On", "nameKey": "common:optionValues.on" },
+        { "value": "off", "name": "Off", "nameKey": "common:optionValues.off" }
+      ]
+    }
+  },
+  {
+    "key": "parallel",
+    "title": "Parallel Sequences",
+    "titleKey": "providers:settingDefs.parallel.title",
+    "description": "Number of parallel sequences to decode for your own chat requests (0 = llama.cpp default of 4). Jan reserves one additional internal slot beyond this for background requests (e.g. thread auto-titling), so they don't evict your chat's KV cache.",
+    "descriptionKey": "providers:settingDefs.parallel.description",
+    "controllerType": "input",
+    "controllerProps": {
+      "value": 1,
+      "placeholder": "1",
+      "type": "number",
+      "textAlign": "right",
+      "min": 0
+    }
+  },
+  {
+    "key": "cont_batching",
+    "title": "Continuous Batching",
+    "titleKey": "providers:settingDefs.cont_batching.title",
+    "description": "Enable continuous batching (a.k.a dynamic batching) for concurrent requests.",
+    "descriptionKey": "providers:settingDefs.cont_batching.description",
+    "controllerType": "checkbox",
+    "controllerProps": {
+      "value": false
+    }
+  },
+  {
+    "key": "no_mmap",
+    "title": "Disable mmap",
+    "titleKey": "providers:settingDefs.no_mmap.title",
+    "description": "Do not memory-map model (slower load but may reduce pageouts if not using mlock).",
+    "descriptionKey": "providers:settingDefs.no_mmap.description",
+    "controllerType": "checkbox",
+    "controllerProps": {
+      "value": false
+    }
+  },
+  {
+    "key": "mlock",
+    "title": "MLock",
+    "titleKey": "providers:settingDefs.mlock.title",
+    "description": "Force system to keep model in RAM, preventing swapping/compression.",
+    "descriptionKey": "providers:settingDefs.mlock.description",
+    "controllerType": "checkbox",
+    "controllerProps": {
+      "value": false
+    }
+  },
+  {
+    "key": "cache_type_k",
+    "title": "KV Cache K Type",
+    "titleKey": "providers:settingDefs.cache_type_k.title",
+    "description": "KV cache data type for Keys (default: f16).",
+    "descriptionKey": "providers:settingDefs.cache_type_k.description",
+    "controllerType": "dropdown",
+    "controllerProps": {
+      "value": "f16",
+      "options": [
+        { "value": "f32", "name": "f32" },
+        { "value": "f16", "name": "f16" },
+        { "value": "bf16", "name": "bf16" },
+        { "value": "q8_0", "name": "q8_0" },
+        { "value": "q4_0", "name": "q4_0" },
+        { "value": "q4_1", "name": "q4_1" },
+        { "value": "iq4_nl", "name": "iq4_nl" },
+        { "value": "q5_0", "name": "q5_0" },
+        { "value": "q5_1", "name": "q5_1" }
+      ]
+    }
+  },
+  {
+    "key": "cache_type_v",
+    "title": "KV Cache V Type",
+    "titleKey": "providers:settingDefs.cache_type_v.title",
+    "description": "KV cache data type for Values (default: f16).",
+    "descriptionKey": "providers:settingDefs.cache_type_v.description",
+    "controllerType": "dropdown",
+    "controllerProps": {
+      "value": "f16",
+      "options": [
+        { "value": "f32", "name": "f32" },
+        { "value": "f16", "name": "f16" },
+        { "value": "bf16", "name": "bf16" },
+        { "value": "q8_0", "name": "q8_0" },
+        { "value": "q4_0", "name": "q4_0" },
+        { "value": "q4_1", "name": "q4_1" },
+        { "value": "iq4_nl", "name": "iq4_nl" },
+        { "value": "q5_0", "name": "q5_0" },
+        { "value": "q5_1", "name": "q5_1" }
+      ]
+    }
+  },
+  {
+    "key": "rope_scaling",
+    "title": "RoPE Scaling Method",
+    "titleKey": "providers:settingDefs.rope_scaling.title",
+    "description": "RoPE frequency scaling method.",
+    "descriptionKey": "providers:settingDefs.rope_scaling.description",
+    "controllerType": "dropdown",
+    "controllerProps": {
+      "value": "none",
+      "options": [
+        { "value": "none", "name": "None", "nameKey": "common:optionValues.noScaling" },
+        { "value": "linear", "name": "Linear", "nameKey": "common:optionValues.linear" },
+        { "value": "yarn", "name": "YaRN", "nameKey": "common:optionValues.yarn" }
+      ]
+    }
+  },
+  {
+    "key": "rope_scale",
+    "title": "RoPE Scale Factor",
+    "titleKey": "providers:settingDefs.rope_scale.title",
+    "description": "RoPE context scaling factor.",
+    "descriptionKey": "providers:settingDefs.rope_scale.description",
+    "controllerType": "input",
+    "controllerProps": {
+      "value": 1.0,
+      "placeholder": "1.0",
+      "type": "number",
+      "textAlign": "right",
+      "min": 0,
+      "step": 0.01
+    }
+  },
+  {
+    "key": "rope_freq_base",
+    "title": "RoPE Frequency Base",
+    "titleKey": "providers:settingDefs.rope_freq_base.title",
+    "description": "RoPE base frequency (0 = loaded from model).",
+    "descriptionKey": "providers:settingDefs.rope_freq_base.description",
+    "controllerType": "input",
+    "controllerProps": {
+      "value": 0,
+      "placeholder": "0 (model default)",
+      "type": "number",
+      "textAlign": "right"
+    }
+  },
+  {
+    "key": "rope_freq_scale",
+    "title": "RoPE Frequency Scale Factor",
+    "titleKey": "providers:settingDefs.rope_freq_scale.title",
+    "description": "RoPE frequency scaling factor.",
+    "descriptionKey": "providers:settingDefs.rope_freq_scale.description",
+    "controllerType": "input",
+    "controllerProps": {
+      "value": 1.0,
+      "placeholder": "1.0",
+      "type": "number",
+      "textAlign": "right",
+      "min": 0,
+      "step": 0.01
+    }
+  },
+  {
+    "key": "cache_ram",
+    "title": "Prompt Cache RAM (MiB)",
+    "titleKey": "providers:settingDefs.cache_ram.title",
+    "description": "Maximum prompt cache size in MiB. -1 = unlimited, 0 = disabled.",
+    "descriptionKey": "providers:settingDefs.cache_ram.description",
+    "controllerType": "input",
+    "controllerProps": {
+      "value": -1,
+      "placeholder": "-1",
+      "type": "number",
+      "textAlign": "right"
+    }
+  },
+  {
+    "key": "cache_reuse",
+    "title": "Cache Reuse",
+    "titleKey": "providers:settingDefs.cache_reuse.title",
+    "description": "Min chunk size of matching prefix tokens to reuse from cache. 0 = disabled.",
+    "descriptionKey": "providers:settingDefs.cache_reuse.description",
+    "controllerType": "input",
+    "controllerProps": {
+      "value": 0,
+      "placeholder": "0",
+      "type": "number",
+      "textAlign": "right",
+      "min": 0
+    }
+  },
+  {
+    "key": "swa_full",
+    "title": "Full SWA Cache",
+    "titleKey": "providers:settingDefs.swa_full.title",
+    "description": "Use full-size KV cache for sliding-window-attention models (e.g. Gemma). Enable this if such a model reprocesses the entire prompt every turn instead of reusing cache; costs more memory.",
+    "descriptionKey": "providers:settingDefs.swa_full.description",
+    "controllerType": "checkbox",
+    "controllerProps": {
+      "value": false
+    }
+  },
+  {
+    "key": "kv_unified",
+    "title": "Unified KV Cache",
+    "titleKey": "providers:settingDefs.kv_unified.title",
+    "description": "Use a single unified KV buffer shared across all slots. Saves memory when running multiple parallel slots.",
+    "descriptionKey": "providers:settingDefs.kv_unified.description",
+    "controllerType": "dropdown",
+    "controllerProps": {
+      "value": "auto",
+      "options": [
+        { "value": "auto", "name": "Auto", "nameKey": "common:optionValues.auto" },
+        { "value": "on", "name": "On", "nameKey": "common:optionValues.on" },
+        { "value": "off", "name": "Off", "nameKey": "common:optionValues.off" }
+      ]
+    }
+  },
+  {
+    "key": "keep",
+    "title": "Keep First N Tokens",
+    "titleKey": "providers:settingDefs.keep.title",
+    "description": "Number of tokens from the initial prompt to keep when context is shifted. -1 = keep all.",
+    "descriptionKey": "providers:settingDefs.keep.description",
+    "controllerType": "input",
+    "controllerProps": {
+      "value": 0,
+      "placeholder": "0",
+      "type": "number",
+      "textAlign": "right"
+    }
+  }
+]

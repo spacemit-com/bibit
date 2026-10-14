@@ -1,0 +1,110 @@
+{
+  "status": {
+    "pending": "等待执行",
+    "running": "执行中",
+    "completed": "已完成",
+    "failed": "执行失败",
+    "attention": "待审批",
+    "completedUnread": "完成未读"
+  },
+  "permission": {
+    "pending": "待审批",
+    "approved": "已允许",
+    "denied": "已拒绝",
+    "expired": "已失效",
+    "requestExpired": "权限请求已失效",
+    "requestResolved": "权限请求已处理",
+    "needsApproval": "需要审批：",
+    "requestedAction": "请求动作：",
+    "impact": "影响：",
+    "noImpact": "上游未提供影响说明",
+    "moreDetails": "补充详情",
+    "allowedOnce": "已允许一次",
+    "waitingInMainWindow": "主窗口中等待审批",
+    "openMainWindow": "打开主窗口",
+    "actionSeparator": "：",
+    "title": "工具权限审批",
+    "expiredReason": {
+      "timeout": "审批等待超时，已失效",
+      "ended": "任务已结束，审批已失效"
+    }
+  },
+  "reasoning": {
+    "streaming": "思考中…",
+    "completed": "已思考 {{duration}}",
+    "completedNoDuration": "已思考"
+  },
+  "tool": {
+    "command": "执行命令 {{command}}",
+    "read": "读取 {{path}}",
+    "write": "修改 {{path}}",
+    "list": "列出 {{path}}",
+    "search": "搜索 {{pattern}}",
+    "webSearch": "联网搜索 {{query}}",
+    "webFetch": "抓取 {{host}}",
+    "mcp": "调用 {{server}} 的 {{tool}}",
+    "generic": "{{name}}",
+    "unknown": "工具"
+  },
+  "group": {
+    "working": "正在工作 · 第 {{index}} 步 · {{action}}",
+    "workingReasoning": "正在思考 · 第 {{index}} 步",
+    "completed": "已完成 {{steps}} 步",
+    "completedDuration": "已完成 {{steps}} 步 · 用时 {{duration}}",
+    "partialFailure": "{{steps}} 步中 {{failed}} 步失败",
+    "reasoningOnly": "已思考",
+    "reasoningOnlyDuration": "已思考 {{duration}}",
+    "approvalNeeded": "{{count}} 个操作等待审批"
+  },
+  "terminal": {
+    "mergedOutput": "合并输出",
+    "exitCode": "退出码: {{code}}",
+    "timeout": "状态: 执行超时"
+  },
+  "redact": {
+    "hidden": "[已隐藏]",
+    "bearer": "Bearer [已隐藏]",
+    "unavailable": "[无法显示详情]",
+    "truncated": "…[已截断]"
+  },
+  "detail": {
+    "input": "参数",
+    "output": "输出",
+    "error": "错误",
+    "empty": "无输出",
+    "copy": "复制",
+    "copyTerminal": "复制终端输出",
+    "follow": "回到最新内容"
+  },
+  "diagnostic": {
+    "run_failed": "任务执行失败，已保留收到的内容。",
+    "run_cancelled": "任务已停止。",
+    "worker_rpc_error": "运行时工作进程异常，本轮未能完成。",
+    "security_denied": "安全策略拒绝了本轮请求。",
+    "security_unavailable": "安全服务当前不可用，本轮请求已按失败关闭策略中止。",
+    "skill_unavailable": "本轮选中的技能已不可用，请在会话中重新选择。",
+    "network_policy_blocked": "网络策略不允许连接该服务，需要先调整配置。",
+    "provider_timeout": "模型服务在超时时间内没有返回内容。",
+    "provider_connection_failed": "无法连接到模型服务。",
+    "run_incomplete": "上一轮任务未正常结束，已保留收到的内容。",
+    "run_interrupted": "任务在完成前被中断。",
+    "TOKEN_BUDGET_APPROVAL_TIMEOUT": "配额审批超时，本轮已中止。"
+  },
+  "diagnosticDetails": "详情",
+  "diagnosticField": {
+    "tool": "工具",
+    "capability": "所需能力",
+    "scope": "作用范围",
+    "risk_level": "风险等级",
+    "reason": "原因",
+    "provider_host": "服务地址",
+    "network_mode": "网络策略",
+    "timeout_seconds": "超时（秒）",
+    "http_status": "上游状态码",
+    "skill_ids": "技能",
+    "provider": "服务商",
+    "action": "建议处置",
+    "agent_id": "Agent",
+    "worker_instance": "工作进程"
+  }
+}

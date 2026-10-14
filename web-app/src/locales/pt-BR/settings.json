@@ -1,0 +1,70 @@
+{
+  "dataFolder": {
+    "appLogs": "Logs do App",
+    "appLogsDesc": "Ver logs detalhados do App."
+  },
+  "shortcuts": {
+    "application": "Aplicação",
+    "newChat": "Novo Chat",
+    "newChatDesc": "Criar um novo chat.",
+    "toggleSidebar": "Mostrar/Ocultar Barra Lateral",
+    "toggleSidebarDesc": "Mostrar/ocultar a barra lateral.",
+    "zoomIn": "Aumentar Zoom",
+    "zoomInDesc": "Aumentar o nível de zoom.",
+    "zoomOut": "Diminuir Zoom",
+    "zoomOutDesc": "Diminuir o nível de zoom.",
+    "chat": "Chat",
+    "sendMessage": "Enviar Mensagem",
+    "sendMessageDesc": "Enviar a mensagem atual.",
+    "newLine": "Nova Linha",
+    "newLineDesc": "Inserir uma nova linha.",
+    "navigation": "Navegação",
+    "goToSettings": "Ir para Configurações",
+    "goToSettingsDesc": "Abrir configurações."
+  },
+  "appearance": {},
+  "hardware": {},
+  "httpsProxy": {
+    "authentication": "Autenticação"
+  },
+  "localApiServer": {},
+  "privacy": {},
+  "general": {
+    "openContainingFolder": "Abrir Pasta Contendo",
+    "appVersion": "Versão do App",
+    "openLogs": "Abrir Logs",
+    "revealLogs": "Mostrar Logs"
+  },
+  "attachments": {
+    "enable": "Habilitar Anexos",
+    "enableDesc": "Permitir upload e indexação de documentos para recuperação.",
+    "parseMode": "Preferência de análise",
+    "parseModeDesc": "Escolha como os documentos processados são adicionados às conversas.",
+    "autoInlineThreshold": "Limite de inclusão automática",
+    "autoInlineThresholdDesc": "Fração do contexto do modelo usada como limite para incluir arquivos processados em modelos locais.",
+    "maxFile": "Tamanho Máximo do Arquivo (MB)",
+    "maxFileDesc": "Tamanho máximo por arquivo. Aplicado no upload e processamento.",
+    "topK": "Top-K",
+    "topKDesc": "Máximo de citações para retornar.",
+    "threshold": "Limite de Afinidade",
+    "thresholdDesc": "Pontuação mínima de similaridade (0-1). Usado apenas para busca linear cosseno, não ANN.",
+    "searchMode": "Modo de Busca Vetorial",
+    "searchModeDesc": "Escolha entre sqlite-vec ANN, cosseno linear, ou auto.",
+    "chunkSize": "Tamanho do Fragmento (caracteres)",
+    "chunkSizeDesc": "Máximo aproximado de caracteres por fragmento para embeddings.",
+    "chunkOverlap": "Sobreposição (caracteres)",
+    "chunkOverlapDesc": "Sobreposição de caracteres entre fragmentos consecutivos."
+  },
+  "dialogs": {
+    "changeDataFolder": {}
+  },
+  "backendUpdater": {
+    "newBackendVersion": "Nova Versão Llamacpp {{version}}",
+    "backendUpdateAvailable": "Atualização Llamacpp Disponível",
+    "remindMeLater": "Lembre-me Mais Tarde",
+    "updating": "Atualizando...",
+    "updateNow": "Atualizar Agora",
+    "updateSuccess": "Llamacpp atualizado com sucesso",
+    "updateError": "Falha ao atualizar Llamacpp"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "@bibit/feature-store",
+  "version": "0.1.0",
+  "type": "module",
+  "bibitFeature": "bibit.feature.json",
+  "exports": {
+    "./bibit-feature": "./src/bibit-feature.ts"
+  }
+}

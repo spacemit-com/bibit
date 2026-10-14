@@ -1,0 +1,37 @@
+{
+  "name": "reject-unknown-conversation-kind",
+  "expect": "reject",
+  "note": "Conversation kinds are a closed set.",
+  "manifest": {
+    "manifestSchemaVersion": 1,
+    "sdkApiVersion": 1,
+    "id": "conformance",
+    "version": "0.1.0",
+    "owner": "platform-team",
+    "display": {
+      "titleKey": "conformance:title",
+      "fallbackTitle": "Conformance",
+      "iconKey": "feature"
+    },
+    "targets": [
+      "desktop"
+    ],
+    "requiredHostCapabilities": [],
+    "contributions": {
+      "pages": [],
+      "settings": [],
+      "conversation": [
+        {
+          "id": "trace",
+          "kind": "not-a-kind",
+          "surfaces": [
+            "main"
+          ]
+        }
+      ],
+      "locales": [
+        "en"
+      ]
+    }
+  }
+}

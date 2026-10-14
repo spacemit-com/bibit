@@ -1,0 +1,41 @@
+{
+  "name": "accept-unknown-navigation-group",
+  "expect": "accept",
+  "note": "Navigation groups are ordering tokens, not a per-kind enum. A page may carry a token this build only knows for settings; the host orders it after the known groups instead of refusing the plugin.",
+  "manifest": {
+    "manifestSchemaVersion": 1,
+    "sdkApiVersion": 1,
+    "id": "conformance",
+    "version": "0.1.0",
+    "owner": "platform-team",
+    "display": {
+      "titleKey": "conformance:title",
+      "fallbackTitle": "Conformance",
+      "iconKey": "feature"
+    },
+    "targets": [
+      "desktop"
+    ],
+    "requiredHostCapabilities": [],
+    "contributions": {
+      "pages": [
+        {
+          "id": "catalog",
+          "path": "catalog",
+          "surfaces": [
+            "main"
+          ],
+          "navigation": {
+            "group": "integrations",
+            "order": 100
+          }
+        }
+      ],
+      "settings": [],
+      "conversation": [],
+      "locales": [
+        "en"
+      ]
+    }
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "name": "accept-extended-icon-keys",
+  "expect": "accept",
+  "note": "Icon keys added after v1 stay accepted. The manifest value is an open token, so a plugin may declare a new icon before the host ships it and still install; only the rendering degrades until the icon exists.",
+  "manifest": {
+    "manifestSchemaVersion": 1,
+    "sdkApiVersion": 1,
+    "id": "icon-keys",
+    "version": "0.1.0",
+    "owner": "platform-team",
+    "display": {
+      "titleKey": "icon-keys:title",
+      "fallbackTitle": "Icon keys",
+      "iconKey": "sparkles"
+    },
+    "targets": ["desktop"],
+    "requiredHostCapabilities": [],
+    "contributions": {
+      "pages": [
+        {
+          "id": "home",
+          "path": "",
+          "surfaces": ["main"],
+          "navigation": { "group": "tools", "order": 100 }
+        }
+      ],
+      "settings": [
+        {
+          "id": "configure",
+          "path": "configure",
+          "surfaces": ["main"],
+          "navigation": {
+            "group": "core",
+            "order": 100,
+            "fallbackTitle": "Configure",
+            "iconKey": "wrench"
+          }
+        }
+      ],
+      "conversation": [],
+      "locales": ["en"]
+    }
+  }
+}

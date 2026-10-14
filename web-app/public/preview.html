@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>BiBit 悬浮球动效实时预览</title>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <style>
+    /* 核心动画定义（与 index.css 保持完全一致） */
+    .voice-ball-trigger {
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      border-radius: 50%;
+      background: transparent;
+      cursor: grab;
+      user-select: none;
+      -webkit-user-select: none;
+      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .voice-ball-trigger:hover {
+      transform: scale(1.05);
+    }
+
+    .voice-ball-trigger:active {
+      transform: scale(0.92);
+      cursor: grabbing;
+      transition-duration: 0.1s;
+    }
+
+    .voice-ball-svg {
+      display: block;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+    }
+
+    /* 思考状态旋转外环 */
+    .voice-ball-ring {
+      opacity: 0;
+      transform-origin: 128px 128px;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+
+    .voice-ball-ring.is-thinking {
+      opacity: 1;
+      animation: voice-ball-spin 1.2s linear infinite;
+    }
+
+    @keyframes voice-ball-spin {
+      from {
+        transform: rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* 点阵眼睛：呼吸微光、视线移动巡视与点阵数量开合眨眼 */
+    .voice-ball-eyes {
+      transform-origin: 128px 128px;
+      animation:
+        voice-ball-look 23.2s cubic-bezier(0.25, 1, 0.5, 1) infinite,
+        voice-ball-breathe 3.5s ease-in-out infinite;
+    }
+
+    /* 23.2s 完整待机动画循环：
+       0s~5.0s: 居中停留 (5s)
+       5.0s~5.26s: 居中眨眼 (0.26s)
+       5.26s~10.26s: 居中停留 (5s)
+       10.26s~10.66s: 眼睛平滑移到左上 (0.4s)
+       10.66s~15.66s: 停留左上 (5s)
+       15.66s~15.92s: 在左上眨眼 (0.26s)
+       15.92s~16.92s: 在左上继续停留 1s (1s)
+       16.92s~17.42s: 眼睛平滑移到右边 (0.5s)
+       17.42s~22.42s: 停留右边 (5s)
+       22.42s~22.82s: 回到中间初始位置 (0.4s)
+       22.82s~23.2s: 居中停留，无缝衔接下一轮循环
+    */
+    @keyframes voice-ball-look {
+
+      0%,
+      44.22% {
+        transform: translate(0px, 0px);
+      }
+
+      45.95%,
+      72.93% {
+        transform: translate(-18px, -14px);
+      }
+
+      75.09%,
+      96.64% {
+        transform: translate(18px, 0px);
+      }
+
+      98.36%,
+      100% {
+        transform: translate(0px, 0px);
+      }
+    }
+
+    /* 眨眼动效：周期同步为 23.2s，分别在居中(5.0s)与左上(15.66s)各执行一次点阵数量开合闭眼 */
+    .voice-ball-tier-outer {
+      animation: voice-ball-blink-outer 23.2s ease-in-out infinite;
+    }
+
+    .voice-ball-tier-mid {
+      animation: voice-ball-blink-mid 23.2s ease-in-out infinite;
+    }
+
+    .voice-ball-tier-inner {
+      animation: voice-ball-blink-inner 23.2s ease-in-out infinite;
+    }
+
+    .voice-ball-tier-center {
+      /* 中心行始终保持点亮，闭眼时呈现自然的点阵横线缝隙 */
+    }
+
+    /* 最外层（第 0、6 行）：最先熄灭，最后点亮 */
+    @keyframes voice-ball-blink-outer {
+
+      0%,
+      21.55% {
+        opacity: 1;
+      }
+
+      21.68%,
+      22.54% {
+        opacity: 0;
+      }
+
+      22.67%,
+      67.50% {
+        opacity: 1;
+      }
+
+      67.63%,
+      68.49% {
+        opacity: 0;
+      }
+
+      68.62%,
+      100% {
+        opacity: 1;
+      }
+    }
+
+    /* 次外层（第 1、5 行）：次先熄灭 */
+    @keyframes voice-ball-blink-mid {
+
+      0%,
+      21.55% {
+        opacity: 1;
+      }
+
+      21.81%,
+      22.41% {
+        opacity: 0;
+      }
+
+      22.67%,
+      67.50% {
+        opacity: 1;
+      }
+
+      67.76%,
+      68.36% {
+        opacity: 0;
+      }
+
+      68.62%,
+      100% {
+        opacity: 1;
+      }
+    }
+
+    /* 内层（第 2、4 行）：最后熄灭，最早恢复 */
+    @keyframes voice-ball-blink-inner {
+
+      0%,
+      21.55% {
+        opacity: 1;
+      }
+
+      21.94%,
+      22.28% {
+        opacity: 0;
+      }
+
+      22.67%,
+      67.50% {
+        opacity: 1;
+      }
+
+      67.89%,
+      68.23% {
+        opacity: 0;
+      }
+
+      68.62%,
+      100% {
+        opacity: 1;
+      }
+    }
+
+    /* 手动视线定格类名（用于调试或固定方向） */
+    .voice-ball-eyes.is-look-center {
+      animation: none !important;
+      transform: translate(0px, 0px) !important;
+    }
+
+    .voice-ball-eyes.is-look-top-left,
+    .voice-ball-eyes.is-look-left {
+      animation: none !important;
+      transform: translate(-18px, -14px) !important;
+    }
+
+    .voice-ball-eyes.is-look-right {
+      animation: none !important;
+      transform: translate(18px, -14px) !important;
+    }
+
+    /* 手动触发眨眼类名（供点击测试） */
+    .voice-ball-eyes.is-manual-blinking .voice-ball-tier-outer {
+      animation: voice-ball-blink-outer-manual 0.24s ease-in-out !important;
+    }
+
+    .voice-ball-eyes.is-manual-blinking .voice-ball-tier-mid {
+      animation: voice-ball-blink-mid-manual 0.24s ease-in-out !important;
+    }
+
+    .voice-ball-eyes.is-manual-blinking .voice-ball-tier-inner {
+      animation: voice-ball-blink-inner-manual 0.24s ease-in-out !important;
+    }
+
+    @keyframes voice-ball-blink-outer-manual {
+
+      0%,
+      10% {
+        opacity: 1;
+      }
+
+      16%,
+      84% {
+        opacity: 0;
+      }
+
+      90%,
+      100% {
+        opacity: 1;
+      }
+    }
+
+    @keyframes voice-ball-blink-mid-manual {
+
+      0%,
+      26% {
+        opacity: 1;
+      }
+
+      32%,
+      68% {
+        opacity: 0;
+      }
+
+      74%,
+      100% {
+        opacity: 1;
+      }
+    }
+
+    @keyframes voice-ball-blink-inner-manual {
+
+      0%,
+      42% {
+        opacity: 1;
+      }
+
+      48%,
+      52% {
+        opacity: 0;
+      }
+
+      58%,
+      100% {
+        opacity: 1;
+      }
+    }
+
+    @keyframes voice-ball-breathe {
+
+      0%,
+      100% {
+        opacity: 0.82;
+      }
+
+      50% {
+        opacity: 1;
+      }
+    }
+
+    /* 语音输入录音态：点阵音波跳动（严格实心柱，无空隙断开） */
+    .voice-ball-eyes.is-hidden {
+      display: none !important;
+      opacity: 0 !important;
+      animation: none !important;
+    }
+
+    .voice-ball-waves {
+      display: none;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .voice-ball-waves.is-active {
+      display: block;
+      opacity: 1;
+    }
+
+    /* 音波柱中心水平基准行始终常亮 */
+    .voice-ball-wave-bar .voice-ball-wave-tier-0 {
+      opacity: 1 !important;
+    }
+
+    .voice-ball-wave-tier {
+      transition: opacity 0.08s linear;
+    }
+  </style>
+</head>
+
+<body class="bg-transparent text-[var(--foreground)] antialiased p-3">
+  <div
+    class="bg-[var(--card)] text-[var(--foreground)] border border-[var(--border)] rounded-2xl p-5 shadow-sm space-y-4 max-w-xl mx-auto">
+
+    <!-- 标题与状态指示 -->
+    <div class="flex items-center justify-between border-b border-[var(--border)] pb-3">
+      <div>
+        <h2 class="font-bold text-base flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-[#7bff47] animate-pulse"></span>
+          BiBit 悬浮球动效预览器
+        </h2>
+        <p class="text-xs text-[var(--muted-foreground)] mt-0.5">
+          支持实时模拟真实 96×96px 尺寸、放大细节观察、思考旋转环与眨眼微动效
+        </p>
+      </div>
+      <div class="text-xs px-2.5 py-1 rounded-full bg-[var(--accent)] text-[var(--accent-foreground)] font-mono">
+        96 × 96 px
+      </div>
+    </div>
+
+    <!-- 舞台展示区 -->
+    <div id="stage"
+      class="relative rounded-xl border border-[var(--border)] bg-[#1e2430] p-8 flex flex-col sm:flex-row items-center justify-around gap-6 transition-colors duration-300">
+
+      <!-- 真实尺寸对比 (96×96px) -->
+      <div class="flex flex-col items-center gap-2">
+        <span class="text-xs text-slate-400 font-mono">真实 1:1 尺寸 (96px)</span>
+        <div class="w-[96px] h-[96px] flex items-center justify-center">
+          <button type="button" class="voice-ball-trigger w-[96px] h-[96px] border-0 p-0 focus:outline-none"
+            title="点击或按住感受交互">
+            <svg viewBox="0 0 256 256" fill="none" class="voice-ball-svg pointer-events-none select-none">
+              <defs>
+                <linearGradient id="vb-grad-1" x1="286" y1="321" x2="-10" y2="55" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#7BFF47" />
+                  <stop offset="1" stop-color="white" />
+                </linearGradient>
+              </defs>
+              <circle cx="128" cy="128" r="120" fill="black" />
+              <g class="voice-ball-ring vb-ring-target">
+                <circle cx="128" cy="128" r="120" stroke="url(#vb-grad-1)" stroke-width="16" fill="none" />
+              </g>
+              <g class="voice-ball-eyes vb-eyes-target">
+                <g class="vb-dots-left"></g>
+                <g class="vb-dots-right"></g>
+              </g>
+              <g class="voice-ball-waves vb-waves-target"></g>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- 放大 2 倍细节观察区 (192px) -->
+      <div class="flex flex-col items-center gap-2">
+        <span class="text-xs text-slate-400 font-mono">放大 2× 观察细节 (192px)</span>
+        <div class="w-[192px] h-[192px] flex items-center justify-center">
+          <button type="button" class="voice-ball-trigger w-[192px] h-[192px] border-0 p-0 focus:outline-none"
+            title="放大观察点阵眼与旋转描边">
+            <svg viewBox="0 0 256 256" fill="none" class="voice-ball-svg pointer-events-none select-none">
+              <defs>
+                <linearGradient id="vb-grad-2" x1="286" y1="321" x2="-10" y2="55" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#7BFF47" />
+                  <stop offset="1" stop-color="white" />
+                </linearGradient>
+              </defs>
+              <circle cx="128" cy="128" r="120" fill="black" />
+              <g class="voice-ball-ring vb-ring-target">
+                <circle cx="128" cy="128" r="120" stroke="url(#vb-grad-2)" stroke-width="16" fill="none" />
+              </g>
+              <g class="voice-ball-eyes vb-eyes-target">
+                <g class="vb-dots-left"></g>
+                <g class="vb-dots-right"></g>
+              </g>
+              <g class="voice-ball-waves vb-waves-target"></g>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 交互控制面板 -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+
+      <!-- 思考状态切换 -->
+      <button id="toggle-thinking" type="button"
+        class="flex items-center justify-between px-3.5 py-2.5 rounded-lg border border-[var(--border)] bg-[var(--background)] hover:bg-[var(--accent)] text-sm font-medium transition">
+        <span class="flex items-center gap-2">
+          <span id="thinking-indicator" class="w-2 h-2 rounded-full bg-slate-400"></span>
+          <span>思考态旋转描边</span>
+        </span>
+        <span id="thinking-status"
+          class="text-xs px-2 py-0.5 rounded bg-slate-700/30 text-[var(--muted-foreground)]">默认隐藏</span>
+      </button>
+
+      <!-- 语音输入/录音音波状态切换 -->
+      <button id="toggle-listening" type="button"
+        class="flex items-center justify-between px-3.5 py-2.5 rounded-lg border border-[var(--border)] bg-[var(--background)] hover:bg-[var(--accent)] text-sm font-medium transition">
+        <span class="flex items-center gap-2">
+          <span id="listening-indicator" class="w-2 h-2 rounded-full bg-slate-400"></span>
+          <span>录音输入态（点阵音波）</span>
+        </span>
+        <span id="listening-status"
+          class="text-xs px-2 py-0.5 rounded bg-slate-700/30 text-[var(--muted-foreground)]">待机双眼</span>
+      </button>
+
+      <!-- 手动触发单次眨眼 -->
+      <button id="trigger-blink" type="button"
+        class="flex items-center justify-between px-3.5 py-2.5 rounded-lg border border-[var(--border)] bg-[var(--background)] hover:bg-[var(--accent)] text-sm font-medium transition">
+        <span>眨眼触发（27s 自动周期）</span>
+        <span class="text-xs text-[var(--muted-foreground)]">点击手动眨眼</span>
+      </button>
+
+      <!-- 舞台底色切换 -->
+      <button id="toggle-bg" type="button"
+        class="flex items-center justify-between px-3.5 py-2.5 rounded-lg border border-[var(--border)] bg-[var(--background)] hover:bg-[var(--accent)] text-sm font-medium transition">
+        <span>切换预览背景底色</span>
+        <span id="bg-name"
+          class="text-xs px-2 py-0.5 rounded bg-slate-700/30 text-[var(--muted-foreground)]">深空蓝底</span>
+      </button>
+
+      <!-- 待机视线位置测试 -->
+      <button id="toggle-gaze" type="button"
+        class="flex items-center justify-between px-3.5 py-2.5 rounded-lg border border-[var(--border)] bg-[var(--background)] hover:bg-[var(--accent)] text-sm font-medium transition sm:col-span-2">
+        <span class="flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
+          <span>待机眼睛视线测试</span>
+        </span>
+        <span id="gaze-status" class="text-xs px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-300 font-semibold">23.2s
+          自动巡视循环</span>
+      </button>
+
+      <!-- 语音输入模拟模式切换（静音/说话/峰值） -->
+      <button id="toggle-voice-mode" type="button"
+        class="flex items-center justify-between px-3.5 py-2.5 rounded-lg border border-[var(--border)] bg-[var(--background)] hover:bg-[var(--accent)] text-sm font-medium transition sm:col-span-2">
+        <span class="flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+          <span>录音音量状态测试</span>
+        </span>
+        <span id="voice-mode-status"
+          class="text-xs px-2 py-0.5 rounded bg-emerald-500/20 text-[#7bff47] font-semibold">自然模拟说话（含无声断句）</span>
+      </button>
+
+    </div>
+
+    <!-- 特性说明提示卡 -->
+    <div
+      class="text-[11px] text-[var(--muted-foreground)] bg-[var(--background)] rounded-lg p-2.5 border border-[var(--border)] space-y-1">
+      <p>💡 <b>待机双眼巡视</b>：5s 居中 ➔ 眨眼 ➔ 5s 居中 ➔ 移到左上停留 5s ➔ 在左上眨眼停留 1s ➔ 移到右边停留 5s ➔ 回到居中（23.2s 完整周期，纯小点数量开合眨眼与平滑视线巡视）。
+      </p>
+      <p>🎙️ <b>语音输入</b>：点击切换为 4 列点阵跳动音波（高度由点数律动展开，纯正 LED 频谱质感）。</p>
+      <p>🔄 <b>思考状态</b>：开启后，经典绿白渐变外环点亮并以 1.2s/圈 顺时针旋转。</p>
+    </div>
+
+  </div>
+
+  <script>
+    // 点阵眼睛按层级分组（与 VoiceBall.tsx 100% 保持一致）
+    const EYE_TIERS = {
+      center: [
+        [80.5, 119.5], [89.5, 119.5], [98.5, 119.5], [107.5, 119.5]
+      ],
+      inner: [
+        [80.5, 110.5], [89.5, 110.5], [98.5, 110.5], [107.5, 110.5],
+        [80.5, 128.5], [89.5, 128.5], [98.5, 128.5], [107.5, 128.5]
+      ],
+      mid: [
+        [80.5, 101.5], [89.5, 101.5], [98.5, 101.5], [107.5, 101.5],
+        [80.5, 137.5], [89.5, 137.5], [98.5, 137.5], [107.5, 137.5]
+      ],
+      outer: [
+        [89.5, 92.5], [98.5, 92.5],
+        [89.5, 146.5], [98.5, 146.5]
+      ]
+    };
+
+    // 语音输入音波：4 列点阵柱定义
+    const WAVE_BARS = [
+      { id: 'b1', x: [51.5, 60.5, 69.5], maxTier: 3 },
+      { id: 'b2', x: [96.5, 105.5, 114.5], maxTier: 5 },
+      { id: 'b3', x: [141.5, 150.5, 159.5], maxTier: 2 },
+      { id: 'b4', x: [186.5, 195.5, 204.5], maxTier: 4 }
+    ];
+
+    const WAVE_TIER_Y = [
+      [128],
+      [119, 137],
+      [110, 146],
+      [101, 155],
+      [92, 164],
+      [83, 173]
+    ];
+
+    // 渲染点阵眼睛 SVG
+    function renderEyeDots(container, offsetX = 0) {
+      container.innerHTML = `
+        <g class="voice-ball-tier-center">
+          ${EYE_TIERS.center.map(([x, y]) => `<ellipse cx="${x + offsetX}" cy="${y}" rx="3.49" ry="3.5" fill="#7BFF47"/>`).join('')}
+        </g>
+        <g class="voice-ball-tier-inner">
+          ${EYE_TIERS.inner.map(([x, y]) => `<ellipse cx="${x + offsetX}" cy="${y}" rx="3.49" ry="3.5" fill="#7BFF47"/>`).join('')}
+        </g>
+        <g class="voice-ball-tier-mid">
+          ${EYE_TIERS.mid.map(([x, y]) => `<ellipse cx="${x + offsetX}" cy="${y}" rx="3.49" ry="3.5" fill="#7BFF47"/>`).join('')}
+        </g>
+        <g class="voice-ball-tier-outer">
+          ${EYE_TIERS.outer.map(([x, y]) => `<ellipse cx="${x + offsetX}" cy="${y}" rx="3.49" ry="3.5" fill="#7BFF47"/>`).join('')}
+        </g>
+      `;
+    }
+
+    // 渲染点阵跳动音波 SVG
+    function renderWaveBars(container) {
+      container.innerHTML = WAVE_BARS.map(bar => {
+        let tiersHtml = '';
+        for (let t = 0; t <= bar.maxTier; t++) {
+          const yArr = WAVE_TIER_Y[t];
+          const dots = yArr.flatMap(y =>
+            bar.x.map(x => `<ellipse cx="${x}" cy="${y}" rx="3.49" ry="3.5" fill="#7BFF47"/>`)
+          ).join('');
+          const isTier0 = t === 0;
+          tiersHtml += `<g class="voice-ball-wave-tier voice-ball-wave-tier-${t}" style="opacity: ${isTier0 ? 1 : 0}">${dots}</g>`;
+        }
+        return `<g class="voice-ball-wave-bar ${bar.id}">${tiersHtml}</g>`;
+      }).join('');
+    }
+
+    // 借鉴 LiveKit 语音包络算法
+    // 静音或断句停顿期间：全为 0（即 4 根柱子均保持仅 1 行基准小圆点）
+    function getSimulatedLevels(time) {
+      const pauseGate = Math.sin(time * 0.9);
+      if (pauseGate < -0.25) {
+        // 停顿断句 / 静音无声：全部回落到 0，每一条都只有 1 行圆点
+        return [0, 0, 0, 0];
+      }
+
+      const envelope = (pauseGate + 0.25) / 1.25;
+      const pulse = Math.abs(Math.sin(time * 3.2));
+      const energy = envelope * (0.2 + 0.8 * pulse);
+
+      const f1 = Math.sin(time * 4.1) * 0.5 + 0.5;
+      const f2 = Math.sin(time * 5.0 + 1.0) * 0.5 + 0.5;
+      const f3 = Math.cos(time * 3.7 + 2.0) * 0.5 + 0.5;
+      const f4 = Math.sin(time * 4.6 + 0.5) * 0.5 + 0.5;
+
+      return [
+        Math.min(3, Math.max(0, Math.round(f1 * 3.4 * energy))),
+        Math.min(5, Math.max(0, Math.round(f2 * 5.4 * energy))),
+        Math.min(2, Math.max(0, Math.round(f3 * 2.4 * energy))),
+        Math.min(4, Math.max(0, Math.round(f4 * 4.4 * energy))),
+      ];
+    }
+
+    function updateWaveBars(levels) {
+      WAVE_BARS.forEach((bar, bIdx) => {
+        const activeTier = levels[bIdx];
+        for (let t = 1; t <= bar.maxTier; t++) {
+          const isLit = t <= activeTier;
+          document.querySelectorAll(`.${bar.id} .voice-ball-wave-tier-${t}`).forEach(el => {
+            el.style.opacity = isLit ? '1' : '0';
+          });
+        }
+      });
+    }
+
+    document.querySelectorAll('.vb-dots-left').forEach(el => renderEyeDots(el, 0));
+    document.querySelectorAll('.vb-dots-right').forEach(el => renderEyeDots(el, 67));
+    document.querySelectorAll('.vb-waves-target').forEach(el => renderWaveBars(el));
+
+    // 思考状态切换控制
+    let isThinking = false;
+    const toggleThinkingBtn = document.getElementById('toggle-thinking');
+    const thinkingIndicator = document.getElementById('thinking-indicator');
+    const thinkingStatus = document.getElementById('thinking-status');
+    const rings = document.querySelectorAll('.vb-ring-target');
+
+    toggleThinkingBtn.addEventListener('click', () => {
+      isThinking = !isThinking;
+      rings.forEach(ring => {
+        if (isThinking) {
+          ring.classList.add('is-thinking');
+        } else {
+          ring.classList.remove('is-thinking');
+        }
+      });
+      if (isThinking) {
+        thinkingIndicator.className = 'w-2 h-2 rounded-full bg-[#7bff47] animate-ping';
+        thinkingStatus.textContent = '思考中 (旋转)';
+        thinkingStatus.className = 'text-xs px-2 py-0.5 rounded bg-emerald-500/20 text-[#7bff47] font-semibold';
+      } else {
+        thinkingIndicator.className = 'w-2 h-2 rounded-full bg-slate-400';
+        thinkingStatus.textContent = '默认隐藏';
+        thinkingStatus.className = 'text-xs px-2 py-0.5 rounded bg-slate-700/30 text-[var(--muted-foreground)]';
+      }
+    });
+
+    // 录音输入态（点阵音波）切换控制
+    let isListening = false;
+    let listeningTimer = null;
+    let listeningTime = 0;
+    let voiceTestMode = 'simulate'; // 'simulate' | 'silence' | 'peak'
+
+    const toggleListeningBtn = document.getElementById('toggle-listening');
+    const listeningIndicator = document.getElementById('listening-indicator');
+    const listeningStatus = document.getElementById('listening-status');
+    const eyesTargets = document.querySelectorAll('.vb-eyes-target');
+    const wavesTargets = document.querySelectorAll('.vb-waves-target');
+    const toggleVoiceModeBtn = document.getElementById('toggle-voice-mode');
+    const voiceModeStatus = document.getElementById('voice-mode-status');
+
+    function applyVoiceMode() {
+      if (!isListening) return;
+
+      if (listeningTimer) {
+        clearInterval(listeningTimer);
+        listeningTimer = null;
+      }
+
+      if (voiceTestMode === 'simulate') {
+        voiceModeStatus.textContent = '自然模拟说话（含无声断句）';
+        voiceModeStatus.className = 'text-xs px-2 py-0.5 rounded bg-emerald-500/20 text-[#7bff47] font-semibold';
+        listeningTimer = setInterval(() => {
+          listeningTime += 0.12;
+          updateWaveBars(getSimulatedLevels(listeningTime));
+        }, 55);
+      } else if (voiceTestMode === 'silence') {
+        voiceModeStatus.textContent = '完全无声静音（全 1 行圆点）';
+        voiceModeStatus.className = 'text-xs px-2 py-0.5 rounded bg-blue-500/20 text-blue-300 font-semibold';
+        updateWaveBars([0, 0, 0, 0]);
+      } else if (voiceTestMode === 'peak') {
+        voiceModeStatus.textContent = '最大声峰值（满格柱）';
+        voiceModeStatus.className = 'text-xs px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 font-semibold';
+        updateWaveBars([3, 5, 2, 4]);
+      }
+    }
+
+    toggleVoiceModeBtn.addEventListener('click', () => {
+      if (!isListening) {
+        // 若未开启录音态，顺便帮用户激活录音态
+        toggleListeningBtn.click();
+      }
+      if (voiceTestMode === 'simulate') {
+        voiceTestMode = 'silence';
+      } else if (voiceTestMode === 'silence') {
+        voiceTestMode = 'peak';
+      } else {
+        voiceTestMode = 'simulate';
+      }
+      applyVoiceMode();
+    });
+
+    toggleListeningBtn.addEventListener('click', () => {
+      isListening = !isListening;
+      eyesTargets.forEach(el => {
+        if (isListening) el.classList.add('is-hidden');
+        else el.classList.remove('is-hidden');
+      });
+      wavesTargets.forEach(el => {
+        if (isListening) el.classList.add('is-active');
+        else el.classList.remove('is-active');
+      });
+      if (isListening) {
+        listeningIndicator.className = 'w-2 h-2 rounded-full bg-[#7bff47] animate-pulse';
+        listeningStatus.textContent = '录音中 (音波跳动)';
+        listeningStatus.className = 'text-xs px-2 py-0.5 rounded bg-emerald-500/20 text-[#7bff47] font-semibold';
+        applyVoiceMode();
+      } else {
+        if (listeningTimer) {
+          clearInterval(listeningTimer);
+          listeningTimer = null;
+        }
+        updateWaveBars([0, 0, 0, 0]);
+        listeningIndicator.className = 'w-2 h-2 rounded-full bg-slate-400';
+        listeningStatus.textContent = '待机双眼';
+        listeningStatus.className = 'text-xs px-2 py-0.5 rounded bg-slate-700/30 text-[var(--muted-foreground)]';
+      }
+    });
+
+    // 手动眨眼触发（无形变，点阵数量开合）
+    const blinkBtn = document.getElementById('trigger-blink');
+    blinkBtn.addEventListener('click', () => {
+      eyesTargets.forEach(eyes => {
+        eyes.classList.remove('is-manual-blinking');
+        void eyes.offsetWidth; // 触发回流重置单次动画
+        eyes.classList.add('is-manual-blinking');
+      });
+      setTimeout(() => {
+        eyesTargets.forEach(eyes => {
+          eyes.classList.remove('is-manual-blinking');
+        });
+      }, 250);
+    });
+
+    // 待机视线手动定格控制（测试居中 / 望左上 / 望右）
+    const toggleGazeBtn = document.getElementById('toggle-gaze');
+    const gazeStatus = document.getElementById('gaze-status');
+    const gazeModes = ['auto', 'center', 'top-left', 'right'];
+    let gazeModeIndex = 0;
+
+    toggleGazeBtn.addEventListener('click', () => {
+      gazeModeIndex = (gazeModeIndex + 1) % gazeModes.length;
+      const mode = gazeModes[gazeModeIndex];
+      eyesTargets.forEach(el => {
+        el.classList.remove('is-look-center', 'is-look-top-left', 'is-look-left', 'is-look-right');
+        if (mode === 'center') el.classList.add('is-look-center');
+        else if (mode === 'top-left') el.classList.add('is-look-top-left');
+        else if (mode === 'right') el.classList.add('is-look-right');
+      });
+      if (mode === 'auto') {
+        gazeStatus.textContent = '23.2s 自动巡视循环';
+        gazeStatus.className = 'text-xs px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-300 font-semibold';
+      } else if (mode === 'center') {
+        gazeStatus.textContent = '定格：居中位置 (0, 0)';
+        gazeStatus.className = 'text-xs px-2 py-0.5 rounded bg-slate-700/40 text-slate-300 font-semibold';
+      } else if (mode === 'top-left') {
+        gazeStatus.textContent = '定格：移到左上 (-18px, -14px)';
+        gazeStatus.className = 'text-xs px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 font-semibold';
+      } else if (mode === 'right') {
+        gazeStatus.textContent = '定格：移到右边 (+18px, 0)';
+        gazeStatus.className = 'text-xs px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 font-semibold';
+      }
+    });
+
+    // 舞台背景切换
+    const stage = document.getElementById('stage');
+    const toggleBgBtn = document.getElementById('toggle-bg');
+    const bgName = document.getElementById('bg-name');
+    const bgs = [
+      { name: '深空蓝底', class: 'bg-[#1e2430]' },
+      { name: '暗黑背景', class: 'bg-[#0f1115]' },
+      { name: '浅灰桌面', class: 'bg-[#e2e8f0]' },
+      { name: '网格桌面', class: 'bg-slate-900 bg-[radial-gradient(#334155_1px,transparent_1px)] [background-size:16px_16px]' }
+    ];
+    let bgIndex = 0;
+
+    toggleBgBtn.addEventListener('click', () => {
+      stage.classList.remove(
+        'bg-[#1e2430]', 'bg-[#0f1115]', 'bg-[#e2e8f0]',
+        'bg-slate-900', 'bg-[radial-gradient(#334155_1px,transparent_1px)]', '[background-size:16px_16px]'
+      );
+      bgIndex = (bgIndex + 1) % bgs.length;
+      stage.className = `relative rounded-xl border border-[var(--border)] p-8 flex flex-col sm:flex-row items-center justify-around gap-6 transition-colors duration-300 ${bgs[bgIndex].class}`;
+      bgName.textContent = bgs[bgIndex].name;
+    });
+  </script>
+</body>
+
+</html>

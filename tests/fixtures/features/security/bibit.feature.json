@@ -1,0 +1,39 @@
+{
+  "manifestSchemaVersion": 1,
+  "sdkApiVersion": 1,
+  "id": "security",
+  "version": "0.1.0",
+  "owner": "security-team",
+  "display": {
+    "titleKey": "security:title",
+    "fallbackTitle": "Security",
+    "descriptionKey": "security:description",
+    "fallbackDescription": "Review agent permission requests",
+    "iconKey": "security"
+  },
+  "targets": ["desktop"],
+  "requiredHostCapabilities": [
+    "external-service:security",
+    "runtime:permission"
+  ],
+  "contributions": {
+    "pages": [],
+    "settings": [
+      {
+        "id": "rules",
+        "path": "",
+        "surfaces": ["main"],
+        "navigation": { "group": "privacy", "order": 50 }
+      }
+    ],
+    "conversation": [
+      {
+        "id": "approval",
+        "kind": "permission-presenter",
+        "surfaces": ["main"],
+        "order": 100
+      }
+    ],
+    "locales": ["en", "zh-CN"]
+  }
+}

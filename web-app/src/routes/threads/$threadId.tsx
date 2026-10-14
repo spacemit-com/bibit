@@ -1,0 +1,2310 @@
+import { readSessionKnowledge } from '@/lib/session-knowledge'
+import { usePrompt } from '@/hooks/usePrompt'
+import { useOverlayConversationStore } from '@/stores/overlay-conversation-store'
+import { VoiceComposer } from '@/components/VoiceComposer'
+import { useVoiceSubmission } from '@/hooks/useVoiceSubmission'
+import {
+  Fragment,
+  lazy,
+  Suspense,
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react'
+import type { CSSProperties } from 'react'
+import { createFileRoute, useNavigate, useParams, useSearch } from '@tanstack/react-router'
+import { cn } from '@/lib/utils'
+
+import HeaderPage from '@/containers/HeaderPage'
+import { useThreads } from '@/hooks/useThreads'
+import ChatInput from '@/containers/ChatInput'
+import { SessionExpertChip } from '@/containers/SessionExpertChip'
+import { useShallow } from 'zustand/react/shallow'
+import { MessageItem } from '@/containers/MessageItem'
+
+import { useMessages } from '@/hooks/useMessages'
+import { useMessageErrors } from '@/stores/message-errors'
+import { useServiceHub } from '@/hooks/useServiceHub'
+import { useTools } from '@/hooks/useTools'
+import { useAppState } from '@/hooks/useAppState'
+import { SESSION_STORAGE_PREFIX } from '@/constants/chat'
+import { useChat } from '@/hooks/use-chat'
+import { useSessionConversation } from '@/hooks/useSessionConversation'
+import { useModelProvider } from '@/hooks/useModelProvider'
+import { useInterfaceSettings } from '@/hooks/useInterfaceSettings'
+import {
+  Conversation,
+  ConversationContent,
+  ConversationScrollButton,
+} from '@/components/ai-elements/conversation'
+import { VirtualMessageList } from '@/components/ai-elements/virtual-message-list'
+import type { StickToBottomContext } from 'use-stick-to-bottom'
+import { invoke } from '@tauri-apps/api/core'
+import { getCurrentWebviewWindow } from '@tauri-apps/api/webviewWindow'
+import { generateId, lastAssistantMessageIsCompleteWithToolCalls } from 'ai'
+import { RuntimeControls } from '@/components/RuntimeControls'
+import { PendingApprovalNavigation } from '@/components/PendingApprovalNavigation'
+import {
+  RuntimePermissionFallback,
+  type RuntimeEventPartValue,
+} from '@/components/RuntimeEventPart'
+import { runtimePermissionIdentityKey } from '@/features/conversation/runtimePermissionController'
+import { useRuntimeStore } from '@/stores/runtime-store'
+import type { UIMessage } from '@ai-sdk/react'
+import { useChatSessions } from '@/stores/chat-session-store'
+import { useConversationSyncStore } from '@/stores/conversation-sync-store'
+import { cancelCoordinatedSessionRun } from '@/lib/coordinated-stop'
+import { currentWindowSurface } from '@/lib/window-surface'
+import { route } from '@/constants/routes'
+import {
+  convertThreadMessagesToUIMessages,
+  extractContentPartsFromUIMessage,
+  extractRuntimeTurnV2FromUIMessage,
+  uiMessageHasMeaningfulContent,
+  threadMessageIsEmpty,
+} from '@/lib/messages'
+import { newUserThreadContent } from '@/lib/completion'
+import {
+  computeActivePath,
+  backfillParentIds,
+  makeSibling,
+  withActiveChild,
+  getParentId,
+  getSiblings,
+  getVersionInfo,
+  hasBranching,
+  repairDetachedAssistants,
+  planContinuation,
+} from '@/lib/message-branching'
+import {
+  ThreadMessage,
+  MessageStatus,
+  ChatCompletionRole,
+} from '@janhq/core'
+import {
+  createImageAttachment,
+  createAudioAttachment,
+  createVideoAttachment,
+} from '@/types/attachment'
+import {
+  useChatAttachments,
+  NEW_THREAD_ATTACHMENT_KEY,
+} from '@/hooks/useChatAttachments'
+import { processAttachmentsForSend } from '@/lib/attachmentProcessing'
+import { useAttachments } from '@/hooks/useAttachments'
+import { PromptProgress } from '@/components/PromptProgress'
+import { useToolAvailable } from '@/hooks/useToolAvailable'
+import {
+  OUT_OF_CONTEXT_SIZE,
+  isContextOverflowMessage,
+  parseContextOverflow,
+} from '@/utils/error'
+import { useTranslation } from '@/i18n/react-i18next-compat'
+import { Button } from '@/components/ui/button'
+import { IconAlertCircle, IconRefresh, IconLoader2 } from '@tabler/icons-react'
+import { useToolApproval } from '@/hooks/useToolApproval'
+import { useToolApprovalRequests } from '@/hooks/useToolApprovalRequests'
+import { WEB_TOOL_NAMES, executeWebTool } from '@/lib/webSearchTool'
+import { Shimmer } from '@/components/ai-elements/shimmer'
+import { useMessageQueue } from '@/stores/message-queue-store'
+import { generateThreadTitle } from '@/lib/thread-title-summarizer'
+import { useAutoScroll } from '@/hooks/useAutoScroll'
+import { describeRuntimeCommandError, formatRuntimeCommandError } from '@/lib/runtime-contract'
+import { prepareKnowledgeMessage, type KnowledgeContext } from '@/lib/knowledge-retrieval'
+
+const SecurityDemoApprovalTimeline = BIBIT_SECURITY_DEMO
+  ? lazy(() =>
+      import('@/components/SecurityDemoApproval').then((module) => ({
+        default: module.SecurityDemoApprovalTimeline,
+      }))
+    )
+  : null
+
+const CHAT_STATUS = {
+  STREAMING: 'streaming',
+  SUBMITTED: 'submitted',
+} as const
+
+const TITLE_REFRESH_EVERY_N_ASSISTANT_MESSAGES = 4
+// Persist the out-of-context error onto the latest user message so the banner
+// survives thread switches, mirroring how LlamacppOomListener stamps oom/backend.
+function stampContextErrorOnThread(
+  threadId: string,
+  message: string = OUT_OF_CONTEXT_SIZE
+) {
+  const messages = useMessages.getState().getMessages(threadId)
+  for (let i = messages.length - 1; i >= 0; i--) {
+    const m = messages[i]
+    if (m.role !== 'user') continue
+    const meta = (m.metadata as Record<string, unknown> | undefined) ?? {}
+    if (typeof meta.contextError === 'string') return
+    useMessages.getState().updateMessage({
+      ...m,
+      metadata: { ...meta, contextError: message },
+    })
+    return
+  }
+}
+
+type ThreadModel = {
+  id: string
+  provider: string
+}
+
+type SearchParams = {
+  threadModel?: ThreadModel
+  /**
+   * 从搜索结果跳进来时的消息游标：首屏读一份以这条消息结尾的历史窗口，
+   * 这样命中的那条消息一定在窗口里，界面滚动到它即可。
+   */
+  seq?: number
+}
+
+// as route.threadsDetail
+export const Route = createFileRoute('/threads/$threadId')({
+  component: ThreadDetail,
+  validateSearch: (search: Record<string, unknown>): SearchParams => {
+    const seq = Number(search.seq)
+    return {
+      threadModel: search.threadModel as ThreadModel | undefined,
+      seq: Number.isSafeInteger(seq) && seq >= 0 ? seq : undefined,
+    }
+  },
+})
+
+function ThreadDetail() {
+  const isVoiceOverlay = currentWindowSurface() === 'voice-overlay'
+  const isStatusPopup = currentWindowSurface() === 'status-popup'
+  const isCompact = isStatusPopup || isVoiceOverlay
+  const serviceHub = useServiceHub()
+  const { threadId } = useParams({ from: Route.id })
+  const search = useSearch({ from: Route.id })
+  const searchThreadModel = search.threadModel
+  const anchorSeq = search.seq
+  const navigate = useNavigate()
+  const fontSize = useInterfaceSettings((state) => state.fontSize)
+  const messageZoom = useInterfaceSettings((state) => state.messageZoom)
+  const setCurrentThreadId = useThreads((state) => state.setCurrentThreadId)
+  const setMessages = useMessages((state) => state.setMessages)
+  const addMessage = useMessages((state) => state.addMessage)
+  const updateMessage = useMessages((state) => state.updateMessage)
+  const deleteMessage = useMessages((state) => state.deleteMessage)
+  const currentThread = useRef<string | undefined>(undefined)
+  const runtimeEnabled = useRuntimeStore((state) => state.enabled)
+  const sessionEvents = useRuntimeStore(
+    (state) => Boolean(state.enabled && state.capabilities?.sessionEvents)
+  )
+  const session = useSessionConversation(threadId, sessionEvents, anchorSeq)
+  const durableSessions = useRuntimeStore(
+    (state) =>
+      state.capabilities ? state.capabilities.durableSessions && !state.capabilities.sessionEvents : false
+  )
+  // Runtime 没有历史写接口时（同一路径的 POST 返回 405），编辑/删除/继续/重试/版本切换
+  // 一律不接线：不显示点了必然失败的入口，也不把失败包装成"历史操作未确认"。
+  const historyOperations = useRuntimeStore(
+    (state) => Boolean(state.enabled && state.capabilities?.historyOperations)
+  )
+  const { changeHistory, switchVersion } = session
+  const runtimeHistory = sessionEvents && historyOperations ? {
+    regenerate: (id: string) => { void changeHistory('regenerate', id).catch(() => undefined) },
+    continue: (id: string) => { void changeHistory('continue', id).catch(() => undefined) },
+    edit: (id: string, content: string) => { void changeHistory('edit', id, content).catch(() => undefined) },
+    remove: (id: string) => { void changeHistory('delete', id).catch(() => undefined) },
+    switchVersion: (id: string, direction: -1 | 1) => { void switchVersion(id, direction).catch(() => undefined) },
+  } : undefined
+  const mirroredRun = useConversationSyncStore(
+    (state) => state.activeRuns[threadId]
+  )
+  const controllerTransition = useRef<Promise<void>>(Promise.resolve())
+  const [controllerError, setControllerError] = useState<string>()
+  const [controllerAttempt, setControllerAttempt] = useState(0)
+  const [controllerReady, setControllerReady] = useState(
+    !durableSessions || isStatusPopup
+  )
+  const [historyReady, setHistoryReady] = useState(!durableSessions)
+  const initialMessageKey = `${SESSION_STORAGE_PREFIX.INITIAL_MESSAGE}${threadId}`
+  const initialMessageSentRef = useRef<string | undefined>(undefined)
+  const ownsInitialMessage =
+    initialMessageSentRef.current === threadId ||
+    sessionStorage.getItem(initialMessageKey) !== null
+
+  useLayoutEffect(() => {
+    if (!durableSessions || isStatusPopup) return
+    let disposed = false
+    let active = true
+    const detachLocalStream = () => {
+      const transport = useChatSessions.getState().sessions[threadId]
+        ?.transport as { detach?: () => void } | undefined
+      transport?.detach?.()
+    }
+    const transition = (nextActive: boolean) => {
+      active = nextActive
+      setControllerReady(false)
+      setHistoryReady(false)
+      if (nextActive) setControllerError(undefined)
+      else detachLocalStream()
+      controllerTransition.current = controllerTransition.current
+        .catch(() => undefined)
+        .then(async () => {
+          if (!nextActive) {
+            await invoke('runtime_session_detach', {
+              sessionId: threadId,
+            }).catch(() => undefined)
+            return
+          }
+          if (disposed || !active) return
+          // 挂载会话只做只读准备：工作台控制权只在真正写入时申请（见发送与
+          // 会话管理路径），否则主窗口会因为命令行正在使用而看不到会话内容。
+          await invoke('runtime_start')
+          if (!disposed && active) setControllerReady(true)
+        })
+        .catch(async (error) => {
+          if (!nextActive) return
+          console.error('Failed to attach Runtime Session:', threadId, error)
+          if (!disposed && active) {
+            setControllerError(formatRuntimeCommandError(error))
+          }
+        })
+    }
+
+    transition(true)
+    const focusListener = getCurrentWebviewWindow().onFocusChanged(
+      ({ payload: focused }) => transition(focused)
+    )
+
+    return () => {
+      disposed = true
+      void focusListener.then((unlisten) => unlisten())
+      transition(false)
+    }
+  }, [controllerAttempt, durableSessions, isStatusPopup, threadId])
+
+  useTools(!runtimeEnabled)
+
+  // Get attachments for this thread
+  const attachmentsKey = threadId ?? NEW_THREAD_ATTACHMENT_KEY
+  const getAttachments = useChatAttachments((state) => state.getAttachments)
+  const clearAttachmentsForThread = useChatAttachments(
+    (state) => state.clearAttachments
+  )
+
+  // Session data for tool call tracking
+  const getSessionData = useChatSessions((state) => state.getSessionData)
+  const sessionData = getSessionData(threadId)
+
+  // AbortController for cancelling tool calls
+  const toolCallAbortController = useRef<AbortController | null>(null)
+
+  // Approval promises started in onToolCall (so the popup appears immediately)
+  // and awaited by the onFinish execution loop, keyed by toolCallId. Executing
+  // stays in onFinish so the tool result lands on a completed assistant message
+  // and the AI SDK's auto-resubmit (sendAutomaticallyWhen) fires.
+  const toolApprovalPromises = useRef<Map<string, Promise<boolean>>>(new Map())
+
+  const titleAbortRef = useRef<AbortController | null>(null)
+
+  // Check if we should follow up with tool calls (respects abort signal)
+  const followUpMessage = useCallback(
+    ({ messages }: { messages: UIMessage[] }) => {
+      if (
+        !toolCallAbortController.current ||
+        toolCallAbortController.current?.signal.aborted
+      ) {
+        return false
+      }
+      return lastAssistantMessageIsCompleteWithToolCalls({ messages })
+    },
+    []
+  )
+
+  // Subscribe directly to the thread data to ensure updates when model changes
+  const thread = useThreads(useShallow((state) => state.threads[threadId]))
+
+  // Get model and provider for useChat
+  const selectedModel = useModelProvider((state) => state.selectedModel)
+  const selectedProvider = useModelProvider((state) => state.selectedProvider)
+  const getProviderByName = useModelProvider((state) => state.getProviderByName)
+  const threadRef = useRef(thread)
+
+  useEffect(() => {
+    threadRef.current = thread
+  }, [thread])
+
+  // Holds the partial assistant message while the model reloads after a
+  // context-limit hit, so the user sees it instead of a blank gap.
+  const [pendingContinueMessage, setPendingContinueMessage] =
+    useState<UIMessage | null>(null)
+  const [contextLimitError, setContextLimitError] = useState<Error | null>(null)
+  // Per-thread so the shimmer survives navigating away and back while the
+  // embedding run is still in flight.
+  const processingEmbeddings = useAppState(
+    (s) => !!s.embeddingThreads[threadId]
+  )
+  const { t } = useTranslation()
+
+  // llama-server's overflow string is raw English; localize it, interpolating
+  // the parsed request/context token counts when available.
+  const contextBannerMessage = useMemo(() => {
+    const raw = contextLimitError?.message
+    if (!raw) return undefined
+    const info = parseContextOverflow(raw)
+    if (info)
+      return t('model-errors:contextOverflowDetail', {
+        request: info.requestTokens.toLocaleString(),
+        context: info.contextTokens.toLocaleString(),
+      })
+    return t('model-errors:contextOverflowGeneric')
+  }, [contextLimitError, t])
+
+  // Refs so onFinish (captured in closure) always calls the latest callbacks
+  const oomErrorRaw = useAppState((s) => s.oomError)
+  const setOomError = useAppState((s) => s.setOomError)
+  const backendErrorRaw = useAppState((s) => s.backendError)
+  const setBackendError = useAppState((s) => s.setBackendError)
+
+  // These signals come from the llamacpp router via global Tauri events.
+  // Mask them when the active provider isn't llamacpp so a router crash
+  // doesn't decorate chats running against OpenAI / Anthropic / etc.
+  const isLlamacppActive = !sessionEvents && selectedProvider === 'llamacpp'
+  const oomError = isLlamacppActive ? oomErrorRaw : undefined
+  const backendError = isLlamacppActive ? backendErrorRaw : undefined
+
+  const handleContextSizeIncreaseRef = useRef<(() => void) | null>(null)
+  const setContinueFromContentRef = useRef<((content: string) => void) | null>(
+    null
+  )
+  const setChatMessagesRef = useRef<
+    ((updater: (prev: UIMessage[]) => UIMessage[]) => void) | null
+  >(null)
+  // Holds the partial assistant output captured when the model stops with
+  // `finishReason === 'length'`. Consumed by `handleContextSizeIncrease` so
+  // the manual "Increase Context Size" button resumes from where the stream
+  // stopped rather than regenerating from scratch.
+  const pendingContinuationRef = useRef<{
+    message: UIMessage
+    text: string
+  } | null>(null)
+  // Set before a generation when the resulting assistant message should be
+  // linked to a specific parent (versioning). Consumed once in onFinish.
+  const pendingAssistantParentId = useRef<string | null>(null)
+  // Holds the id of a stopped assistant message being resumed. Continuing must
+  // extend the turn in place, not fork a new version, so onFinish deletes this
+  // stale partial once the continued reply is persisted.
+  const continueReplaceIdRef = useRef<string | null>(null)
+
+  // Use the AI SDK chat hook
+  const {
+    messages: sdkMessages,
+    status: sdkStatus,
+    error: sdkError,
+    sendMessage,
+    regenerate,
+    setMessages: setChatMessages,
+    stop,
+    addToolOutput,
+    updateRagToolsAvailability,
+    setContinueFromContent,
+  } = useChat({
+    sessionId: sessionEvents ? undefined : threadId,
+    sessionTitle: thread?.title,
+    resume: sessionEvents ? false : durableSessions
+      ? controllerReady && historyReady && !ownsInitialMessage
+      : undefined,
+    experimental_throttle: 50,
+    onFinish: ({ message, isAbort }) => {
+      const msgMeta = message.metadata as Record<string, unknown> | undefined
+      const finishReason = msgMeta?.finishReason as string | undefined
+      // Consume once per generation so a skipped persist (error/empty) can't
+      // leak the replace target into a later, unrelated turn.
+      const continueReplaceId = continueReplaceIdRef.current
+      continueReplaceIdRef.current = null
+
+      // Context limit hit: send partial content as prefill so the model continues
+      // from where it stopped. The stream wrapper injects it as the first text-delta
+      // of the new message, so the user sees the partial text immediately.
+      if (!isAbort && finishReason === 'length') {
+        const selectedModelState = useModelProvider.getState().selectedModel
+        const usage = msgMeta?.usage as
+          | { inputTokens?: number; outputTokens?: number }
+          | undefined
+        const totalTokens =
+          (usage?.inputTokens ?? 0) + (usage?.outputTokens ?? 0)
+        const ctxLen =
+          (selectedModelState?.settings?.ctx_len?.controller_props
+            ?.value as number) ?? 32768
+        const isContextLimit = totalTokens >= ctxLen * 0.9
+
+        if (isContextLimit) {
+          // Stash the partial so the manual "Increase Context Size" button can
+          // resume from here. Surface the standard banner with the manual
+          // button — auto-increase was removed; the user explicitly opts in.
+          const partialText = message.parts
+            .filter((p) => p.type === 'text')
+            .map((p) => (p as { type: 'text'; text: string }).text)
+            .join('')
+          if (partialText) {
+            pendingContinuationRef.current = { message, text: partialText }
+          }
+          stampContextErrorOnThread(threadId)
+          setContextLimitError(new Error(OUT_OF_CONTEXT_SIZE))
+          return
+        }
+        // Non-context-limit length truncation: fall through and persist the
+        // partial marked as stopped so the "Continue" button can resume it.
+      }
+
+      if (!isAbort && message.parts.length) setPendingContinueMessage(null)
+
+      // The turn ended before completion (user hit Stop, or the model hit its
+      // output-token cap). Persist the partial marked `stopped` so the UI can
+      // offer a "Continue" affordance, and stamp the live message so the button
+      // appears without waiting for a reload.
+      const isStoppedTurn = isAbort || finishReason === 'length'
+
+      if (durableSessions) {
+        void serviceHub
+          .messages()
+          .fetchMessages(threadId)
+          .then((runtimeMessages) => {
+            const runtimeSession = useChatSessions.getState().sessions[threadId]
+            if (
+              !runtimeSession ||
+              ['submitted', 'streaming'].includes(runtimeSession.chat.status)
+            ) {
+              return
+            }
+            setMessages(threadId, runtimeMessages)
+            runtimeSession.chat.messages =
+              convertThreadMessagesToUIMessages(runtimeMessages)
+          })
+          .catch((runtimeError) =>
+            console.error('Failed to refresh Runtime messages:', runtimeError)
+          )
+        return
+      }
+
+      // Persist assistant message to backend (skip if aborted).
+      // For continuations, message.parts already contains partial + new content
+      // because the stream wrapper prepended the partial text as the first delta.
+      if (
+        message.role === 'assistant' &&
+        uiMessageHasMeaningfulContent(message)
+      ) {
+        const contentParts = extractContentPartsFromUIMessage(message)
+        const runtimeTurnV2 = extractRuntimeTurnV2FromUIMessage(message)
+        const messageMetadata = {
+          ...((message.metadata || {}) as Record<string, unknown>),
+          ...(runtimeTurnV2 ? { runtimeTurnV2 } : {}),
+          ...(isStoppedTurn ? { stopped: true } : {}),
+        }
+
+        if (isStoppedTurn) {
+          setChatMessagesRef.current?.((prev) =>
+            prev.map((m) =>
+              m.id === message.id
+                ? {
+                    ...m,
+                    metadata: {
+                      ...(m.metadata as Record<string, unknown> | undefined),
+                      stopped: true,
+                    },
+                  }
+                : m
+            )
+          )
+        }
+
+        // A continuation resumes a stopped turn: the stale partial is deleted
+        // below so the continued reply takes its place instead of forking a new
+        // version. Inherit the partial's parent so the branch link holds.
+        const continuation = planContinuation(
+          useMessages.getState().getMessages(threadId),
+          message.id,
+          continueReplaceId,
+          pendingAssistantParentId.current
+        )
+        pendingAssistantParentId.current = null
+
+        let parentForAssistant = continuation.parentId
+
+        // Never persist a detached assistant in a branched thread: if the
+        // pending link was lost (e.g. a multi-step turn consumed the ref before
+        // this reply finished), fall back to the user message this reply
+        // answers. A null parentId would make computeActivePath treat the
+        // assistant as a phantom root and drop it from the visible path.
+        if (
+          parentForAssistant == null &&
+          hasBranching(useMessages.getState().getMessages(threadId))
+        ) {
+          parentForAssistant = resolveAssistantParent(undefined)
+        }
+
+        const assistantMessage: ThreadMessage = {
+          type: 'text',
+          role: ChatCompletionRole.Assistant,
+          content: contentParts,
+          id: message.id,
+          object: 'thread.message',
+          thread_id: threadId,
+          status: MessageStatus.Ready,
+          created_at: Date.now(),
+          completed_at: Date.now(),
+          metadata:
+            parentForAssistant != null
+              ? { ...messageMetadata, parentId: parentForAssistant }
+              : messageMetadata,
+        }
+
+        const existingMessages = useMessages.getState().getMessages(threadId)
+        const existingMessage = existingMessages.find(
+          (m) => m.id === message.id
+        )
+
+        if (existingMessage) {
+          // Preserve the existing branch link on re-runs of onFinish.
+          const existingParent = getParentId(existingMessage)
+          updateMessage(
+            existingParent != null
+              ? {
+                  ...assistantMessage,
+                  metadata: {
+                    ...assistantMessage.metadata,
+                    parentId: existingParent,
+                  },
+                }
+              : assistantMessage
+          )
+        } else {
+          addMessage(assistantMessage)
+          // New generation becomes the active branch under its parent so
+          // version navigation lands on the latest reply by default.
+          if (parentForAssistant) {
+            const parent = existingMessages.find(
+              (m) => m.id === parentForAssistant
+            )
+            if (parent) updateMessage(withActiveChild(parent, assistantMessage.id))
+          }
+        }
+
+        // Drop the stale partial so the resumed turn replaces it in place
+        // rather than appearing as a separate version of the same reply.
+        if (continuation.deletePartialId) {
+          deleteMessage(threadId, continuation.deletePartialId)
+          useMessageErrors.getState().clearError(continuation.deletePartialId)
+        }
+
+        for (const m of existingMessages) {
+          const meta = m.metadata as Record<string, unknown> | undefined
+          if (meta?.error) {
+            const rest = { ...meta }
+            delete rest.error
+            updateMessage({ ...m, metadata: rest })
+          }
+          useMessageErrors.getState().clearError(m.id)
+        }
+      }
+
+      // Execute tool calls here, after the assistant message has completed, so
+      // each addToolOutput lands on a finished message and the SDK's
+      // auto-resubmit (sendAutomaticallyWhen) fires. Approval is requested
+      // earlier in onToolCall (popup appears without waiting for this callback);
+      // we await that already-started promise here rather than prompting again.
+      if (runtimeEnabled) return
+
+      toolCallAbortController.current = new AbortController()
+      const signal = toolCallAbortController.current.signal
+
+      const ragToolNames = useAppState.getState().ragToolNames
+      const mcpToolNames = useAppState.getState().mcpToolNames
+
+      // Keep the thread marked busy while awaiting approval and executing tools,
+      // since streaming has already ended and isSessionBusy's tools-array read isn't reactive.
+      useAppState.getState().setThreadBusy(threadId, true)
+
+      ;(async () => {
+        for (const toolCall of sessionData.tools) {
+          if (signal.aborted) {
+            break
+          }
+
+          try {
+            const toolName = toolCall.toolName
+
+            // Built-in RAG and native web tools are internal and auto-allowed.
+            const approved = ragToolNames.has(toolName) ||
+              WEB_TOOL_NAMES.has(toolName)
+              ? true
+              : await (toolApprovalPromises.current.get(toolCall.toolCallId) ??
+                  useToolApprovalRequests
+                    .getState()
+                    .requestApproval(toolCall.toolCallId, toolName, threadId))
+            toolApprovalPromises.current.delete(toolCall.toolCallId)
+
+            if (!approved) {
+              addToolOutput({
+                state: 'output-error',
+                tool: toolCall.toolName,
+                toolCallId: toolCall.toolCallId,
+                errorText: t('chat:toolDeniedByUser'),
+              })
+              continue
+            }
+
+            let result
+
+            if (WEB_TOOL_NAMES.has(toolName)) {
+              result = await executeWebTool(toolName, toolCall.input)
+            } else if (ragToolNames.has(toolName)) {
+              result = await serviceHub.rag().callTool({
+                toolName,
+                arguments: toolCall.input,
+                threadId,
+              })
+            } else if (mcpToolNames.has(toolName)) {
+              result = await serviceHub.mcp().callTool({
+                toolName,
+                arguments: toolCall.input,
+              })
+            } else {
+              result = {
+                error: t('chat:toolNotFound', { name: toolName }),
+              }
+            }
+
+            if (result.error) {
+              addToolOutput({
+                state: 'output-error',
+                tool: toolCall.toolName,
+                toolCallId: toolCall.toolCallId,
+                errorText: t('chat:toolErrorPrefix', { message: result.error }),
+              })
+            } else {
+              addToolOutput({
+                tool: toolCall.toolName,
+                toolCallId: toolCall.toolCallId,
+                output: result.content,
+              })
+            }
+          } catch (error) {
+            if ((error as Error).name !== 'AbortError') {
+              console.error('Tool call error:', error)
+              addToolOutput({
+                state: 'output-error',
+                tool: toolCall.toolName,
+                toolCallId: toolCall.toolCallId,
+                errorText: t('chat:toolErrorPrefix', { message: JSON.stringify(error) }),
+              })
+            }
+          }
+        }
+
+        sessionData.tools = []
+        toolApprovalPromises.current.clear()
+        toolCallAbortController.current = null
+        useAppState.getState().setThreadBusy(threadId, false)
+      })().catch((error) => {
+        if (error.name !== 'AbortError') {
+          console.error('Tool call error:', error)
+        }
+        sessionData.tools = []
+        toolApprovalPromises.current.clear()
+        toolCallAbortController.current = null
+        useAppState.getState().setThreadBusy(threadId, false)
+      })
+
+      if (!isAbort) {
+        const localMessages = useMessages.getState().getMessages(threadId)
+        const assistantCount = localMessages.filter(
+          (m) => m.role === 'assistant'
+        ).length
+        const isRefreshTick =
+          assistantCount === 1 ||
+          (assistantCount > 0 &&
+            assistantCount % TITLE_REFRESH_EVERY_N_ASSISTANT_MESSAGES === 0)
+        const currentThread = useThreads.getState().threads[threadId]
+        const autoGenerateTitle =
+          useInterfaceSettings.getState().autoGenerateTitle
+        if (
+          autoGenerateTitle &&
+          isRefreshTick &&
+          !currentThread?.metadata?.titleSetManually
+        ) {
+          const TITLE_TRANSCRIPT_MAX_TURNS = 8
+          const recent = localMessages.slice(-TITLE_TRANSCRIPT_MAX_TURNS)
+          const inputText =
+            recent
+              .map((m) => {
+                const text = m.content
+                  ?.map((c) => c?.text?.value ?? '')
+                  .join('')
+                  .trim()
+                if (!text) return ''
+                const role = m.role === 'assistant' ? t('chat:copyRoleAssistant') : t('chat:copyRoleUser')
+                return t('chat:copyTranscriptLine', { role, text })
+              })
+              .filter(Boolean)
+              .join('\n\n') ||
+            useThreads.getState().threads[threadId]?.title
+          if (inputText) {
+            const provider = useModelProvider.getState().selectedProvider
+            const modelId = useModelProvider.getState().selectedModel?.id
+            ;(async () => {
+              if (provider === 'llamacpp' && modelId) {
+                let idle = false
+                for (let attempt = 0; attempt < 6; attempt++) {
+                  try {
+                    idle = await invoke<boolean>(
+                      'plugin:llamacpp|router_slots_idle',
+                      { modelId }
+                    )
+                  } catch {
+                    idle = true
+                    break
+                  }
+                  if (idle) break
+                  await new Promise((r) => setTimeout(r, 150))
+                }
+                if (!idle) return
+              }
+              titleAbortRef.current?.abort()
+              const controller = new AbortController()
+              titleAbortRef.current = controller
+              const title = await generateThreadTitle(
+                inputText,
+                controller.signal
+              )
+              if (!title || controller.signal.aborted) return
+              useThreads.getState().updateThread(threadId, { title })
+              titleAbortRef.current = null
+            })()
+          }
+        }
+      }
+    },
+    onToolCall: ({ toolCall }) => {
+      if (runtimeEnabled) return
+
+      // Collect the tool for the onFinish execution loop, and request approval
+      // right now so the popup appears immediately instead of waiting for the
+      // stream's terminal finish chunk (a stalled stream would otherwise leave
+      // the tool at "Running..." with no popup). Execution itself stays in
+      // onFinish so the tool result lands on a completed message. RAG tools are
+      // internal and never prompt.
+      sessionData.tools.push(toolCall)
+      const ragToolNames = useAppState.getState().ragToolNames
+      if (
+        !ragToolNames.has(toolCall.toolName) &&
+        !WEB_TOOL_NAMES.has(toolCall.toolName) &&
+        !toolApprovalPromises.current.has(toolCall.toolCallId)
+      ) {
+        toolApprovalPromises.current.set(
+          toolCall.toolCallId,
+          useToolApprovalRequests
+            .getState()
+            .requestApproval(toolCall.toolCallId, toolCall.toolName, threadId)
+        )
+      }
+    },
+    sendAutomaticallyWhen: followUpMessage,
+  })
+  const chatMessages = sessionEvents ? session.messages : sdkMessages
+  const status = sessionEvents ? session.status : sdkStatus
+  const error = sessionEvents ? undefined : sdkError
+
+  const handleStop = useCallback(() => {
+    if (sessionEvents) {
+      void session.stop()
+      return
+    }
+    if (!runtimeEnabled) {
+      stop()
+    }
+    void cancelCoordinatedSessionRun(
+      threadId,
+      IS_TAURI,
+      undefined,
+      runtimeEnabled
+    ).catch((error) => {
+      if (runtimeEnabled) {
+        stop()
+      }
+      console.error('Failed to stop synchronized conversation run:', error)
+    })
+  }, [sessionEvents, session.stop, runtimeEnabled, stop, threadId])
+
+  // Our error banners (oom/backend/context) can arrive out-of-band for the
+  // router path, leaving the SDK stream stuck at 'submitted' so the
+  // "Using tools…" indicator shimmers forever. Force a terminal status when a
+  // banner is up — regenerate/reload restarts the turn anyway.
+  const hasBannerError = !sessionEvents && !!(oomError || backendError || contextLimitError)
+  const effectiveStatus = sessionEvents ? status : hasBannerError
+    ? 'ready'
+    : mirroredRun
+      ? 'streaming'
+      : status
+
+  // Global disabled-tools set; re-run the effect below when it changes.
+  const disabledTools = useToolAvailable((state) => state.disabledTools)
+
+  // Update RAG tools availability when documents, model, or tool availability changes
+  useEffect(() => {
+    const checkDocumentsAvailability = async () => {
+      if (runtimeEnabled) return
+      const hasThreadDocuments = Boolean(thread?.metadata?.hasDocuments)
+      const hasDocuments = hasThreadDocuments
+      const ragFeatureAvailable = Boolean(useAttachments.getState().enabled)
+      const modelSupportsTools =
+        selectedModel?.capabilities?.includes('tools') ?? false
+
+      updateRagToolsAvailability(
+        hasDocuments,
+        modelSupportsTools,
+        ragFeatureAvailable
+      )
+    }
+
+    checkDocumentsAvailability()
+  }, [
+    thread?.metadata?.hasDocuments,
+    selectedModel?.capabilities,
+    updateRagToolsAvailability,
+    disabledTools, // Re-run when tools are enabled/disabled
+    runtimeEnabled,
+  ])
+
+  // The conversation scroller, handed back by `StickToBottom` itself. The
+  // message list needs it to virtualize; nothing else in the tree reads it.
+  const conversationRef = useRef<StickToBottomContext | null>(null)
+  // 搜索结果定位：锚定窗口以命中的那条消息结尾，所以它一定是最后一行，
+  // 等窗口真的落地后滚到底部即可；同一次定位只滚一次。
+  const scrolledAnchor = useRef<number | undefined>(undefined)
+  useEffect(() => {
+    if (anchorSeq === undefined || !session.anchored) return
+    if (scrolledAnchor.current === anchorSeq) return
+    scrolledAnchor.current = anchorSeq
+    const frame = requestAnimationFrame(() => {
+      void conversationRef.current?.scrollToBottom('instant')
+    })
+    return () => cancelAnimationFrame(frame)
+  }, [anchorSeq, session.anchored])
+
+  const leaveAnchor = () => {
+    void navigate({
+      to: route.threadsDetail,
+      params: { threadId },
+      search: { threadModel: searchThreadModel },
+    })
+  }
+
+  // Auto-scroll the reasoning container during streaming, pausing when the user scrolls up
+  const {
+    containerRef: reasoningContainerRef,
+    isAtBottom: isReasoningAtBottom,
+    handleScroll: handleReasoningScroll,
+    scrollToBottom: scrollReasoningToBottom,
+    forceScrollToBottom: forceScrollReasoningToBottom,
+    reset: resetReasoningScroll,
+  } = useAutoScroll()
+
+  const lastIsAssistant = useMemo(() => {
+    const last = chatMessages[chatMessages.length - 1]
+    return !!last && last.role === 'assistant'
+  }, [chatMessages])
+  const showSessionWorking = sessionEvents && !session.waiting && !session.error && (
+    (status === 'streaming' && !lastIsAssistant) ||
+    (status === 'ready' && session.pending.some(input => input.status !== 'failed' && input.status !== 'unknown'))
+  )
+
+  useEffect(() => {
+    if (status === 'streaming') {
+      resetReasoningScroll()
+    }
+  }, [status, resetReasoningScroll])
+
+  // useLayoutEffect: set scrollTop in the same commit as the DOM text update,
+  // before the browser paints — otherwise the container renders one frame with
+  // scrollTop lagging behind the grown scrollHeight and the thinking content
+  // visibly "jumps" on every ~250ms delta.
+  useLayoutEffect(() => {
+    if (status === 'streaming') {
+      scrollReasoningToBottom()
+    }
+  }, [status, chatMessages, scrollReasoningToBottom])
+
+  useEffect(() => {
+    setCurrentThreadId(threadId)
+    titleAbortRef.current?.abort()
+    titleAbortRef.current = null
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [threadId])
+
+  // Load messages on first mount
+  useEffect(() => {
+    if (sessionEvents) return
+    if (durableSessions && !controllerReady) return
+    let disposed = false
+    if (durableSessions) setHistoryReady(false)
+    // Skip if chat already has messages (e.g., returning to a streaming conversation)
+    const existingSession = useChatSessions.getState().sessions[threadId]
+    if (
+      !durableSessions &&
+      (existingSession?.chat.messages.length > 0 ||
+        existingSession?.isStreaming ||
+        currentThread.current === threadId)
+    ) {
+      return
+    }
+
+    serviceHub
+      .messages()
+      .fetchMessages(threadId)
+      .then((fetchedMessages) => {
+        if (disposed) return
+        if (fetchedMessages && (durableSessions || fetchedMessages.length > 0)) {
+          const currentLocalMessages = useMessages
+            .getState()
+            .getMessages(threadId)
+
+          let messagesToSet = fetchedMessages
+
+          // Runtime-backed history is authoritative; legacy local rows remain
+          // untouched on disk but are never merged into the active projection.
+          if (
+            !durableSessions &&
+            currentLocalMessages &&
+            currentLocalMessages.length > 0
+          ) {
+            const fetchedIds = new Set(fetchedMessages.map((m) => m.id))
+            const localOnlyMessages = currentLocalMessages.filter(
+              (m) => !fetchedIds.has(m.id)
+            )
+
+            if (localOnlyMessages.length > 0) {
+              messagesToSet = [...fetchedMessages, ...localOnlyMessages].sort(
+                (a, b) => (a.created_at || 0) - (b.created_at || 0)
+              )
+            }
+          }
+
+          // Drop and delete any persisted empty assistant rows produced by
+          // the old bug where errored generations were written as empty-text
+          // messages. Lossless cleanup — these carry no information.
+          const emptyAssistantIds = messagesToSet
+            .filter(threadMessageIsEmpty)
+            .map((m) => m.id)
+          if (emptyAssistantIds.length > 0) {
+            messagesToSet = messagesToSet.filter(
+              (m) => !emptyAssistantIds.includes(m.id)
+            )
+            for (const id of emptyAssistantIds) {
+              deleteMessage(threadId, id)
+            }
+          }
+
+          // Migrate threads corrupted by the pre-#8357 bug: assistant replies
+          // saved with parentId:null are phantom roots that computeActivePath
+          // drops. Re-parent them to the user turn they answer and persist.
+          const repaired = durableSessions
+            ? []
+            : repairDetachedAssistants(messagesToSet)
+          if (repaired.length > 0) {
+            const byId = new Map(repaired.map((m) => [m.id, m]))
+            messagesToSet = messagesToSet.map((m) => byId.get(m.id) ?? m)
+            for (const m of repaired) updateMessage(m)
+          }
+
+          setMessages(threadId, messagesToSet)
+
+          const hydrated: Record<string, string> = {}
+          for (const m of messagesToSet) {
+            const err = (m.metadata as Record<string, unknown> | undefined)
+              ?.error
+            if (typeof err === 'string' && err.length > 0) {
+              hydrated[m.id] = err
+            }
+          }
+          useMessageErrors.getState().hydrate(hydrated)
+
+          const activeRootId = (
+            useThreads.getState().threads[threadId]?.metadata as
+              | Record<string, unknown>
+              | undefined
+          )?.activeRootId as string | undefined
+          const uiMessages = convertThreadMessagesToUIMessages(
+            computeActivePath(messagesToSet, activeRootId)
+          )
+          const targetChat = useChatSessions.getState().sessions[threadId]?.chat
+          if (targetChat) targetChat.messages = uiMessages
+          currentThread.current = threadId
+        }
+        if (durableSessions) setHistoryReady(true)
+      })
+      .catch((error) => {
+        if (disposed) return
+        console.error('Failed to fetch messages for thread:', threadId, error)
+        if (durableSessions) {
+          setControllerError(`run_failed: ${String(error)}`)
+        }
+      })
+    return () => {
+      disposed = true
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sessionEvents, controllerReady, threadId, serviceHub])
+
+  useEffect(() => {
+    return () => {
+      titleAbortRef.current?.abort()
+      setCurrentThreadId(undefined)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  // The route component is reused across thread switches (no remount), so tear
+  // down the in-flight tool loop and release approvals waiting on the thread we
+  // are leaving. Cleanup captures the previous threadId; without this the
+  // unresolved approval promise keeps that thread marked busy forever.
+  useEffect(() => {
+    // Stable ref object (never reassigned) — capture for the cleanup closure.
+    const approvalPromises = toolApprovalPromises.current
+    return () => {
+      toolCallAbortController.current?.abort()
+      toolCallAbortController.current = null
+      approvalPromises.clear()
+      useToolApprovalRequests.getState().clearPendingForThread(threadId)
+    }
+  }, [threadId])
+
+  // Resync the OOM/backend banner from message metadata on every thread switch.
+  // Persisted by LlamacppOomListener at error time; unset state when this
+  // thread carries no such metadata so the banner doesn't leak across threads.
+  const threadMessagesForBanner = useMessages((s) => s.messages?.[threadId])
+  useEffect(() => {
+    if (sessionEvents) { setContextLimitError(null); return }
+    let oom: string | undefined
+    let be: string | undefined
+    let ctx: string | undefined
+    for (const m of threadMessagesForBanner ?? []) {
+      const meta = m.metadata as Record<string, unknown> | undefined
+      const o = meta?.oomError
+      if (typeof o === 'string' && o.length > 0) oom = o
+      const b = meta?.backendError
+      if (typeof b === 'string' && b.length > 0) be = b
+      const c = meta?.contextError
+      if (typeof c === 'string' && c.length > 0) ctx = c
+    }
+    useAppState.getState().setOomError(oom)
+    useAppState.getState().setBackendError(be)
+    setContextLimitError(ctx ? new Error(ctx) : null)
+  }, [sessionEvents, threadId, threadMessagesForBanner])
+
+  // Consolidated function to process and send a message
+  const processAndSendMessage = useCallback(
+    async (
+      text: string,
+      files?: Array<{ type: string; mediaType: string; url: string; resourceId?: string }>,
+      enableKnowledge?: boolean,
+      includeDraftAttachments = true
+    ) => {
+      let messageText = text.trim()
+      const messageId = generateId()
+
+      // Show preview message with "retrieving" status if knowledge retrieval is needed
+      let knowledgeContext: KnowledgeContext | undefined
+      const needsRetrieval = Boolean(enableKnowledge)
+      if (needsRetrieval) {
+        const previewMessage = {
+          ...newUserThreadContent(threadId, messageText, [], messageId),
+          metadata: { knowledgeRetrieving: true, createdAt: new Date() },
+        }
+        const previewUI = convertThreadMessagesToUIMessages([previewMessage])
+        setChatMessages((prev) => [...prev, ...previewUI])
+      }
+
+      try {
+        const prepared = await prepareKnowledgeMessage(text, enableKnowledge ?? false)
+        messageText = prepared.question
+        knowledgeContext = prepared.context
+
+      } finally {
+        // 失败必须继续抛给输入框，只有发送被接受后才能清除草稿和附件。
+        if (needsRetrieval) {
+          setChatMessages((prev) => prev.filter((m) => m.id !== messageId))
+        }
+      }
+      // Cancel any in-flight title summarization so it doesn't compete with this request
+      titleAbortRef.current?.abort()
+      titleAbortRef.current = null
+
+      // Get all attachments from the store (media transferred from the
+      // new-thread key, plus documents).
+      const allAttachments = runtimeEnabled || !includeDraftAttachments
+        ? []
+        : getAttachments(attachmentsKey)
+
+      // In-thread sends pass media inline via `files`; reconstruct typed by
+      // mediaType (image/audio/video — not all images). New-thread sends pass
+      // no media in `files` (quota), so fall back to media already in the store.
+      const fileMediaAttachments = (runtimeEnabled ? [] : files ?? []).map(
+        (file) => {
+          const base64 = file.url.split(',')[1] || ''
+          const size = Math.ceil((base64.length * 3) / 4) // Estimate from base64
+          if (file.mediaType.startsWith('audio/')) {
+            return createAudioAttachment({
+              name: `audio-${Date.now()}`,
+              mimeType: file.mediaType,
+              dataUrl: file.url,
+              base64,
+              audioFormat: file.mediaType === 'audio/mpeg' ? 'mp3' : 'wav',
+              size,
+            })
+          }
+          if (file.mediaType.startsWith('video/')) {
+            return createVideoAttachment({
+              name: `video-${Date.now()}`,
+              mimeType: file.mediaType,
+              dataUrl: file.url,
+              base64,
+              size,
+            })
+          }
+          return createImageAttachment({
+            name: `image-${Date.now()}`,
+            mimeType: file.mediaType,
+            dataUrl: file.url,
+            base64,
+            size,
+          })
+        }
+      )
+
+      const storeMediaAttachments = allAttachments.filter(
+        (a) => a.type === 'image' || a.type === 'audio' || a.type === 'video'
+      )
+      const mediaAttachments = fileMediaAttachments.length
+        ? fileMediaAttachments
+        : storeMediaAttachments
+
+      // Combine media attachments with document attachments from the store
+      const combinedAttachments = [
+        ...mediaAttachments,
+        ...allAttachments.filter((a) => a.type === 'document'),
+      ]
+
+      const hasDocuments = combinedAttachments.some(
+        (a) => a.type === 'document' && !a.processed
+      )
+      const hasEmbeddingDocuments = combinedAttachments.some(
+        (a) =>
+          a.type === 'document' &&
+          !a.processed &&
+          a.parseMode !== 'inline'
+      )
+
+      // When there are unprocessed documents (e.g. first-message flow),
+      // show the user message in the conversation immediately so the UI
+      // doesn't hang while embeddings are generated.
+      if (hasDocuments) {
+        const previewMessage = newUserThreadContent(
+          threadId,
+          messageText,
+          combinedAttachments,
+          messageId
+        )
+        const previewUI =
+          convertThreadMessagesToUIMessages([previewMessage])
+        setChatMessages((prev) => [...prev, ...previewUI])
+      }
+
+      // Clear attachment chips from the input — they are now either
+      // about to be sent or visible in the preview message above.
+      if (includeDraftAttachments) clearAttachmentsForThread(attachmentsKey)
+
+      // Process attachments (ingest images, parse/index documents)
+      let processedAttachments = combinedAttachments
+      if (combinedAttachments.length > 0) {
+        if (hasEmbeddingDocuments) {
+          useAppState.getState().setThreadEmbedding(threadId, true)
+          useAppState.getState().setThreadBusy(threadId, true)
+        }
+        try {
+          const parsePreference = useAttachments.getState().parseMode
+          const result = await processAttachmentsForSend({
+            attachments: combinedAttachments,
+            threadId,
+            serviceHub,
+            selectedProvider,
+            parsePreference,
+          })
+          processedAttachments = result.processedAttachments
+
+          // Update thread metadata if documents were embedded
+          if (result.hasEmbeddedDocuments) {
+            const toolApproval = useToolApproval.getState()
+            const ragTools = useAppState.getState().ragToolNames
+            for (const toolName of ragTools) {
+              toolApproval.approveToolForThread(threadId, toolName)
+            }
+            useThreads.getState().updateThread(threadId, {
+              metadata: { hasDocuments: true },
+            })
+          }
+        } catch (error) {
+          console.error('Failed to process attachments:', error)
+          // Remove the preview message on failure
+          if (hasDocuments) {
+            setChatMessages((prev) =>
+              prev.filter((m) => m.id !== messageId)
+            )
+          }
+          return
+        } finally {
+          useAppState.getState().setThreadEmbedding(threadId, false)
+          useAppState.getState().setThreadBusy(threadId, false)
+        }
+      }
+
+      // Remove the preview before sendMessage adds the real user message
+      // with the same id — this prevents duplicates.
+      if (hasDocuments) {
+        setChatMessages((prev) => prev.filter((m) => m.id !== messageId))
+      }
+
+      // Persist the final message to backend
+      const baseUserMessage = newUserThreadContent(
+        threadId,
+        messageText,
+        processedAttachments,
+        messageId
+      )
+      // Once a thread has branches, link new turns into the active path so the
+      // assistant reply attaches to this message. Legacy threads stay linear.
+      const branchedMessages = useMessages.getState().getMessages(threadId)
+      let userMessage = baseUserMessage
+      if (hasBranching(branchedMessages)) {
+        const activeRootId = (
+          useThreads.getState().threads[threadId]?.metadata as
+            | Record<string, unknown>
+            | undefined
+        )?.activeRootId as string | undefined
+        const path = computeActivePath(branchedMessages, activeRootId)
+        const parentId = path.length ? path[path.length - 1].id : null
+        userMessage = {
+          ...baseUserMessage,
+          metadata: { ...(baseUserMessage.metadata ?? {}), parentId },
+        }
+        pendingAssistantParentId.current = messageId
+      }
+      if (knowledgeContext) {
+        userMessage = {
+          ...userMessage,
+          metadata: {
+            ...(userMessage.metadata ?? {}),
+            knowledgeContext,
+            createdAt: new Date(),
+          },
+        }
+      }
+      addMessage(userMessage)
+
+      // Build parts for AI SDK. Derive media file parts from the resolved
+      // attachments (not the raw `files` arg) so the first-message flow — where
+      // media lives in the store and `files` is empty — still renders live.
+      const parts: Array<
+        | { type: 'text'; text: string }
+        | { type: 'file'; mediaType: string; url: string }
+      > = [
+        {
+          type: 'text',
+          text: userMessage.content[0].text?.value ?? messageText,
+        },
+      ]
+
+      mediaAttachments.forEach((a) => {
+        if (a.dataUrl && a.mimeType) {
+          parts.push({
+            type: 'file',
+            mediaType: a.mimeType,
+            url: a.dataUrl,
+          })
+        }
+      })
+
+      sendMessage({
+        parts,
+        id: messageId,
+        metadata: { ...userMessage.metadata, createdAt: new Date() },
+      })
+    },
+    [
+      sendMessage,
+      threadId,
+      addMessage,
+      getAttachments,
+      attachmentsKey,
+      setChatMessages,
+      clearAttachmentsForThread,
+      serviceHub,
+      selectedProvider,
+      runtimeEnabled,
+    ]
+  )
+
+  // Sends a text-only queued message, bypassing attachment processing entirely.
+  // This prevents stale or new attachments from leaking into auto-sent queue items.
+  const sendQueuedMessage = useCallback(
+    async (text: string) => {
+      const messageId = generateId()
+      const userMessage = newUserThreadContent(threadId, text, [], messageId)
+      addMessage(userMessage)
+
+      sendMessage({
+        parts: [{ type: 'text', text }],
+        id: messageId,
+        metadata: userMessage.metadata,
+      })
+    },
+    [sendMessage, threadId, addMessage]
+  )
+
+  useEffect(() => {
+    // Prevent duplicate sends
+    if (sessionEvents) return
+    if (initialMessageSentRef.current === threadId) return
+
+    const sendText = (
+      text: string,
+      files?: Array<{ type: string; mediaType: string; url: string }>,
+      enableKnowledge?: boolean
+    ) => {
+      if (initialMessageSentRef.current === threadId) return
+      initialMessageSentRef.current = threadId
+      void processAndSendMessage(text, files, enableKnowledge).catch((error) => {
+        usePrompt.setState({ prompt: text, draftToken: crypto.randomUUID() })
+        console.error('Failed to send initial message:', error)
+      })
+    }
+
+    // Keyboard new-thread flow: message is staged via sessionStorage before
+    // navigation and consumed by this page on mount.
+    const storedMessage = sessionStorage.getItem(initialMessageKey)
+
+    if (storedMessage) {
+      // Mark as sent immediately to prevent duplicate sends
+      sessionStorage.removeItem(initialMessageKey)
+      try {
+        const message = JSON.parse(storedMessage) as {
+          text: string
+          enableKnowledge?: boolean
+          files?: Array<{ type: string; mediaType: string; url: string }>
+        }
+        sendText(message.text, message.files, message.enableKnowledge)
+      } catch (error) {
+        console.error('Failed to parse initial message:', error)
+      }
+      return
+    }
+
+  }, [sessionEvents, initialMessageKey, threadId, processAndSendMessage])
+
+  const stripBannerMetadata = useCallback(() => {
+    const tmsgs = useMessages.getState().getMessages(threadId)
+    for (const m of tmsgs) {
+      const meta = m.metadata as Record<string, unknown> | undefined
+      if (!meta) continue
+      if (
+        meta.oomError == null &&
+        meta.backendError == null &&
+        meta.contextError == null
+      )
+        continue
+      const nextMeta = { ...meta }
+      delete nextMeta.oomError
+      delete nextMeta.backendError
+      delete nextMeta.contextError
+      updateMessage({ ...m, metadata: nextMeta })
+    }
+  }, [threadId, updateMessage])
+
+  // Dismiss any active thread-level banner error and strip its persisted
+  // metadata. The banner stands in for a failed last assistant turn (hidden by
+  // the render filter), so leaving it set would blank a healthy assistant on
+  // whatever branch we navigate to next.
+  const clearBannerErrors = useCallback(() => {
+    if (oomError) setOomError(undefined)
+    if (backendError) setBackendError(undefined)
+    if (contextLimitError) setContextLimitError(null)
+    if (oomError || backendError || contextLimitError) stripBannerMetadata()
+  }, [
+    oomError,
+    setOomError,
+    backendError,
+    setBackendError,
+    contextLimitError,
+    stripBannerMetadata,
+  ])
+
+  // Handle submit from ChatInput
+  const handleSubmit = useCallback(
+    async (
+      text: string,
+      files?: Array<{ type: string; mediaType: string; url: string }>,
+      skillIds?: string[],
+      enableKnowledge?: boolean
+    ) => {
+      if (sessionEvents) return session.send(
+        text,
+        undefined,
+        (files ?? []).flatMap(file => 'resourceId' in file && typeof file.resourceId === 'string'
+          ? [{ resourceId: file.resourceId }]
+          : []),
+        skillIds ?? [],
+        enableKnowledge ?? false
+      )
+      clearBannerErrors()
+      await processAndSendMessage(text, files, enableKnowledge)
+    },
+    [sessionEvents, session.send, processAndSendMessage, clearBannerErrors]
+  )
+
+  const submitVoice = useCallback(async (text: string, id: string) => {
+    if (sessionEvents && session.feed) {
+      await session.send(text, undefined, [], { messageId: id, preserveDraft: true })
+    } else {
+      clearBannerErrors()
+      await processAndSendMessage(text, [], undefined, false)
+    }
+  }, [sessionEvents, session, processAndSendMessage, clearBannerErrors])
+  useEffect(() => {
+    if (!isVoiceOverlay) return
+    useOverlayConversationStore.setState({ busy:
+      effectiveStatus === 'streaming' || effectiveStatus === 'submitted' ||
+      (sessionEvents && (session.waiting || session.pending.length > 0)),
+    })
+    return () => useOverlayConversationStore.setState({ busy: false })
+  }, [isVoiceOverlay, effectiveStatus, sessionEvents, session.waiting, session.pending.length])
+
+  useVoiceSubmission(threadId, isVoiceOverlay && (sessionEvents
+    ? session.ready && !session.waiting
+    : controllerReady && !controllerError && effectiveStatus === 'ready'), submitVoice)
+
+  // Versioning helpers --------------------------------------------------------
+
+  // Assign parentId along the current linear path the first time a thread forks,
+  // so siblings and subtrees are well-defined. Idempotent. Returns the store.
+  const ensureBranched = useCallback(() => {
+    const msgs = useMessages.getState().getMessages(threadId)
+    if (hasBranching(msgs)) return msgs
+    const filled = backfillParentIds(msgs)
+    filled.forEach((m) => updateMessage(m))
+    return useMessages.getState().getMessages(threadId)
+  }, [threadId, updateMessage])
+
+  // Make `node` the active branch under its parent (or active root).
+  const setActiveBranch = useCallback(
+    (node: ThreadMessage) => {
+      const parentId = getParentId(node)
+      if (!parentId) {
+        const t = useThreads.getState().threads[threadId]
+        useThreads.getState().updateThread(threadId, {
+          metadata: {
+            ...((t?.metadata as Record<string, unknown> | undefined) ?? {}),
+            activeRootId: node.id,
+          },
+        })
+        return
+      }
+      const parent = useMessages
+        .getState()
+        .getMessages(threadId)
+        .find((m) => m.id === parentId)
+      if (parent) updateMessage(withActiveChild(parent, node.id))
+    },
+    [threadId, updateMessage]
+  )
+
+  // Rebuild the rendered conversation from the active path in the store.
+  const syncActivePath = useCallback(() => {
+    const msgs = useMessages.getState().getMessages(threadId)
+    const activeRootId = (
+      useThreads.getState().threads[threadId]?.metadata as
+        | Record<string, unknown>
+        | undefined
+    )?.activeRootId as string | undefined
+    setChatMessages(
+      convertThreadMessagesToUIMessages(computeActivePath(msgs, activeRootId))
+    )
+  }, [threadId, setChatMessages])
+
+  // Switch the visible version of a message (the `< n/m >` control).
+  const handleSwitchVersion = useCallback(
+    (messageId: string, dir: -1 | 1) => {
+      const msgs = useMessages.getState().getMessages(threadId)
+      const target = msgs.find((m) => m.id === messageId)
+      if (!target) return
+      const siblings = getSiblings(msgs, target)
+      const idx = siblings.findIndex((m) => m.id === messageId)
+      const next = siblings[idx + dir]
+      if (!next) return
+      titleAbortRef.current?.abort()
+      titleAbortRef.current = null
+      clearBannerErrors()
+      setActiveBranch(next)
+      syncActivePath()
+    },
+    [threadId, setActiveBranch, syncActivePath, clearBannerErrors]
+  )
+
+  // Resolve the user message that an assistant reply hangs off of.
+  const resolveAssistantParent = useCallback(
+    (messageId: string | undefined): string | null => {
+      const msgs = useMessages.getState().getMessages(threadId)
+      const activeRootId = (
+        useThreads.getState().threads[threadId]?.metadata as
+          | Record<string, unknown>
+          | undefined
+      )?.activeRootId as string | undefined
+      const path = computeActivePath(msgs, activeRootId)
+      const idx =
+        messageId == null
+          ? path.length - 1
+          : path.findIndex((m) => m.id === messageId)
+      if (idx === -1) return null
+      const sel = path[idx]
+      if (sel.role === 'user') return sel.id
+      for (let i = idx; i >= 0; i--) {
+        if (path[i].role === 'user') return path[i].id
+      }
+      return null
+    },
+    [threadId]
+  )
+
+  // Regenerate keeps the previous reply as a prior version (no deletion); the
+  // new reply arrives in onFinish as a sibling and becomes the active branch.
+  const handleRegenerate = useCallback(
+    (messageId?: string) => {
+      const hadBannerError =
+        useAppState.getState().oomError != null ||
+        useAppState.getState().backendError != null ||
+        contextLimitError != null
+      if (useAppState.getState().oomError) {
+        useAppState.getState().setOomError(undefined)
+      }
+      if (useAppState.getState().backendError) {
+        useAppState.getState().setBackendError(undefined)
+      }
+      if (contextLimitError) setContextLimitError(null)
+      if (hadBannerError) stripBannerMetadata()
+      titleAbortRef.current?.abort()
+      titleAbortRef.current = null
+
+      ensureBranched()
+      pendingAssistantParentId.current = resolveAssistantParent(messageId)
+
+      regenerate(messageId ? { messageId } : undefined)
+    },
+    [
+      regenerate,
+      stripBannerMetadata,
+      contextLimitError,
+      ensureBranched,
+      resolveAssistantParent,
+    ]
+  )
+
+  // Resume a turn that was stopped before it finished: replay the partial text
+  // as an assistant prefill so the model continues from where it left off. The
+  // transport re-emits the partial as the first delta, so the regenerated
+  // message reconstitutes partial + new content and the KV cache is reused.
+  const handleContinue = useCallback(
+    (messageId: string) => {
+      const msg = chatMessages.find((m) => m.id === messageId)
+      if (!msg) return
+      const collect = (type: 'text' | 'reasoning') =>
+        msg.parts
+          .filter((p) => p.type === type)
+          .map((p) => (p as { text: string }).text)
+          .join('')
+      const text = collect('text')
+      const reasoning = collect('reasoning')
+      if (!text && !reasoning) return
+      setContinueFromContent({ text, reasoning })
+      continueReplaceIdRef.current = messageId
+      handleRegenerate(messageId)
+    },
+    [chatMessages, setContinueFromContent, handleRegenerate]
+  )
+
+  // Editing forks a new sibling version (the original + its subtree are kept).
+  // User edits regenerate a reply for the new branch; assistant edits don't.
+  const handleEditMessage = useCallback(
+    (messageId: string, newText: string) => {
+      const msgs = ensureBranched()
+      const target = msgs.find((m) => m.id === messageId)
+      if (!target) return
+
+      useMessageErrors.getState().clearError(messageId)
+      titleAbortRef.current?.abort()
+      titleAbortRef.current = null
+
+      const newId = generateId()
+      const sibling = makeSibling(target, {
+        id: newId,
+        createdAt: Date.now(),
+        text: newText,
+      })
+      addMessage(sibling)
+      setActiveBranch(sibling)
+
+      if (target.role === 'user') {
+        pendingAssistantParentId.current = newId
+        syncActivePath()
+        regenerate({ messageId: newId })
+      } else {
+        syncActivePath()
+      }
+    },
+    [
+      ensureBranched,
+      addMessage,
+      setActiveBranch,
+      syncActivePath,
+      regenerate,
+    ]
+  )
+
+  // Handle delete message
+  const handleDeleteMessage = useCallback(
+    (messageId: string) => {
+      deleteMessage(threadId, messageId)
+      useMessageErrors.getState().clearError(messageId)
+
+      // Update chat messages for UI
+      const updatedChatMessages = chatMessages.filter(
+        (msg) => msg.id !== messageId
+      )
+      setChatMessages(updatedChatMessages)
+    },
+    [threadId, deleteMessage, chatMessages, setChatMessages]
+  )
+
+  // Handler for increasing context size
+  const handleContextSizeIncrease = useCallback(async () => {
+    if (!selectedModel) return
+
+    const updateProvider = useModelProvider.getState().updateProvider
+    const provider = getProviderByName(selectedProvider)
+    if (!provider) return
+
+    const modelIndex = provider.models.findIndex(
+      (m) => m.id === selectedModel.id
+    )
+    if (modelIndex === -1) return
+
+    const model = provider.models[modelIndex]
+
+    // Increase context length in steps: <8192 -> 8192 -> 32768 -> x1.5
+    const currentCtxLen =
+      (model.settings?.ctx_len?.controller_props?.value as number) ?? 8192
+    const maxCtxLen =
+      (model.settings?.ctx_len?.controller_props?.max as number) || 131072
+
+    let newCtxLen: number
+    if (currentCtxLen < 8192) {
+      newCtxLen = 8192
+    } else if (currentCtxLen < 32768) {
+      newCtxLen = 32768
+    } else {
+      newCtxLen = Math.round(currentCtxLen * 1.5)
+    }
+
+    newCtxLen = Math.min(newCtxLen, maxCtxLen)
+    if (newCtxLen <= currentCtxLen) {
+      stampContextErrorOnThread(threadId)
+      setContextLimitError(new Error(OUT_OF_CONTEXT_SIZE))
+      return
+    }
+
+    const updatedModel = {
+      ...model,
+      settings: {
+        ...model.settings,
+        ctx_len: {
+          ...(model.settings?.ctx_len ?? {}),
+          controller_props: {
+            ...(model.settings?.ctx_len?.controller_props ?? {}),
+            value: newCtxLen,
+          },
+        },
+      },
+    }
+
+    const updatedModels = [...provider.models]
+    updatedModels[modelIndex] = updatedModel as Model
+
+    updateProvider(provider.provider, {
+      models: updatedModels,
+    })
+
+    // For llamacpp the router reads ctx-size from the preset, not from any
+    // request param — so we must write model.yml and bounce the router before
+    // the regenerate, otherwise the next load picks up the OLD context size.
+    // Other providers consume the new Zustand value directly on next load.
+    if (provider.provider === 'llamacpp') {
+      try {
+        await serviceHub
+          .models()
+          .updateModelSettings(selectedModel.id, { ctx_len: newCtxLen })
+      } catch (e) {
+        updateProvider(provider.provider, {
+          models: provider.models,
+        })
+        console.error('Failed to persist increased ctx_len', e)
+        stampContextErrorOnThread(threadId)
+        setContextLimitError(new Error(OUT_OF_CONTEXT_SIZE))
+        return
+      }
+    } else {
+      await serviceHub.models().stopModel(selectedModel.id)
+    }
+
+    // Consume any pending partial captured at the `finishReason === 'length'`
+    // event so the regenerate resumes from where the stream stopped, and the
+    // "Growing the Mind…" shimmer renders while the model reloads.
+    const pending = pendingContinuationRef.current
+    pendingContinuationRef.current = null
+    if (pending) {
+      setContinueFromContentRef.current?.(pending.text)
+      setPendingContinueMessage(pending.message)
+    }
+
+    setTimeout(() => {
+      handleRegenerate()
+    }, 1000)
+  }, [
+    selectedModel,
+    selectedProvider,
+    getProviderByName,
+    serviceHub,
+    handleRegenerate,
+    threadId,
+  ])
+
+  // Keep refs in sync so onFinish always calls the latest versions
+  handleContextSizeIncreaseRef.current = handleContextSizeIncrease
+  setContinueFromContentRef.current = setContinueFromContent
+  setChatMessagesRef.current = setChatMessages
+
+  useEffect(() => {
+    if (
+      (oomError || backendError || contextLimitError) &&
+      (status === 'streaming' || status === 'submitted')
+    ) {
+      try {
+        stop()
+      } catch (e) {
+        console.warn('router error stop() threw:', e)
+      }
+    }
+  }, [oomError, backendError, contextLimitError, status, stop])
+
+  useEffect(() => {
+    if (status === 'streaming' && pendingContinuationRef.current) {
+      // The new turn is now flowing; drop the saved partial so it can't be
+      // consumed by a later, unrelated "Increase Context Size" click.
+      pendingContinuationRef.current = null
+    }
+    if (status === 'error' && pendingContinueMessage) {
+      setPendingContinueMessage(null)
+    }
+  }, [status]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Message queue: auto-send the next queued message when the stream finishes.
+  // No reactive subscription to the queue here — ChatInput owns the UI.
+  // We only read the store imperatively when status transitions to 'ready'.
+  const processingQueueRef = useRef(false)
+
+  useEffect(() => {
+    if (sessionEvents) return
+    if (status !== 'ready' || processingQueueRef.current) return
+    if (sessionData.tools.length > 0) return
+
+    const next = useMessageQueue.getState().dequeue(threadId)
+    if (!next) return
+
+    processingQueueRef.current = true
+    sendQueuedMessage(next.text)
+      .catch((err) => {
+        console.error('Failed to send queued message:', err)
+      })
+      .finally(() => {
+        processingQueueRef.current = false
+      })
+  }, [sessionEvents, status, threadId, sendQueuedMessage, sessionData.tools.length])
+
+  // If streaming errors out, discard any queued messages so they don't sit there stuck
+  useEffect(() => {
+    if (status === 'error') {
+      useMessageQueue.getState().clearQueue(threadId)
+    }
+  }, [status, threadId])
+
+  // Attach the error to the assistant turn it belongs to so the banner renders
+  // alongside any tool-call parts the model already produced. Falls back to the
+  // last user message if no assistant message exists yet (e.g. provider 4xx
+  // before streaming starts).
+  useEffect(() => {
+    if (!error) return
+    let targetId: string | undefined
+    let lastUserIdx = -1
+    for (let i = chatMessages.length - 1; i >= 0; i--) {
+      if (chatMessages[i].role === 'user') {
+        lastUserIdx = i
+        break
+      }
+    }
+    for (let i = chatMessages.length - 1; i > lastUserIdx; i--) {
+      if (chatMessages[i].role === 'assistant') {
+        targetId = chatMessages[i].id
+        break
+      }
+    }
+    if (!targetId && lastUserIdx >= 0) {
+      targetId = chatMessages[lastUserIdx].id
+    }
+    if (!targetId) return
+    const errMessage =
+      error instanceof Error ? error.message : String(error || 'Error')
+    // Context overflow is owned by the global "Increase Context Size" banner;
+    // a per-message Regenerate would just re-overflow the same prompt.
+    if (isContextOverflowMessage(errMessage)) {
+      stampContextErrorOnThread(threadId, errMessage)
+      setContextLimitError(new Error(errMessage))
+      useMessageErrors.getState().clearError(targetId)
+      return
+    }
+    useMessageErrors.getState().setError(targetId, errMessage)
+    const tm = useMessages.getState().getMessages(threadId).find(
+      (m) => m.id === targetId
+    )
+    if (tm) {
+      const existingError = (tm.metadata as Record<string, unknown> | undefined)
+        ?.error
+      if (existingError !== errMessage) {
+        updateMessage({
+          ...tm,
+          metadata: { ...(tm.metadata || {}), error: errMessage },
+        })
+      }
+    }
+  }, [status, error, threadId, chatMessages, updateMessage])
+
+  // Persist whenever the user message lands in useMessages — covers the race
+  // where the stamping effect ran before addMessage's commit was observable.
+  const localThreadMessages = useMessages((s) => s.messages?.[threadId])
+  const errorEntries = useMessageErrors((s) => s.errors)
+  useEffect(() => {
+    if (sessionEvents || !localThreadMessages) return
+    for (const m of localThreadMessages) {
+      const err = errorEntries[m.id]
+      if (typeof err !== 'string' || !err) continue
+      const existing = (m.metadata as Record<string, unknown> | undefined)
+        ?.error
+      if (existing === err) continue
+      updateMessage({
+        ...m,
+        metadata: { ...(m.metadata || {}), error: err },
+      })
+    }
+  }, [sessionEvents, localThreadMessages, errorEntries, updateMessage])
+
+  // Clear the queue when navigating away from this thread
+  useEffect(() => {
+    return () => {
+      useMessageQueue.getState().clearQueue(threadId)
+    }
+  }, [threadId])
+
+  const threadModel = useMemo(
+    () => searchThreadModel ?? thread?.model,
+    [searchThreadModel, thread]
+  )
+  // Runtime 会话在创建时把专家绑定到自己的 model 上，会话头部照它显示。
+  const sessionExpertId = threadModel?.provider === 'runtime' ? threadModel.id : ''
+
+  // Per-message version counts for the `< n/m >` navigation control.
+  const versionInfoById = useMemo(() => {
+    const map: Record<string, { index: number; count: number }> = {}
+    if (!localThreadMessages || !hasBranching(localThreadMessages)) return map
+    for (const m of localThreadMessages) {
+      const info = getVersionInfo(localThreadMessages, m)
+      if (info.count > 1) map[m.id] = info
+    }
+    return map
+  }, [localThreadMessages])
+
+  const visibleMessageIds = useMemo(
+    () =>
+      chatMessages.flatMap((message, index) => {
+        const hiddenByBanner =
+          index === chatMessages.length - 1 &&
+          hasBannerError &&
+          message.role === 'assistant'
+        return hiddenByBanner ? [] : [message.id]
+      }),
+    [chatMessages, hasBannerError]
+  )
+
+  const renderedRuntimePermissionKeys = useMemo(() => {
+    const keys = new Set<string>()
+    for (const message of chatMessages) {
+      for (const part of message.parts) {
+        if (part.type !== 'data-runtime-permission') continue
+        const permissionPart = part as Extract<
+          RuntimeEventPartValue,
+          { type: 'data-runtime-permission' }
+        >
+        keys.add(runtimePermissionIdentityKey(permissionPart.data))
+      }
+    }
+    return keys
+  }, [chatMessages])
+
+  return (
+    <div className={cn(
+      'flex flex-col',
+      isCompact
+        ? 'h-full min-h-0'
+        : 'h-[calc(100dvh-(env(safe-area-inset-bottom)+env(safe-area-inset-top)))]'
+    )}>
+      {!isCompact && (
+        <HeaderPage>
+          <div className="flex items-center justify-between w-full pr-2">
+            <SessionExpertChip agentId={sessionExpertId} enabled={runtimeEnabled} />
+            <RuntimeControls
+              threadId={threadId}
+              afterMessageId={chatMessages.at(-1)?.id}
+            />
+          </div>
+        </HeaderPage>
+      )}
+      <div className="flex flex-1 flex-col h-full overflow-hidden">
+        {sessionEvents && session.feed && !isStatusPopup && (
+          <PendingApprovalNavigation
+            key={JSON.stringify([session.feed.targetId, session.feed.runtimeEpoch, threadId])}
+            feed={session.feed}
+            ready={session.ready}
+            loadOlder={session.loadOlder}
+            revealLatest={() => { void conversationRef.current?.scrollToBottom('instant') }}
+          />
+        )}
+        {sessionEvents && anchorSeq !== undefined && !isStatusPopup && (
+          <div
+            className="flex items-center justify-between gap-2 border-b bg-secondary/40 px-3 py-1.5"
+            role="status"
+          >
+            <span className="truncate text-xs text-muted-foreground">
+              {t('chat:searchAnchorBanner')}
+            </span>
+            <Button variant="ghost" size="sm" className="h-6 px-2 text-xs" onClick={leaveAnchor}>
+              {t('chat:backToLatest')}
+            </Button>
+          </div>
+        )}
+        {/* Messages Area */}
+        <div
+          className="message-zoom flex-1 relative"
+          style={
+            {
+              '--font-size-base': `calc(${fontSize} * ${messageZoom})`,
+            } as CSSProperties
+          }
+        >
+          <Conversation
+            className="absolute inset-0 text-start"
+            contextRef={conversationRef}
+          >
+            <ConversationContent
+              className={cn('mx-auto w-full md:w-4/5 xl:w-4/6')}
+            >
+              {sessionEvents && session.feed?.hasMore && (
+                <Button variant="outline" onClick={() => void session.loadOlder()}>{t('chat:loadOlder')}</Button>
+              )}
+              <VirtualMessageList
+                count={chatMessages.length}
+                // `StickToBottom` owns the scroller and never reassigns the ref.
+                getScrollElement={() => conversationRef.current?.scrollRef.current ?? null}
+                getKey={(index) => chatMessages[index].id}
+                renderRow={(index) => {
+                  let message = chatMessages[index]
+                  if (!sessionEvents && message.role === 'assistant') {
+                    const parent = chatMessages.slice(0, index).reverse().find(item => item.role === 'user')
+                    const context = (parent?.metadata as { knowledgeContext?: KnowledgeContext } | undefined)?.knowledgeContext
+                    if (context) message = { ...message, metadata: { ...(message.metadata as object), knowledgeContext: context } }
+                  }
+                  const isLastMessage = index === chatMessages.length - 1
+                  const isFirstMessage = index === 0
+                  // A banner error stands in for the failed assistant turn:
+                  // regenerate/reload restarts it from scratch, so hide the
+                  // partial (tool calls, "Worked for Ns") and show only the banner.
+                  if (
+                    isLastMessage &&
+                    !sessionEvents && hasBannerError &&
+                    message.role === 'assistant'
+                  )
+                    return null
+                  return (
+                    <Fragment key={message.id}>
+                      <MessageItem
+                        message={message}
+                        isFirstMessage={isFirstMessage}
+                        isLastMessage={isLastMessage}
+                        highlighted={
+                          sessionEvents &&
+                          anchorSeq !== undefined &&
+                          index === chatMessages.length - 1
+                        }
+                        status={effectiveStatus}
+                        reasoningContainerRef={reasoningContainerRef}
+                        isReasoningAtBottom={isReasoningAtBottom}
+                        onReasoningScroll={handleReasoningScroll}
+                        onReasoningScrollToBottom={forceScrollReasoningToBottom}
+                        onRegenerate={sessionEvents ? runtimeHistory?.regenerate : handleRegenerate}
+                        onContinue={sessionEvents ? runtimeHistory?.continue : handleContinue}
+                        onEdit={sessionEvents ? runtimeHistory?.edit : handleEditMessage}
+                        onDelete={sessionEvents ? runtimeHistory?.remove : handleDeleteMessage}
+                        versionInfo={sessionEvents ? session.versions?.[message.id] : versionInfoById[message.id]}
+                        onSwitchVersion={sessionEvents ? runtimeHistory?.switchVersion : handleSwitchVersion}
+                        isAnimating={!pendingContinueMessage}
+                        hideActions={!!pendingContinueMessage || (sessionEvents && (!session.ready || session.historyBusy || Boolean((message.metadata as Record<string, unknown>)?.compression)))}
+                      />
+                      {SecurityDemoApprovalTimeline ? (
+                        <Suspense fallback={null}>
+                          <SecurityDemoApprovalTimeline
+                            threadId={threadId}
+                            afterMessageId={message.id}
+                          />
+                        </Suspense>
+                      ) : null}
+                    </Fragment>
+                  )
+                }}
+              />
+              {sessionEvents && session.pending.map(input => (
+                <Fragment key={`pending-${input.messageId}`}>
+                  <MessageItem
+                    message={{ id: input.messageId, role: 'user', parts: [{ type: 'text', text: readSessionKnowledge(input.targetId, input.sessionId, input.messageId, input.content)?.question ?? input.content }] }}
+                    isFirstMessage={chatMessages.length === 0}
+                    isLastMessage={false}
+                    status="ready"
+                    hideActions
+                    isAnimating={false}
+                  />
+                  <div className="flex items-center justify-end gap-2 text-xs text-muted-foreground" role="status">
+                    <span>{input.status === 'sending' ? t('chat:inputSending') : input.status === 'unknown' ? t('chat:inputUnknown') : input.status === 'failed' ? t('chat:inputFailed') : t('chat:inputReceived')}</span>
+                    {(input.status === 'unknown' || input.status === 'failed') && (
+                      <Button variant="ghost" size="sm" disabled={!session.ready || session.waiting} onClick={() => void session.send(input.content, input).catch(() => undefined)}>{t('chat:retryAsIs')}</Button>
+                    )}
+                  </div>
+                </Fragment>
+              ))}
+              {(sessionEvents ? session.ready : controllerReady && !controllerError) && (
+                <RuntimePermissionFallback
+                  threadId={threadId}
+                  renderedPermissionKeys={renderedRuntimePermissionKeys}
+                />
+              )}
+              {SecurityDemoApprovalTimeline ? (
+                <Suspense fallback={null}>
+                  <SecurityDemoApprovalTimeline
+                    threadId={threadId}
+                    visibleMessageIds={visibleMessageIds}
+                  />
+                </Suspense>
+              ) : null}
+              {pendingContinueMessage && status === 'submitted' && (
+                <MessageItem
+                  key={`continue-placeholder-${pendingContinueMessage.id}`}
+                  message={pendingContinueMessage}
+                  isFirstMessage={false}
+                  isLastMessage={true}
+                  status={effectiveStatus}
+                  reasoningContainerRef={reasoningContainerRef}
+                  isReasoningAtBottom={isReasoningAtBottom}
+                  onReasoningScroll={handleReasoningScroll}
+                  onReasoningScrollToBottom={forceScrollReasoningToBottom}
+                  onRegenerate={handleRegenerate}
+                  onEdit={handleEditMessage}
+                  onDelete={handleDeleteMessage}
+                  hideActions
+                  isAnimating={false}
+                />
+              )}
+              {processingEmbeddings && (
+                <div className="flex items-start gap-3 px-4 py-3 mx-4 my-2 rounded-lg border border-primary/20 bg-primary/5">
+                  <IconLoader2 className="size-5 text-primary shrink-0 mt-0.5 animate-spin" />
+                  <div className="flex-1">
+                    <p className="text-sm font-medium text-main-view-fg mb-0.5">
+                      {t('chat:embeddings.title')}
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      {t('chat:embeddings.description')}
+                    </p>
+                  </div>
+                </div>
+              )}
+              {!oomError &&
+                !backendError &&
+                !contextLimitError &&
+                (status === CHAT_STATUS.SUBMITTED || showSessionWorking) && (
+                <div className="flex flex-row items-center gap-2">
+                  {pendingContinueMessage && (
+                    <Shimmer duration={1}>{t('chat:growingTheMind')}</Shimmer>
+                  )}
+                  {!pendingContinueMessage && (!lastIsAssistant || showSessionWorking) && (
+                    <PromptProgress />
+                  )}
+                </div>
+              )}
+              {(contextLimitError || oomError || backendError) && (
+                <div className="px-4 py-3 mx-4 my-2 rounded-lg border border-destructive/10 bg-destructive/10">
+                  <div className="flex items-start gap-3">
+                    <IconAlertCircle className="size-5 text-destructive shrink-0 mt-0.5" />
+                    <div className="flex-1">
+                      <p className="text-sm font-medium text-destructive mb-1">
+                        {oomError
+                          ? 'llama.cpp ran out of memory'
+                          : backendError
+                            ? t('chat:backendGgmlError')
+                            : t('chat:contextExhausted')}
+                      </p>
+                      <div className="table table-fixed w-full">
+                        <span
+                          className={
+                            (oomError || backendError
+                              ? 'text-xs font-mono'
+                              : 'text-sm') +
+                            ' text-muted-foreground table-cell align-middle'
+                          }
+                          style={{ wordWrap: 'break-word' }}
+                        >
+                          {oomError ?? backendError ?? contextBannerMessage}
+                        </span>
+                      </div>
+                      {oomError && (
+                        <ul className="mt-2 list-disc pl-5 text-xs text-muted-foreground space-y-0.5">
+                          <li>{t('chat:overflow.reduceContextSize')}</li>
+                          <li>{t('chat:overflow.disableMtp')}</li>
+                          <li>{t('chat:overflow.lowerGpuLayers')}</li>
+                          <li>{t('chat:overflow.useSmallerModel')}</li>
+                        </ul>
+                      )}
+                      {((error ?? contextLimitError)?.message
+                        ?.toLowerCase()
+                        .includes('context') &&
+                        ((error ?? contextLimitError)?.message
+                          ?.toLowerCase()
+                          .includes('size') ||
+                          (error ?? contextLimitError)?.message
+                            ?.toLowerCase()
+                            .includes('length') ||
+                          (error ?? contextLimitError)?.message
+                            ?.toLowerCase()
+                            .includes('limit'))) ||
+                      (error ?? contextLimitError)?.message ===
+                        OUT_OF_CONTEXT_SIZE ? (
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="mt-3"
+                          onClick={handleContextSizeIncrease}
+                        >
+                          <IconAlertCircle className="size-4 mr-2" />
+                          {t('common:outOfContextError.increaseContextSize')}
+                        </Button>
+                      ) : (
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="mt-3"
+                          onClick={() => handleRegenerate()}
+                        >
+                          <IconRefresh className="size-4 mr-2" />
+                          {oomError || backendError ? t('chat:reload') : t('common:regenerate')}
+                        </Button>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              )}
+            </ConversationContent>
+            <ConversationScrollButton />
+          </Conversation>
+        </div>
+
+        {/* Chat Input - Fixed at bottom */}
+        <div className="py-4 mx-auto w-full md:w-4/5 xl:w-4/6">
+          {sessionEvents && session.error && (
+            <div role="alert" className="rounded-lg border border-destructive/20 bg-destructive/10 px-4 py-3 text-sm text-destructive">
+              {session.error}
+              {session.pendingHistory && historyOperations && (
+                <Button variant="outline" size="sm" disabled={!session.ready || session.historyBusy}
+                  onClick={() => { void session.retryHistory().catch(() => undefined) }}>{t('chat:retryOriginalAction')}</Button>
+              )}
+              <Button variant="outline" size="sm" onClick={session.retry}>{t('chat:retryReadSession')}</Button>
+            </div>
+          )}
+          {!sessionEvents && controllerError ? (
+            <div
+              role="alert"
+              className="rounded-lg border border-destructive/20 bg-destructive/10 px-4 py-3 text-sm text-destructive"
+            >
+              {controllerError.startsWith('controller_busy:')
+                ? t('chat:controllerBusy')
+                : t('chat:controllerFailed')}
+              <div className="mt-1 text-xs text-muted-foreground">
+                {describeRuntimeCommandError(controllerError)}
+              </div>
+              <Button
+                variant="outline"
+                size="sm"
+                className="mt-3"
+                onClick={() => setControllerAttempt((attempt) => attempt + 1)}
+              >
+                <IconRefresh className="mr-2 size-4" />
+                {t('chat:retryControl')}
+              </Button>
+            </div>
+          ) : (sessionEvents ? !session.ready && !session.halted : !controllerReady) ? (
+            <div
+              role="status"
+              className="flex items-center justify-center gap-2 px-4 py-3 text-sm text-muted-foreground"
+            >
+              <IconLoader2 className="size-4 animate-spin" />
+              {sessionEvents ? t('chat:readingSession') : t('chat:connectingWorkspace')}
+            </div>
+          ) : sessionEvents && session.halted ? (
+            <div
+              role="status"
+              className="px-4 py-3 text-sm text-muted-foreground"
+            >
+              {t('chat:sessionReadHalted')}
+            </div>
+          ) : (
+            isVoiceOverlay ? (
+              <VoiceComposer busy={effectiveStatus === 'streaming' || effectiveStatus === 'submitted'} waiting={sessionEvents && session.waiting} onStop={handleStop}>
+                <ChatInput surface="overlay" model={threadModel} onSubmit={handleSubmit} onStop={handleStop} chatStatus={effectiveStatus} />
+              </VoiceComposer>
+            ) : (
+              <ChatInput model={threadModel} onSubmit={handleSubmit} onStop={handleStop} chatStatus={effectiveStatus} />
+            )
+          )}
+        </div>
+      </div>
+    </div>
+  )
+}

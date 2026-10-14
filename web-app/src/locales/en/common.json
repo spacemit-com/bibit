@@ -1,0 +1,1048 @@
+{
+  "htmlArtifact": {
+    "code": "Code",
+    "preview": "Preview",
+    "previewStreaming": "Available when generation finishes"
+  },
+  "assistants": "Assistants",
+  "hardware": "Hardware",
+  "mcp-servers": "MCP Servers",
+  "small": "Small",
+  "large": "Large",
+  "extraLarge": "Extra Large",
+  "unnamedAssistant": "Unnamed Assistant",
+  "deleted": "(deleted)",
+  "toolExecutionFailed": "Tool execution failed",
+  "uploadedAttachment": "Uploaded attachment",
+  "generatedImage": "Generated image",
+  "more": "More",
+  "menu": "Menu",
+  "none": "None",
+  "deleteMessageConfirm": "Are you sure you want to delete this message? This action cannot be undone.",
+  "sliderMaxAllowed": "Maximum value allowed is",
+  "performanceEstimateHint": "Estimated from file size and your hardware. Actual performance depends on quantization and context length.",
+  "downloadProgressEmpty": "Your download progress will appear here",
+  "providerLogoAlt": "{{provider}} logo",
+  "samplingDropped": "Sampling parameters dropped",
+  "samplingDroppedDescription": "{{reason}} — request retried without your sampling overrides. Adjust in the Sampling popover.",
+  "ingestImageFailed": "Failed to ingest image attachment",
+  "indexAttachmentsFailed": "Failed to index attachments",
+  "janBrowserMcp": {
+    "enabled": "Jan Browser MCP enabled",
+    "disabled": "Jan Browser MCP disabled",
+    "visionUnsupported": "Jan Browser MCP disabled — the model does not support vision.",
+    "notFound": "Jan Browser MCP not found",
+    "notFoundDescription": "Please check your MCP server configuration"
+  },
+  "local_api_server": "Local API Server",
+  "remote_access": "Remote Access",
+  "integrations": "Integrations",
+  "experimental": "Experimental",
+  "claude_code": "Claude Code",
+  "https_proxy": "HTTPS Proxy",
+  "web_search": "Web Search",
+  "extensions": "Extensions",
+  "attachments": "Attachments",
+  "general": "General",
+  "settings": "Settings",
+  "modelProviders": "Model Providers",
+  "localProviders": "Local",
+  "remoteProviders": "Remote",
+  "manageProviders": "Manage providers",
+  "hiddenProviders": "{{count}} disabled",
+  "hideProvider": "Hide provider",
+  "showProvider": "Show provider",
+  "interface": "Interface",
+  "appearance": "Appearance",
+  "privacy": "Privacy",
+  "keyboardShortcuts": "Shortcuts",
+  "newChat": "New Chat",
+  "newAgentChat": "New Agent Chat",
+  "chats": "Chats",
+  "favorites": "Favorites",
+  "recents": "Recents",
+  "helpSupport": "Help & Support",
+  "unstarAll": "Unstar All",
+  "unstar": "Unstar",
+  "deleteAll": "Delete All",
+  "star": "Star",
+  "rename": "Rename",
+  "delete": "Delete",
+  "copied": "Copied!",
+  "dataFolder": "Data Folder",
+  "others": "Other",
+  "language": "Language",
+  "login": "Log In",
+  "loginWith": "Log In With {{provider}}",
+  "loginFailed": "Failed To Log In",
+  "logout": "Log Out",
+  "loggingOut": "Logging Out...",
+  "loggedOut": "Successfully Logged Out",
+  "logoutFailed": "Failed To Log Out",
+  "profile": "Profile",
+  "reset": "Reset",
+  "search": "Search",
+  "searchThreads": "Search threads...",
+  "searchGroupTitles": "Sessions",
+  "searchGroupMessages": "Message matches",
+  "searchingContent": "Searching message content…",
+  "searchRoleUser": "You",
+  "searchRoleAssistant": "Assistant",
+  "toNavigate": "to navigate",
+  "toSelect": "to select",
+  "toClose": "to close",
+  "clearRecent": "Clear",
+  "name": "Name",
+  "cancel": "Cancel",
+  "dismiss": "Dismiss",
+  "create": "Create",
+  "save": "Save",
+  "edit": "Edit",
+  "copy": "Copy",
+  "back": "Back",
+  "close": "Close",
+  "done": "Done",
+  "next": "Next",
+  "finish": "Finish",
+  "skip": "Skip",
+  "allow": "Allow",
+  "deny": "Deny",
+  "start": "Start",
+  "stop": "Stop",
+  "preview": "Preview",
+  "compactWidth": "Compact Width",
+  "fullWidth": "Full Width",
+  "dark": "Dark",
+  "light": "Light",
+  "system": "System",
+  "auto": "Auto",
+  "english": "English",
+  "medium": "Medium",
+  "newThread": "New Thread",
+  "noResultsFound": "No results found",
+  "noThreadsYet": "No threads yet",
+  "noThreadsYetDesc": "Start a new conversation to see your thread history here.",
+  "downloads": "Downloads",
+  "downloading": "Downloading",
+  "downloadingEllipsis": "Downloading...",
+  "initializingDownload": "Initializing download...",
+  "paused": "Paused",
+  "uploadingAttachments": "Uploading attachments…",
+  "cancelDownload": "Cancel download",
+  "downloadCancelled": "Download Cancelled",
+  "downloadComplete": "Download Complete",
+  "thinking": "Thinking...",
+  "thought": "Thought",
+  "callingTool": "Calling tool",
+  "completed": "Completed",
+  "image": "Image",
+  "vision": "Vision",
+  "multimodal": "Multimodal",
+  "embeddings": "Embeddings",
+  "tools": "Tools",
+  "webSearch": "Web Search",
+  "reasoning": "Reasoning",
+  "proactive": "Proactive",
+  "selectAModel": "Select a model",
+  "noToolsAvailable": "No tools available",
+  "noModelsFoundFor": "No models found for \"{{searchValue}}\"",
+  "failedToLoadModels": "Failed to load models",
+  "noModels": "No models found",
+  "noAssistant": "No assistant",
+  "customAvatar": "Custom avatar",
+  "editAssistant": "Edit Assistant",
+  "jan": "BiBit",
+  "metadata": "Metadata",
+  "regenerate": "Regenerate",
+  "threadImage": "Thread image",
+  "editMessage": "Edit Message",
+  "deleteMessage": "Delete Message",
+  "deleteThread": "Delete Thread",
+  "renameThread": "Rename Thread",
+  "threadTitle": "Thread Title",
+  "deleteAllThreads": "Delete All Threads",
+  "allThreadsUnfavorited": "All Threads Unfavorited",
+  "deleteAllThreadsConfirm": "Are you sure you want to delete all threads? This action cannot be undone.",
+  "addProvider": "Add Provider",
+  "addOpenAIProvider": "Add OpenAI Provider",
+  "enterNameForProvider": "Enter a name for your provider",
+  "providerAlreadyExists": "Provider with name \"{{name}}\" already exists. Please choose a different name.",
+  "adjustFontSize": "Adjust Font Size",
+  "changeLanguage": "Change Language",
+  "editTheme": "Edit Theme",
+  "editCodeBlockStyle": "Edit Code Block Style",
+  "editServerHost": "Edit Server Host",
+  "pickColorWindowBackground": "Pick Color Window Background",
+  "pickColorAppMainView": "Pick Color App Main View",
+  "pickColorAppPrimary": "Pick Color App Primary",
+  "pickColorAppAccent": "Pick Color App Accent",
+  "pickColorAppDestructive": "Pick Color App Destructive",
+  "apiKeyRequired": "API Key is required",
+  "enterTrustedHosts": "Enter trusted hosts",
+  "placeholder": {
+    "chatInput": "Ask me anything..."
+  },
+  "confirm": "Confirm",
+  "continue": "Continue",
+  "loading": "Loading...",
+  "settingUpJan": "Booting up BiBit…",
+  "registeringExtensions": "Registering extensions…",
+  "loadingExtensions": "Loading extensions… ({{done}}/{{total}})",
+  "error": "Error",
+  "success": "Success",
+  "warning": "Warning",
+  "conversationNotAvailable": "Conversation not available",
+  "conversationNotAvailableDescription": "The conversation you are trying to access is not available or has been deleted.",
+  "temporaryChat": "Temporary Chat",
+  "temporaryChatTooltip": "Temporary chat won't appear in your history",
+  "noResultsFoundDesc": "We couldn't find any chats matching your search. Try a different keyword.",
+  "searchModels": "Search models...",
+  "searchStyles": "Search styles...",
+  "createAssistant": "Create Assistant",
+  "enterApiKey": "Enter API Key",
+  "scrollToBottom": "Scroll to bottom",
+  "generateAiResponse": "Generate AI Response",
+  "continueAiResponse": "Continue with AI Response",
+  "addModel": {
+    "title": "Add Model",
+    "modelId": "Model ID",
+    "enterModelId": "Enter Model ID",
+    "addModel": "Add Model",
+    "description": "Add a new model to the provider",
+    "exploreModels": "See model list from provider"
+  },
+  "mcpServers": {
+    "editServer": "Edit Server",
+    "addServer": "Add Server",
+    "serverName": "Server Name",
+    "enterServerName": "Enter server name",
+    "command": "Command",
+    "enterCommand": "Enter command",
+    "arguments": "Arguments",
+    "argument": "Argument {{index}}",
+    "envVars": "Environment Variables",
+    "key": "Key",
+    "value": "Value",
+    "save": "Save",
+    "addByJson": "Add server by JSON",
+    "urlPlaceholder": "Enter URL",
+    "headers": "Headers",
+    "headerNamePlaceholder": "Header name",
+    "headerValuePlaceholder": "Header value",
+    "timeoutPlaceholder": "Enter timeout in seconds",
+    "transportType": "Transport Type",
+    "stdio": "STDIO",
+    "timeoutLabel": "Timeout (seconds)"
+  },
+  "deleteServer": {
+    "title": "Delete Server",
+    "delete": "Delete"
+  },
+  "editJson": {
+    "errorParse": "Failed to parse JSON",
+    "errorPaste": "Failed to paste JSON",
+    "errorFormat": "Invalid JSON format",
+    "titleAll": "Edit All Servers Configuration",
+    "placeholder": "Enter JSON configuration...",
+    "save": "Save"
+  },
+  "editModel": {
+    "title": "Edit Model: {{modelId}}",
+    "description": "Configure model capabilities by toggling the options below.",
+    "capabilities": "Capabilities",
+    "tools": "Tools",
+    "vision": "Vision",
+    "embeddings": "Embeddings",
+    "notAvailable": "Not available yet"
+  },
+  "outOfContextError": {
+    "truncateInput": "Truncate Input",
+    "title": "Out of context error",
+    "description": "This chat is reaching the AI's memory limit, like a whiteboard filling up. We can expand the memory window (called context size) so it remembers more, but it may use more of your computer's memory. We can also truncate the input, which means it will forget some of the chat history to make room for new messages.",
+    "increaseContextSizeDescription": "Do you want to increase the context size?",
+    "increaseContextSize": "Increase Context Size"
+  },
+  "toolApproval": {
+    "title": "Tool Permission Request",
+    "description": "The assistant wants to use <strong>{{toolName}}</strong>",
+    "securityNotice": "Only allow tools you trust. Tools can access your system and data.",
+    "deny": "Deny",
+    "allowOnce": "Allow Once",
+    "alwaysAllow": "Always Allow"
+  },
+  "deleteModel": {
+    "title": "Delete Model: {{modelId}}",
+    "description": "Are you sure you want to delete this model? This action cannot be undone.",
+    "success": "Model {{modelId}} has been permanently deleted.",
+    "cancel": "Cancel",
+    "delete": "Delete"
+  },
+  "deleteProvider": {
+    "title": "Delete Provider",
+    "description": "Delete this provider and all its models. This action cannot be undone.",
+    "success": "Provider {{provider}} has been permanently deleted.",
+    "confirmTitle": "Delete Provider: {{provider}}",
+    "confirmDescription": "Are you sure you want to delete this provider? This action cannot be undone.",
+    "cancel": "Cancel",
+    "delete": "Delete"
+  },
+  "modelSettings": {
+    "title": "Model Settings - {{modelId}}",
+    "description": "Configure model settings to optimize performance and behavior.",
+    "nglDisabledByFit": "Auto-fit is choosing GPU layers. Turn off Auto-fit to set this manually.",
+    "samplingDefaults": {
+      "title": "Default sampling parameters",
+      "description": "Default sampler settings for this model. Used unless overridden by per-assistant or per-request values."
+    },
+    "mtp": {
+      "section": "Multi-Token Prediction (MTP)",
+      "enable": "Enable MTP",
+      "enableDescription": "Use the model's built-in MTP heads to draft multiple tokens per step. Speeds up generation when the model has MTP weights (DeepSeek-V3, GLM-4.5/4.6, MiMo v2.5, …).",
+      "needsUpgrade": "Update the llama.cpp backend to build b9193 or newer to enable MTP.",
+      "nMax": "Max draft tokens",
+      "nMaxDescription": "Maximum number of tokens to draft per step. Default 16.",
+      "nMin": "Min draft tokens",
+      "nMinDescription": "Minimum number of tokens to draft per step. Default 0.",
+      "pMin": "Min draft probability",
+      "pMinDescription": "Minimum probability for greedy drafting (0–1). Default 0.75."
+    },
+    "templateKwargs": {
+      "section": "Chat template options",
+      "description": "Extra options this model's chat template accepts. Sent as chat_template_kwargs on each request; leave a value at its default to let the template decide.",
+      "addCustom": "Add custom option",
+      "keyPlaceholder": "name",
+      "valuePlaceholder": "value",
+      "add": "Add",
+      "cancel": "Cancel",
+      "remove": "Remove"
+    }
+  },
+  "dialogs": {
+    "changeDataFolder": {
+      "title": "Change Data Folder Location",
+      "description": "Are you sure you want to change the data folder location? This will move all your data to the new location and restart the application.",
+      "currentLocation": "Current Location:",
+      "newLocation": "New Location:",
+      "cancel": "Cancel",
+      "changeLocation": "Change Location"
+    },
+    "deleteAllThreads": {
+      "title": "Delete All Threads",
+      "description": "All threads will be deleted. This action cannot be undone."
+    },
+    "deleteThread": {
+      "description": "Are you sure you want to delete this thread? This action cannot be undone."
+    },
+    "editMessage": {
+      "title": "Edit Message"
+    },
+    "messageMetadata": {
+      "title": "Message Metadata"
+    }
+  },
+  "errorDialog": {
+    "titleFallback": "Something went wrong",
+    "details": "Details"
+  },
+  "missingDependenciesDialog": {
+    "title": "Missing System Libraries",
+    "description": "The {{backend}} was installed but some required system libraries could not be found. It may fall back to CPU or not run correctly.",
+    "installLabel": "To fix this, install the following:",
+    "download": "Download",
+    "additionalLibraries": "Additional missing libraries:",
+    "missingLibraries": "Missing libraries:",
+    "showRawLibraries": "Show {{count}} missing library names"
+  },
+  "attachmentsIngestion": {
+    "title": "Choose how to ingest attachments",
+    "description": "Choose whether to include these files directly in the chat or index them as embeddings instead.",
+    "inline": "Inject into chat",
+    "embeddings": "Use embeddings"
+  },
+  "attachmentInjectedIndicator": "Injected into chat",
+  "attachmentEmbeddedIndicator": "Embedded for RAG",
+  "viewInjectedContent": "View injected content",
+  "injectedContentTitle": "Injected file content",
+  "toast": {
+    "allThreadsUnfavorited": {
+      "title": "All Threads Unfavorited",
+      "description": "All threads have been removed from your favorites."
+    },
+    "deleteAllThreads": {
+      "title": "Delete All Threads",
+      "description": "All threads have been permanently deleted."
+    },
+    "renameThread": {
+      "title": "Rename Thread",
+      "description": "Thread title has been renamed to '{{title}}'"
+    },
+    "deleteThread": {
+      "title": "Delete Thread",
+      "description": "This thread has been permanently deleted."
+    },
+    "errorCopied": {
+      "title": "Copy successful",
+      "description": "Error information copied to clipboard"
+    },
+    "errorCopyFailed": {
+      "title": "Failed to copy",
+      "description": "Failed to copy error information to clipboard"
+    },
+    "editMessage": {
+      "title": "Edit Message",
+      "description": "Message edited successfully. Please wait for the model to respond."
+    },
+    "downloadComplete": {
+      "title": "Download Complete",
+      "description": "{{item}} has been downloaded"
+    },
+    "downloadCancelled": {
+      "title": "Download Cancelled",
+      "description": "The download process was cancelled"
+    },
+    "downloadFailed": {
+      "title": "Download Failed",
+      "description": "{{item}} download failed"
+    },
+    "modelValidationStarted": {
+      "title": "Validating Model",
+      "description": "Downloaded model \"{{modelId}}\" successfully. Verifying integrity..."
+    },
+    "modelValidationFailed": {
+      "title": "Model Validation Failed",
+      "description": "The downloaded model \"{{modelId}}\" failed integrity verification and was removed. The file may be corrupted or tampered with."
+    },
+    "downloadAndVerificationComplete": {
+      "title": "Download Complete",
+      "description": "Model \"{{item}}\" downloaded and verified successfully"
+    },
+    "fileUploaded": {
+      "title": "File Processed",
+      "description": "File has been processed and indexed successfully"
+    },
+    "uploadFailed": {
+      "title": "Processing Failed",
+      "description": "Failed to process file",
+      "subjectThisFile": "This file",
+      "pdfMalformedXref": "{{subject}} has a malformed PDF cross-reference table and could not be parsed. Try opening it in a PDF viewer and re-saving it (File → Print → Save as PDF), then upload again.",
+      "pdfScanned": "{{subject}} appears to be a scanned or image-based PDF. OCR isn't supported yet — please upload a text-based PDF.",
+      "pdfEncrypted": "{{subject}} is password-protected. Remove the password and try again.",
+      "pdfUnsupportedFeature": "{{subject}} uses a PDF feature BiBit can't parse yet (e.g. PostScript color/shading functions). Try re-saving it (File → Print → Save as PDF) to flatten it, then upload again.",
+      "pdfGeneric": "{{subject}} could not be parsed as a PDF. The file may be corrupted or uses an unsupported PDF feature.",
+      "fileTooLarge": "{{subject}} is too large. {{message}}.",
+      "unsupportedType": "File type \"{{type}}\" is not supported.",
+      "ioError": "Could not read {{subject}}: {{message}}",
+      "parseGeneric": "{{subject}} could not be parsed: {{message}}",
+      "fallback": "Failed to process {{subject}}."
+    },
+    "deleteFailed": {
+      "title": "Delete Failed",
+      "description": "Failed to delete file"
+    },
+    "attachmentsDisabledInfo": {
+      "title": "Attachments Disabled",
+      "description": "Attachments are disabled in Settings"
+    },
+    "fileProcessed": {
+      "title": "File processed successfully"
+    }
+  },
+  "errors": {
+    "fileTooLarge": "File too large",
+    "fileTooLargeDescription": "{{fileName}} exceeds the {{maxFileSizeMB}}MB limit"
+  },
+  "files": {
+    "chunksCount": "{{count}} chunks"
+  },
+  "llamacppBusyOnExit": {
+    "title": "llama.cpp is still busy",
+    "description": "One or more models did not unload in time. Force-quitting will terminate llama.cpp and may interrupt active responses.",
+    "forceQuit": "Force quit",
+    "forcing": "Force quitting…",
+    "shuttingDown": "Shutting down…"
+  },
+  "features": "Features",
+  "goBack": "Go back",
+  "modelSleeping": "Model sleeping",
+  "visionInputSupported": "Vision input supported",
+  "audioInputSupported": "Audio input supported",
+  "addImages": "Add Images",
+  "addAudio": "Add Audio",
+  "addVideo": "Add Video",
+  "resumeDownload": "Resume download",
+  "pauseDownload": "Pause download",
+  "customCliCommandPlaceholder": "Enter custom CLI command",
+  "featureUnavailable": "Feature unavailable",
+  "loadingFeature": "Loading Feature",
+  "featureEntryUnavailable": "This entry could not load",
+  "featureEntryUnavailableDetail": "The plugin did not provide a renderer for {{entry}}. Update the plugin and try again.",
+  "moreOptions": "More options",
+  "samplingParameters": "Sampling parameters",
+  "openAssistantSettings": "Open assistant settings",
+  "recommendedModel": "Recommended model",
+  "logoAlt": "BiBit Logo",
+  "toolOutput": "Tool output",
+  "refreshModels": "Refresh models",
+  "viewOnHuggingFace": "View on HuggingFace",
+  "enterDisplayName": "Enter display name",
+  "securityConfig": {
+    "currentStatus": "Current Status",
+    "fieldUser": "User:",
+    "fieldApproved": "Approved:",
+    "fieldLast": "Last:",
+    "fieldIp": "IP:",
+    "fieldDevice": "Device:",
+    "tokenWarning": "Save this token now. It cannot be retrieved later. You will need to generate a new one if lost.",
+    "authMode": "Auth Mode:",
+    "hasToken": "Has Token:",
+    "hasPassword": "Has Password:",
+    "recentFailures": "Recent Failures:",
+    "accessToken": "Access Token",
+    "setPassword": "Set Password",
+    "enterPassword": "Enter password",
+    "confirmPassword": "Confirm password",
+    "passwordsDoNotMatch": "Passwords do not match",
+    "requireDevicePairing": "Require Device Pairing",
+    "approvedDevices": "Approved Devices",
+    "noApprovedDevices": "No approved devices",
+    "recentAccessLogs": "Recent Access Logs",
+    "noAccessLogs": "No access logs",
+    "title": "Security Settings",
+    "devices": "Devices",
+    "authModeTitle": "Authentication Mode",
+    "tokenItem": "Token",
+    "tokenDesc": "Require a secret token for API access",
+    "passwordItem": "Password",
+    "passwordDesc": "Require a password for access",
+    "noneItem": "None",
+    "noneDesc": "No authentication required (not recommended)",
+    "generating": "Generating...",
+    "generateToken": "Generate New Token",
+    "passwordTooShort": "Password must be at least 8 characters",
+    "setting": "Setting...",
+    "devicesHint": "Devices must be approved before they can access",
+    "description": "Configure authentication, device management, and view access logs",
+    "logsTab": "Logs",
+    "toast": {
+      "loadSettingsFailed": "Failed to load security settings",
+      "loadDevicesFailed": "Failed to load devices",
+      "loadAccessLogsFailed": "Failed to load access logs",
+      "changeAuthModeFailed": "Failed to change authentication mode",
+      "tokenGenerated": "New access token generated",
+      "generateTokenFailed": "Failed to generate token",
+      "tokenCopied": "Token copied to clipboard",
+      "copyTokenFailed": "Failed to copy token",
+      "passwordSet": "Password set successfully",
+      "setPasswordFailed": "Failed to set password",
+      "updatePairingFailed": "Failed to update pairing setting",
+      "pairingRequired": "Device pairing required",
+      "pairingDisabled": "Device pairing disabled",
+      "deviceRevoked": "Device access revoked",
+      "revokeDeviceFailed": "Failed to revoke device access",
+      "logsCleared": "Access logs cleared",
+      "clearLogsFailed": "Failed to clear logs"
+    },
+    "noTokenConfigured": "No token configured. Generate one to enable token authentication.",
+    "enterNewPassword": "Enter a new password to replace the existing one.",
+    "setPasswordToEnable": "Set a password to enable password authentication.",
+    "confirm": {
+      "revokeTitle": "Revoke Device Access",
+      "revokeDescription": "Are you sure you want to revoke access for this device? The device will need to be approved again to access.",
+      "revokeConfirm": "Revoke",
+      "clearLogsTitle": "Clear Access Logs",
+      "clearLogsDescription": "Are you sure you want to clear all access logs? This action cannot be undone.",
+      "clearLogsConfirm": "Clear Logs",
+      "changeAuthModeTitle": "Change Authentication Mode",
+      "changeAuthModeDescription": "Changing the authentication mode will affect how clients access your BiBit instance. Are you sure you want to continue?"
+    }
+  },
+  "tokenSpeedDetails": "Token speed details",
+  "generation": "Generation",
+  "reading": "Reading",
+  "tokens": "Tokens",
+  "importModel": {
+    "multimodalSupport": "Multimodal Support",
+    "draftModelSupport": "Draft Model Support",
+    "mmprojFile": "MMPROJ File",
+    "draftModelFile": "Draft Model File (GGUF)",
+    "title": "Import Model",
+    "savedAs": "Model will be saved as:",
+    "modelFile": "Model File (GGUF)",
+    "required": "Required",
+    "validationError": "Model Validation Error",
+    "validatingModel": "Validating model file...",
+    "embeddingDetected": "Embedding model detected",
+    "description": "Import a GGUF model file to add it to your collection. Enable multimodal support to attach an mmproj for image or audio input, or draft model support for speculative decoding. Embedding models are detected automatically.",
+    "multimodalDescription": "Enable if your model uses an mmproj for image or audio input. Modalities are detected from the projector file.",
+    "embeddingOnlyDescription": "This model will be imported for embeddings only. Multimodal options are disabled.",
+    "selectGguf": "Select GGUF File",
+    "requiredForMultimodal": "Required for Multimodal",
+    "detected": "Detected:",
+    "mmprojValidationError": "MMProj Validation Error",
+    "validatingMmproj": "Validating MMProj file...",
+    "selectMmproj": "Select MMPROJ File",
+    "requiredForDraft": "Required for Draft Model",
+    "draftValidationError": "Draft Model Validation Error",
+    "validatingDraft": "Validating draft model file...",
+    "selectDraftGguf": "Select Draft GGUF File",
+    "clipModelUnsupported": "This model has CLIP architecture and cannot be imported as a text generation model. CLIP models are designed for vision tasks and require different handling.",
+    "clipDraftUnsupported": "This file has CLIP architecture and cannot be used as a draft model.",
+    "readMetadataFailed": "Failed to read {{type}} metadata: {{message}}",
+    "unknownError": "Unknown error",
+    "selectModelFile": "Please select a model file",
+    "selectBothFiles": "Please select both model and MMPROJ files for multimodal models",
+    "selectDraftFile": "Please select a draft model file",
+    "nameUnknown": "Unable to determine model name from file",
+    "alreadyExistsDescription": "{{name}} already imported",
+    "imported": "Model imported successfully",
+    "importedDescription": "{{name}} has been imported",
+    "importFailed": "Failed to import model",
+    "unknownErrorOccurred": "Unknown error occurred",
+    "tokenizerTypeMismatch": "tokenizer type \"{{draft}}\" does not match the main model's tokenizer type \"{{main}}\"",
+    "bosTokenMismatch": "BOS token id {{draft}} does not match the main model's BOS token id {{main}}",
+    "eosTokenMismatch": "EOS token id {{draft}} does not match the main model's EOS token id {{main}}",
+    "vocabSizeMismatch": "vocab size {{draft}} differs from the main model's vocab size {{main}} by more than {{threshold}} tokens",
+    "draftNotCompatible": "Draft model is not compatible with the main model: {{mismatch}}.",
+    "draftValidationFailed": "Draft model validation failed",
+    "mmprojArchitectureMismatch": "This MMProj file has \"{{architecture}}\" architecture but should have \"clip\" architecture. MMProj files must be CLIP models for vision or audio processing."
+  },
+  "exportTable": "Export table",
+  "export": "Export",
+  "dragWindow": "Drag window",
+  "windowDragArea": "Window drag area",
+  "paramStrippedOnSend": "Not supported — will be stripped on send",
+  "paramMayBeIgnored": "May be ignored by this provider",
+  "decrement": "Decrement",
+  "increment": "Increment",
+  "featureNotAvailable": "Feature Not Available",
+  "noAssistantsAvailable": "No assistants available",
+  "runtimeBackend": "Runtime backend",
+  "errorLabel": "Error:",
+  "clickToEdit": "Click to edit",
+  "toggleFavorite": "Toggle favorite",
+  "loadingModel": "Loading model...",
+  "copyAsMarkdown": "Copy as Markdown",
+  "copyAsCsv": "Copy as CSV",
+  "downloadMd": "Download .md",
+  "downloadCsv": "Download .csv",
+  "diagramError": "Diagram error detected",
+  "contextWindow": "Context window",
+  "tokenUsage": "Token usage",
+  "apply": "Apply",
+  "importing": "Importing...",
+  "deviceCompatibility": "Device compatibility",
+  "later": "Later",
+  "noTunableParameters": "No tunable parameters for this provider.",
+  "addParameter": "Add parameter",
+  "availableTools": "Available Tools",
+  "allTools": "All Tools",
+  "resetAll": "Reset all",
+  "pickAssistantForSampling": "Pick an assistant above to configure sampling.",
+  "unexpectedError": "Oops! Unexpected error occurred.",
+  "displayName": "Display Name",
+  "saving": "Saving...",
+  "change": "Change",
+  "conversationContributionUnavailable": "Conversation contribution unavailable",
+  "loadingConversationContribution": "Loading conversation contribution",
+  "featureLoadFailed": "Feature could not be loaded",
+  "audio": "Audio",
+  "unavailable": "Unavailable",
+  "yes": "Yes",
+  "no": "No",
+  "statusPopup": {
+    "handoffInputBusy": "Handing off input, please try again shortly",
+    "waitAttachments": "Wait for attachments to finish processing before opening the main window",
+    "inputChangedDuringHandoff": "Input changed during handoff; the overlay was kept. Open the main window again.",
+    "running": "Running",
+    "streaming": "Streaming",
+    "pinned": "Pinned",
+    "submitBusy": "Submitting input; start a new conversation shortly",
+    "pendingWork": "A local task is still running or input is pending; finish it before starting a new conversation",
+    "clearDraftFirst": "Send or clear the current draft and attachments first",
+    "runtimeSwitched": "The Runtime has changed; cannot continue the previous conversation",
+    "continueLast": "Continue last",
+    "selectSession": "Select conversation",
+    "unpin": "Unpin",
+    "pinWindow": "Pin window",
+    "openMainWindow": "Open main window",
+    "minimizeQuickChat": "Minimize quick chat",
+    "closeInputPopup": "Close input popup",
+    "hideQuickChat": "Hide quick chat",
+    "openQuickChat": "Open quick chat"
+  },
+  "missingDependencies": {
+    "backend": {
+      "cuda13": "NVIDIA CUDA 13 Backend",
+      "cuda12": "NVIDIA CUDA 12 Backend",
+      "cuda11": "NVIDIA CUDA 11 Backend",
+      "cuda": "NVIDIA CUDA Backend",
+      "vulkan": "Vulkan Backend",
+      "metal": "Apple Metal Backend",
+      "cpu": "CPU Backend"
+    },
+    "redownloadBackend": {
+      "label": "Re-download the backend",
+      "description": "Some core backend files are missing or corrupted — this usually means the download was interrupted or the archive was only partially extracted. Delete the backend and re-download it from BiBit settings."
+    },
+    "nccl": {
+      "label": "NVIDIA NCCL",
+      "description": "Install NCCL via the NVIDIA package repository. On Debian/Ubuntu: sudo apt install libnccl2 libnccl-dev. See the NVIDIA NCCL install guide for your distro."
+    },
+    "cudnn": {
+      "label": "NVIDIA cuDNN",
+      "description": "Install cuDNN via the NVIDIA package repository or download the tarball and copy libs to /usr/local/cuda/lib64."
+    },
+    "vulkan": {
+      "label": "Vulkan Runtime",
+      "description": "Install the Vulkan loader: on Ubuntu/Debian: sudo apt install libvulkan1. On Arch: sudo pacman -S vulkan-icd-loader. On RHEL/Fedora: sudo dnf install vulkan-loader."
+    }
+  },
+  "install": "Install",
+  "uninstall": "Uninstall",
+  "downloadErrors": {
+    "hfTokenRequired": "Hugging Face token required",
+    "hfTokenRequiredDescription": "This model requires a Hugging Face access token. Add your token in Settings and retry.",
+    "acceptLicense": "Accept model license on Hugging Face",
+    "acceptLicenseDescription": "You must accept the model’s license on its Hugging Face page before downloading.",
+    "rateLimited": "Rate limited by Hugging Face",
+    "rateLimitedDescription": "You have been rate-limited. Adding a token can increase rate limits. Please try again later."
+  },
+  "openSettings": "Open Settings",
+  "fileCategory": {
+    "documentsAndCode": "Documents & Code",
+    "allFiles": "All Files"
+  },
+  "tokenPrompt": "Prompt",
+  "tokenCompletion": "Completion",
+  "tokenUsed": "Used",
+  "tokenRemaining": "Remaining",
+  "configuredCtxLen": "Configured ctx_len: {{value}}",
+  "runtimeStatus": {
+    "disconnected": "{{name}} disconnected",
+    "checking": "Checking {{name}}",
+    "starting": "Starting {{name}}",
+    "connected": "{{name}} connected",
+    "failed": "{{name}} connection failed"
+  },
+  "runtimeSwitchConfirmKeepSession": "The current server-side task keeps running in the background after switching; return to resume the conversation and approvals. Switch to {{name}}?",
+  "runtimeSwitchConfirmInterrupt": "Switching Runtime ends the current run and interrupts pending approvals. Switch to {{name}}?",
+  "runtimeUnavailableOption": " (unavailable)",
+  "runtimeRetryConnection": "Reconnect {{name}}",
+  "fittedTo": "Fitted to {{value}}",
+  "awaitingApprovalInMainWindow": "Awaiting approval in the main window",
+  "openMainWindow": "Open main window",
+  "permissionPresenterUnavailable": "The approval UI is unavailable; the Runtime will deny the request after {{time}}.",
+  "fitTier": {
+    "fits": "Fits",
+    "fitsDetail": "Should run comfortably on your device",
+    "mayBeSlow": "May be slow",
+    "mayBeSlowDetail": "Will run but leaves little memory headroom",
+    "wontFit": "Won't fit",
+    "wontFitDetail": "Likely exceeds your available memory",
+    "unknown": "Fit unknown",
+    "unknownDetail": "Could not estimate memory requirements"
+  },
+  "modelVariantInformation": "Model Variant Information",
+  "modelInformation": "Model Information",
+  "defaultQuantization": "Default Quantization",
+  "quantization": "Quantization",
+  "deviceCompatibilityLabel": "Device compatibility: {{label}}",
+  "errorIntro": "Something went wrong. Try to",
+  "errorRefreshPage": "refresh this page",
+  "errorContactPrompt": "or feel free to",
+  "errorContactUs": "contact us",
+  "errorPersists": "if the problem persists.",
+  "showLess": "Show less",
+  "showMore": "Show more",
+  "progress": {
+    "loadingStage": "Loading {{stage}}: {{percent}}%",
+    "reading": "Reading: {{percent}}%",
+    "working": "Working…",
+    "tokens": "{{processed}} / {{total}} tokens",
+    "etaLeft": "~{{eta}} left",
+    "stageModel": "model",
+    "stageTextModel": "text model",
+    "stageVisionEncoder": "vision encoder",
+    "stageDraftModel": "draft model"
+  },
+  "handoffPayloadInvalid": "Invalid overlay handoff payload",
+  "handoffRuntimeMismatch": "Runtime mode mismatch",
+  "handoffRuntimeSwitched": "The Runtime has switched; the overlay input was not accepted",
+  "handoffTargetSessionFailed": "The main window could not open the target conversation; the overlay input was kept",
+  "fitEstimated": "{{label}} (estimated)",
+  "pendingApprovalLocating": "Locating approval…",
+  "pendingApprovalLocateAction": "{{count}} pending approval(s) · Locate",
+  "pendingApprovalLocateUnavailable": "Could not locate the approval yet; load the conversation and retry",
+  "pendingApprovalHistoryFailed": "Failed to load the history around the approval, please retry",
+  "saveChanges": "Save Changes",
+  "hide": "Hide",
+  "reveal": "Reveal",
+  "minimize": "Minimize",
+  "maximize": "Maximize",
+  "key": "Key",
+  "value": "Value",
+  "submenu": "Submenu",
+  "noMessagesYet": "No messages yet",
+  "startConversationHint": "Start a conversation to see messages here",
+  "removeItem": "Remove {{title}}",
+  "typeOrSelectModel": "Type or select a model...",
+  "parametersNoOverrides": "No overrides — using model defaults.",
+  "parameterNotSupported": "Not supported — will be skipped.",
+  "capabilityWebSearch": "Web Search",
+  "capabilityEmbeddings": "Embedding Model (for RAG/vectors, not chat)",
+  "attachedImage": "Attached image {{index}}",
+  "cudaToolkit": "NVIDIA CUDA Toolkit{{version}}",
+  "cudaToolkitDescription": "Install the CUDA Toolkit{{version}} from NVIDIA. On Debian/Ubuntu: sudo apt install cuda-toolkit-{{major}}. On RHEL/Fedora: use the NVIDIA repo.",
+  "demoRuntime": "Demo Runtime",
+  "demoRuntimeResponseMode": "Demo Runtime response mode",
+  "streamingMode": "Streaming",
+  "fixedMode": "Fixed",
+  "modelParamDefs": {
+    "ctx_len": {
+      "title": "Context Size",
+      "description": "Size of the prompt context. Leave empty to auto-fit when --fit is on."
+    },
+    "ngl": {
+      "title": "GPU Layers",
+      "description": "Number of model layers to offload to the GPU (-1 for all layers, 0 for CPU only)."
+    },
+    "temperature": {
+      "title": "Temperature",
+      "description": "Temperature for sampling (higher = more random). This is the default setting on load and can be overridden by the assistant settings."
+    },
+    "top_k": {
+      "title": "Top K",
+      "description": "Top-K sampling (0 = disabled). This is the default setting on load and can be overridden by the assistant settings."
+    },
+    "top_p": {
+      "title": "Top P",
+      "description": "Top-P sampling (1.0 = disabled). This is the default setting on load and can be overridden by the assistant settings."
+    },
+    "min_p": {
+      "title": "Min P",
+      "description": "Min-P sampling (0.0 = disabled). This is the default setting on load and can be overridden by the assistant settings."
+    },
+    "repeat_last_n": {
+      "title": "Repeat Last N",
+      "description": "Number of tokens to consider for repeat penalty (0 = disabled, -1 = ctx_size). This is the default setting on load and can be overridden by the assistant settings."
+    },
+    "repeat_penalty": {
+      "title": "Repeat Penalty",
+      "description": "Penalize repeating token sequences (1.0 = disabled). This is the default setting on load and can be overridden by the assistant settings."
+    },
+    "presence_penalty": {
+      "title": "Presence Penalty",
+      "description": "Repeat alpha presence penalty (0.0 = disabled). This is the default setting on load and can be overridden by the assistant settings."
+    },
+    "frequency_penalty": {
+      "title": "Frequency Penalty",
+      "description": "Repeat alpha frequency penalty (0.0 = disabled). This is the default setting on load and can be overridden by the assistant settings."
+    },
+    "chat_template": {
+      "title": "Custom Jinja Chat template",
+      "description": "Custom Jinja chat_template to be used for the model"
+    },
+    "cpu_moe": {
+      "title": "Keep all Experts in CPU",
+      "description": "Keep all Mixture of Experts (MoE) weights in the CPU (if GPU is used)."
+    },
+    "n_cpu_moe": {
+      "title": "Number of MoE weights in the CPU",
+      "description": "Keep the Mixture of Experts (MoE) weights of the first N layers in the CPU (if GPU is used)"
+    },
+    "override_tensor_buffer_t": {
+      "title": "Override Tensor Buffer Type",
+      "description": "Override the tensor buffer type for the model"
+    },
+    "no_kv_offload": {
+      "title": "Disable KV Offload",
+      "description": "Disable KV cache offload to GPU (if GPU is used)."
+    },
+    "batch_size": {
+      "title": "Batch Size",
+      "description": "Logical maximum batch size for processing prompts."
+    },
+    "reasoning": {
+      "title": "Reasoning",
+      "description": "Use reasoning/thinking in the chat. 'auto' detects from the chat template."
+    }
+  },
+  "paramDefs": {
+    "stream": {
+      "title": "Stream",
+      "description": "Enables real-time response streaming."
+    },
+    "max_context_tokens": {
+      "title": "Max Context Tokens",
+      "description": "Total token budget (input + output). Older messages are trimmed/compacted to stay within this. 0 disables trimming."
+    },
+    "max_output_tokens": {
+      "title": "Max Output Tokens",
+      "description": "Maximum tokens the model may generate in one reply. Sent as max_tokens to OpenAI-compatible APIs."
+    },
+    "auto_compact": {
+      "title": "Auto Compact",
+      "description": "When context limit is reached, summarize older messages instead of dropping them. Requires Max Context Tokens to be set."
+    },
+    "temperature": {
+      "title": "Temperature",
+      "description": "Controls response randomness.",
+      "effectHint": "Higher = more varied; 0 = deterministic."
+    },
+    "top_p": {
+      "title": "Top P",
+      "description": "Nucleus sampling threshold. Higher values allow more diverse word choices."
+    },
+    "top_k": {
+      "title": "Top K",
+      "description": "Sample from the top K most likely tokens. 0 = disabled."
+    },
+    "min_p": {
+      "title": "Min P",
+      "description": "Minimum relative probability for a token to be considered."
+    },
+    "frequency_penalty": {
+      "title": "Frequency Penalty",
+      "description": "Reduces word repetition based on prior frequency."
+    },
+    "presence_penalty": {
+      "title": "Presence Penalty",
+      "description": "Encourages the model to introduce new topics."
+    },
+    "repeat_penalty": {
+      "title": "Repeat Penalty",
+      "description": "llama.cpp-style multiplicative penalty for repeated tokens. 1.0 = disabled."
+    },
+    "mirostat": {
+      "title": "Mirostat",
+      "description": "Adaptive perplexity-targeting sampler.",
+      "effectHint": "When enabled, overrides Top K / Top P / Min P."
+    },
+    "mirostat_tau": {
+      "title": "Mirostat Tau",
+      "description": "Target entropy. Lower = more focused."
+    },
+    "mirostat_eta": {
+      "title": "Mirostat Eta",
+      "description": "Mirostat learning rate."
+    },
+    "grammar": {
+      "title": "Grammar (GBNF)",
+      "description": "GBNF grammar to constrain generations."
+    },
+    "json_schema": {
+      "title": "JSON Schema",
+      "description": "JSON schema constraining the output to valid JSON."
+    },
+    "typical_p": {
+      "title": "Typical P",
+      "description": "Locally-typical sampling. 1.0 = disabled."
+    },
+    "top_n_sigma": {
+      "title": "Top N Sigma",
+      "description": "Filter by standard deviations above the max logit. -1 = off."
+    },
+    "dynatemp_range": {
+      "title": "Dynamic Temperature Range",
+      "description": "Effective temperature is sampled in [temperature - range, temperature + range]. 0 = off."
+    },
+    "dynatemp_exp": {
+      "title": "Dynamic Temperature Exponent",
+      "description": "Shapes the temperature distribution within the range."
+    },
+    "xtc_probability": {
+      "title": "XTC Probability",
+      "description": "Probability of activating the Exclude-Top-Choices sampler."
+    },
+    "xtc_threshold": {
+      "title": "XTC Threshold",
+      "description": "Minimum token probability to be eligible for XTC exclusion."
+    },
+    "dry_multiplier": {
+      "title": "DRY Multiplier",
+      "description": "Don't-Repeat-Yourself penalty multiplier. 0 = disabled."
+    },
+    "dry_base": {
+      "title": "DRY Base",
+      "description": "Exponential base for penalty growth."
+    },
+    "dry_allowed_length": {
+      "title": "DRY Allowed Length",
+      "description": "Minimum repeated-sequence length before DRY engages."
+    },
+    "dry_penalty_last_n": {
+      "title": "DRY Penalty Window",
+      "description": "Recent-token window DRY scans. -1 = full context, 0 = off."
+    },
+    "ignore_eos": {
+      "title": "Ignore EOS",
+      "description": "Continue past the end-of-sequence token."
+    },
+    "repeat_last_n": {
+      "title": "Repeat Last N",
+      "description": "Number of recent tokens considered for the repeat penalty. -1 = full context, 0 = disabled."
+    },
+    "samplers": {
+      "title": "Sampler Order",
+      "description": "Order in which samplers are applied, comma-separated (e.g. \"top_k,typ_p,top_p,min_p,xtc,temperature\"). Empty = server default order."
+    },
+    "backend_sampling": {
+      "title": "Backend Sampling",
+      "description": "Use the model backend's own sampler instead of llama.cpp's."
+    },
+    "thinking_budget_tokens": {
+      "title": "Thinking Budget",
+      "description": "Maximum tokens the model may spend on reasoning before being forced to answer. -1 = unlimited."
+    }
+  },
+  "paramGroups": {
+    "mirostat": {
+      "title": "Mirostat",
+      "description": "Adaptive perplexity-targeting sampler. Overrides Top K / Top P / Min P."
+    },
+    "dry": {
+      "title": "DRY",
+      "description": "Don't-Repeat-Yourself penalty for long repeated sequences."
+    },
+    "xtc": {
+      "title": "XTC",
+      "description": "Exclude-Top-Choices sampler — probabilistically removes high-prob tokens."
+    },
+    "dynatemp": {
+      "title": "Dynamic Temperature",
+      "description": "Sample the effective temperature from a range around the base."
+    }
+  },
+  "paramCategories": {
+    "common": "Common",
+    "penalties": "Penalties",
+    "output": "Output control",
+    "advanced": "Advanced samplers"
+  },
+  "paramDisabled": {
+    "ignoredWhenTemperatureIsZero": "Ignored when Temperature is 0",
+    "controlledByMirostat": "Controlled by Mirostat",
+    "enableMirostat": "Enable Mirostat to use",
+    "setDynatempRange": "Set Dynamic Temperature Range > 0",
+    "setXtcProbability": "Set XTC Probability > 0",
+    "setDryMultiplier": "Set DRY Multiplier > 0"
+  },
+  "optionValues": {
+    "auto": "Auto",
+    "on": "On",
+    "off": "Off",
+    "noSplit": "None",
+    "byLayer": "Layer",
+    "byRow": "Row",
+    "noScaling": "None",
+    "linear": "Linear",
+    "yarn": "YaRN",
+    "autoRecommended": "Auto (recommended)",
+    "ann": "ANN (sqlite-vec)",
+    "includeInChat": "Include in chat",
+    "ingestAsEmbeddings": "Ingest as embeddings",
+    "askEveryTime": "Ask every time"
+  },
+  "runtimeCommandFailed": "Runtime command failed",
+  "windowControlUnavailable": "Another Bibit client is using this workbench. Exit it and try again"
+}

@@ -1,0 +1,110 @@
+{
+  "status": {
+    "pending": "Queued",
+    "running": "Running",
+    "completed": "Done",
+    "failed": "Failed",
+    "attention": "Needs approval",
+    "completedUnread": "Done, unread"
+  },
+  "permission": {
+    "pending": "Needs approval",
+    "approved": "Approved",
+    "denied": "Denied",
+    "expired": "Expired",
+    "requestExpired": "Permission request expired",
+    "requestResolved": "Permission request resolved",
+    "needsApproval": "Needs approval: ",
+    "requestedAction": "Requested action: ",
+    "impact": "Impact: ",
+    "noImpact": "No impact statement was provided",
+    "moreDetails": "More details",
+    "allowedOnce": "Allowed once",
+    "waitingInMainWindow": "Waiting for approval in the main window",
+    "openMainWindow": "Open main window",
+    "actionSeparator": ": ",
+    "title": "Tool approval",
+    "expiredReason": {
+      "timeout": "The approval window closed before a decision arrived.",
+      "ended": "The run ended before a decision was made."
+    }
+  },
+  "reasoning": {
+    "streaming": "Thinking…",
+    "completed": "Thought for {{duration}}",
+    "completedNoDuration": "Thought"
+  },
+  "tool": {
+    "command": "Run {{command}}",
+    "read": "Read {{path}}",
+    "write": "Edit {{path}}",
+    "list": "List {{path}}",
+    "search": "Search {{pattern}}",
+    "webSearch": "Search the web for {{query}}",
+    "webFetch": "Fetch {{host}}",
+    "mcp": "Call {{tool}} on {{server}}",
+    "generic": "{{name}}",
+    "unknown": "a tool"
+  },
+  "group": {
+    "working": "Working · step {{index}} · {{action}}",
+    "workingReasoning": "Thinking · step {{index}}",
+    "completed": "{{steps}} steps done",
+    "completedDuration": "{{steps}} steps in {{duration}}",
+    "partialFailure": "{{failed}} of {{steps}} steps failed",
+    "reasoningOnly": "Thought",
+    "reasoningOnlyDuration": "Thought for {{duration}}",
+    "approvalNeeded": "{{count}} action(s) need approval"
+  },
+  "terminal": {
+    "mergedOutput": "Merged output",
+    "exitCode": "Exit code: {{code}}",
+    "timeout": "Status: timed out"
+  },
+  "redact": {
+    "hidden": "[redacted]",
+    "bearer": "Bearer [redacted]",
+    "unavailable": "[details unavailable]",
+    "truncated": "…[truncated]"
+  },
+  "detail": {
+    "input": "Input",
+    "output": "Output",
+    "error": "Error",
+    "empty": "No output",
+    "copy": "Copy",
+    "copyTerminal": "Copy terminal output",
+    "follow": "Jump to latest"
+  },
+  "diagnostic": {
+    "run_failed": "The run failed. Content received so far is kept.",
+    "run_cancelled": "The run was stopped.",
+    "worker_rpc_error": "The runtime worker failed, so this run did not finish.",
+    "security_denied": "The security policy blocked this run.",
+    "security_unavailable": "The security service is unavailable, so this run was stopped fail-closed.",
+    "skill_unavailable": "A skill selected for this run is no longer available. Reselect it in the session.",
+    "network_policy_blocked": "The network policy blocks this connection. Adjust the policy first.",
+    "provider_timeout": "The model provider did not respond within the timeout.",
+    "provider_connection_failed": "The model provider could not be reached.",
+    "run_incomplete": "The previous run ended without a result. Content received so far is kept.",
+    "run_interrupted": "The run was interrupted before it finished.",
+    "TOKEN_BUDGET_APPROVAL_TIMEOUT": "The quota approval timed out and the run was stopped."
+  },
+  "diagnosticDetails": "Details",
+  "diagnosticField": {
+    "tool": "Tool",
+    "capability": "Required capability",
+    "scope": "Scope",
+    "risk_level": "Risk level",
+    "reason": "Reason",
+    "provider_host": "Provider host",
+    "network_mode": "Network policy",
+    "timeout_seconds": "Timeout (s)",
+    "http_status": "Upstream status",
+    "skill_ids": "Skills",
+    "provider": "Provider",
+    "action": "Suggested action",
+    "agent_id": "Agent",
+    "worker_instance": "Worker"
+  }
+}

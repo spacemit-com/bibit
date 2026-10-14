@@ -1,0 +1,97 @@
+{
+  "name": "bibit-gui",
+  "private": true,
+  "type": "module",
+  "workspaces": {
+    "packages": [
+      "core",
+      "web-app",
+      "extensions/*",
+      "packages/*",
+      "features/*"
+    ]
+  },
+  "scripts": {
+    "feature:registry": "node scripts/feature-registry/generate.mjs",
+    "feature:registry:check": "node scripts/feature-registry/generate.mjs --check",
+    "feature:sdk:pack": "node scripts/feature-sdk-vendor.mjs pack",
+    "feature:sdk:verify": "node scripts/feature-sdk-vendor.mjs verify",
+    "test:feature-sdk-vendor": "node --test scripts/feature-sdk-vendor.test.mjs",
+    "lint": "yarn lint:web && yarn lint:features",
+    "lint:web": "yarn workspace @janhq/web-app lint",
+    "lint:features": "eslint features tests/fixtures/features --config features/eslint.config.js",
+    "test:feature-boundaries": "node --test features/feature-boundary-lint.test.mjs",
+    "dev": "yarn dev:tauri",
+    "build": "yarn build:web && yarn build:tauri",
+    "build:release:linux": "node scripts/build-bibit-release.mjs",
+    "test": "yarn test:core && yarn test:web && yarn test:ext",
+    "test:core": "cross-env NODE_OPTIONS=--max-old-space-size=4096 vitest run --project @janhq/core",
+    "test:web": "yarn feature:registry && cross-env NODE_OPTIONS=--max-old-space-size=4096 vitest run --project @janhq/web-app",
+    "test:ext": "cross-env NODE_OPTIONS=--max-old-space-size=4096 vitest run --project '@janhq/*-extension'",
+    "test:features:web": "cross-env NODE_OPTIONS=--max-old-space-size=4096 vitest run --project '@bibit/feature-*' && yarn test:feature-boundaries && yarn test:feature-fixtures && yarn test:feature-contracts",
+    "test:features": "yarn test:features:web && yarn test:trusted-plugin-interop",
+    "test:trusted-plugin-interop": "node scripts/trusted-plugin-interop.test.mjs",
+    "test:feature-fixtures": "tsc --noEmit -p tests/fixtures/features/tsconfig.json",
+    "test:feature-contracts": "tsc --noEmit -p web-app/tsconfig.contract-tests.json",
+    "test:all": "yarn feature:registry && cross-env NODE_OPTIONS=--max-old-space-size=4096 vitest run",
+    "test:watch": "yarn feature:registry && cross-env NODE_OPTIONS=--max-old-space-size=4096 vitest",
+    "test:ui": "yarn feature:registry && cross-env NODE_OPTIONS=--max-old-space-size=4096 vitest --ui",
+    "test:coverage": "yarn feature:registry && cross-env NODE_OPTIONS=--max-old-space-size=4096 vitest run --coverage",
+    "test:packaging:linux": "node --test scripts/bump-version.test.mjs scripts/linux-deb-config.test.mjs scripts/linux-window-controls-build.test.mjs scripts/build-bibit-release.test.mjs",
+    "test:prepare": "yarn build:icon && yarn copy:assets:tauri && yarn build --no-bundle ",
+    "dev:web": "yarn workspace @janhq/web-app dev",
+    "dev:tauri": "yarn feature:registry && yarn build:tauri:plugin:api && yarn build:extensions && yarn build:icon && yarn copy:assets:tauri && cross-env IS_CLEAN=true AUTO_UPDATER_DISABLED=true tauri dev --features demo-runtime",
+    "dev:security-demo": "cross-env BIBIT_HERMES_ACP_EXPERIMENTAL=true BIBIT_SECURITY_DEMO=true yarn dev:tauri",
+    "licenses:generate": "node scripts/generate-third-party-license-manifest.mjs",
+    "copy:assets:tauri": "yarn licenses:generate && cpx \"{LICENSE,NOTICE}\" \"src-tauri/resources/\" && cpx \"LICENSES/*\" \"src-tauri/resources/LICENSES/\"",
+    "download:lib": "node ./scripts/download-lib.mjs",
+    "download:bin": "node ./scripts/download-bin.mjs",
+    "build:tauri:linux": "yarn feature:registry && yarn download:bin && NO_STRIP=1 ./src-tauri/build-utils/shim-linuxdeploy.sh yarn tauri build && ./src-tauri/build-utils/buildAppImage.sh",
+    "build:deb:linux": "yarn feature:registry && yarn build:tauri:plugin:api && yarn build:extensions && yarn build:icon && yarn copy:assets:tauri && cross-env IS_CLEAN=true IS_TAURI=true IS_DEV=false AUTO_UPDATER_DISABLED=true TAURI_ENV_PLATFORM=linux tauri build --debug --bundles deb --features allow-unsigned-plugins",
+    "build:tauri": "yarn feature:registry && yarn build:icon && yarn copy:assets:tauri && yarn build:tauri:linux",
+    "build:tauri:plugin:api": "cd src-tauri/plugins && yarn install && cd ../.. && yarn build:tauri:plugin:api:linux",
+    "build:tauri:plugin:api:linux": "cd src-tauri/plugins && yarn workspaces foreach -Apt run build",
+    "build:icon": "tauri icon ./src-tauri/icons/app-icon.svg --png 16,32,48,64,128,256 && mv src-tauri/icons/256x256.png src-tauri/icons/128x128@2x.png",
+    "build:core": "cd core && yarn build && yarn pack",
+    "build:web": "yarn workspace @janhq/web-app build && node --test scripts/security-demo-vite-config.test.mjs scripts/security-demo-production-artifact.test.mjs",
+    "build:web:linux": "cross-env IS_TAURI=true IS_DEV=false TAURI_ENV_PLATFORM=linux yarn build:web && node scripts/verify-linux-window-controls.mjs web-app/dist",
+    "build:extensions": "yarn workspace @janhq/core build && yarn workspaces foreach -Apt --include '@janhq/*-extension' run build"
+  },
+  "devDependencies": {
+    "@eslint/js": "8.57.0",
+    "@rolldown/binding-wasm32-wasi": "1.0.0-beta.8",
+    "@tauri-apps/cli": "^2.11.0",
+    "@vitest/coverage-v8": "^3.1.3",
+    "ajv": "8.17.1",
+    "cpx": "^1.5.0",
+    "cross-env": "^7.0.3",
+    "eslint": "9.25.1",
+    "globals": "16.0.0",
+    "husky": "^9.1.5",
+    "jsdom": "^26.1.0",
+    "rimraf": "^3.0.2",
+    "tar": "^4.4.19",
+    "typescript": "5.9.2",
+    "typescript-eslint": "8.31.0",
+    "unzipper": "^0.12.3",
+    "vitest": "^3.1.3"
+  },
+  "version": "1.0.0-beta.1",
+  "installConfig": {
+    "hoistingLimits": "workspaces"
+  },
+  "dependenciesMeta": {
+    "rolldown@1.0.0-beta.8": {
+      "built": false
+    }
+  },
+  "resolutions": {
+    "yallist": "4.0.0",
+    "@types/react": "19.1.2",
+    "@types/react-dom": "19.1.2",
+    "@tailwindcss/oxide-wasm32-wasi": "4.3.3",
+    "rolldown": "1.0.0-beta.8",
+    "lightningcss": "npm:lightningcss-wasm@1.29.2"
+  },
+  "packageManager": "yarn@4.5.3"
+}

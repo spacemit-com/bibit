@@ -1,0 +1,28 @@
+#!/usr/bin/make -f
+
+include /usr/share/dpkg/pkg-info.mk
+
+export YARN_TASK_POOL_CONCURRENCY := 1
+export NODE_OPTIONS ?= --max-old-space-size=12288
+
+%:
+	dh $@
+
+override_dh_auto_clean:
+	:
+
+override_dh_auto_build:
+	node scripts/bump-version.mjs --check
+	node .yarn/releases/yarn-4.5.3.cjs install --immutable
+	+AUTO_UPDATER_DISABLED=true \
+	  node .yarn/releases/yarn-4.5.3.cjs build:deb:linux
+
+override_dh_auto_test:
+	node .yarn/releases/yarn-4.5.3.cjs test:packaging:linux
+
+override_dh_auto_install:
+	mkdir -p debian/bi-bit
+	target_dir=$${CARGO_TARGET_DIR:-src-tauri/target}; \
+	artifact=$$target_dir/debug/bundle/deb/BiBit_$(DEB_VERSION_UPSTREAM)_$(DEB_HOST_ARCH).deb; \
+	test -f "$$artifact"; \
+	dpkg-deb -x "$$artifact" debian/bi-bit

@@ -1,0 +1,29 @@
+{
+  "name": "reject-missing-english-locale",
+  "expect": "reject",
+  "note": "locales must contain en.",
+  "manifest": {
+    "manifestSchemaVersion": 1,
+    "sdkApiVersion": 1,
+    "id": "conformance",
+    "version": "0.1.0",
+    "owner": "platform-team",
+    "display": {
+      "titleKey": "conformance:title",
+      "fallbackTitle": "Conformance",
+      "iconKey": "feature"
+    },
+    "targets": [
+      "desktop"
+    ],
+    "requiredHostCapabilities": [],
+    "contributions": {
+      "pages": [],
+      "settings": [],
+      "conversation": [],
+      "locales": [
+        "zh-CN"
+      ]
+    }
+  }
+}
